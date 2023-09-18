@@ -1,82 +1,24 @@
-<!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Track11 팀프로젝트</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
-		<script src="https://kit.fontawesome.com/34253ab9f2.js" crossorigin="anonymous"></script>
-		<script>
-			function plus(){
-				$('.merchan_count').val(Number($('.merchan_count').val())+1);
-				check_merchan_count();
-			}function minus(){
-				$('.merchan_count').val(Number($('.merchan_count').val())-1);
-				check_merchan_count();
-			}function check_merchan_count(){
-				if(buy.m_count.value<1||!$.isNumeric(buy.m_count.value)){
-					alert("구매수량은 1 이상이여아 합니다.");
-					$('.merchan_count').val(1);
-					buy.m_count.focus();
-				}	
-			}function goBucket(){
-				alert("상품이 장바구니에 담겼습니다");
-				location.href='detail.html'
-			}
-		</script>
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Header -->
-					<header id="header">
-						<div class="inner">
-
-							<!-- Logo -->
-								<a href="../index.html" class="logo">
-									<span class="symbol"><img src="../images/logo.png" alt="" /></span>
-								</a>
-
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
-
-							<!-- Account -->
-								<div class="account">
-									<a href="../member/login.html" style="margin-right:0.5em;">LogIn</a>
-									<a href="../member/join.html">Join</a>
-								</div>
-	
-							</div>
-					</header>
-
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="../index.html">Home</a></li>
-							<li><a href="product/shop.html">식료품</a></li>
-							<li><a href="product/shop.html">의류</a></li>
-							<li><a href="product/shop.html">앤티크</a></li>
-							<li><a href="product/shop.html">원예</a></li>
-							<li><a href="product/shop.html">음반</a></li>
-							<li><a href="product/shop.html">공구</a></li>
-							<li><a href="member/mypage.html">마이페이지</a></li>
-							<li><a href="product/manage_list.html">관리페이지</a></li>
-							<li><a href="elements.html">Elements</a></li>
-						</ul>
-					</nav>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="../Common_header.jsp"%>
+<script>
+	function plus(){
+		$('.merchan_count').val(Number($('.merchan_count').val())+1);
+		check_merchan_count();
+	}function minus(){
+		$('.merchan_count').val(Number($('.merchan_count').val())-1);
+		check_merchan_count();
+	}function check_merchan_count(){
+		if(buy.m_count.value<1||!$.isNumeric(buy.m_count.value)){
+			alert("구매수량은 1 이상이여아 합니다.");
+			$('.merchan_count').val(1);
+			buy.m_count.focus();
+		}	
+	}function goBucket(){
+		alert("상품이 장바구니에 담겼습니다");
+		location.href='detail.jsp'
+	}
+</script>
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
@@ -235,63 +177,11 @@
 									</div>
 									<div>총 금액<div>￦9,000,002,500</div></div>
 									<div class="merchan_butt">
-										<input type="button" onclick="location.href='purchase.html'" value="구매">
+										<input type="button" onclick="location.href='purchase.jsp'" value="구매">
 										<input type="button" onclick="goBucket()" value="장바구니">
 									</div>
 								</form>
 							</section>
 						</div>
 					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">							
-							<section>
-								<h2>이메일 문의</h2>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<input type="text" name="name" id="name" placeholder="Name" />
-										</div>
-										<div class="field half">
-											<input type="email" name="email" id="email" placeholder="Email" />
-										</div>
-										<div class="field">
-											<textarea name="message" id="message" placeholder="Message"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send" class="primary" /></li>
-									</ul>
-								</form>
-							</section>
-							<section>
-								<h2>Follow</h2>
-								<ul class="icons">
-									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-							<ul class="copyright">
-								<li>&copy; JSL. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</footer>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="../assets/js/jquery.min.js"></script>
-			<script src="../assets/js/browser.min.js"></script>
-			<script src="../assets/js/breakpoints.min.js"></script>
-			<script src="../assets/js/util.js"></script>
-			<script src="../assets/js/main.js"></script>
-
-	</body>
-</html>
+<%@ include file="../Common_footer.jsp"%>
