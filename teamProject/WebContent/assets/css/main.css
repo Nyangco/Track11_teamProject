@@ -3599,3 +3599,37 @@ table{
 .border_list .title{
 	text-align:left;
 }
+
+.free_board>div>div{
+	display:none;
+	border:0.5px solid black;
+}
+
+.free_board>div>span{
+	float:right;
+}
+
+.free_board>div>span>span{
+	margin-right:10px;
+}
+
+.free_board input[type="text"]{
+	display:inline-block;
+	width:89%;
+}
+
+.free_board input[type="button"]{
+	display:block;
+	width:10%;
+	float:right;
+	height:48px;
+}
+
+.basket div{
+	display:inline-block;
+}
+
+.basket .merchan_count{
+	width:13px;
+	display:inline-block;
+}
