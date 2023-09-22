@@ -14,6 +14,8 @@
 			$('.merchan_count').val(1);
 			buy.m_count.focus();
 		}	
+	}function goPurchase(){
+		
 	}function goBucket(){
 		alert("상품이 장바구니에 담겼습니다");
 		location.href='detail.jsp'
@@ -164,6 +166,8 @@
 									</div>
 								</div>
 								<form class="side_bar" name="buy">
+									<input type="hidden" name="t_gubun">
+									<input type="hidden" name="t_product_no">
 									<div class="merchan_title">상품 </div>
 									<div>제품명<div>어디로든 문</div></div>
 									<div>가격<div>￦9,000,000,000</div></div>
@@ -177,7 +181,7 @@
 									</div>
 									<div>총 금액<div>￦9,000,002,500</div></div>
 									<div class="merchan_butt">
-										<input type="button" onclick="location.href='purchase.jsp'" value="구매">
+										<input type="button" onclick="goPage('purchase')" value="구매">
 										<input type="button" onclick="goBucket()" value="장바구니">
 									</div>
 								</form>

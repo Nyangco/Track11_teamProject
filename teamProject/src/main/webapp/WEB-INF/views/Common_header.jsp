@@ -1,4 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML>
 <!--
 	Phantom by HTML5 UP
@@ -47,11 +49,20 @@
 
 							<!-- Account -->
 								<div class="account">
-									<a href="javascript:goPage('manage_list','Product')">관리페이지</a>
-									<a href="javascript:goPage('memberMypage','Member')">Mypage</a>
-									<a href="javascript:goPage('basket','Product')">장바구니</a>
-									<a href="javascript:goPage('memberLogin','Member')" style="margin-right:0.5em;">LogIn</a>
-									<a href="javascript:goPage('memberJoin','Member')">Join</a>
+									<c:if test="${empty sLevel }">
+										<a href="javascript:goPage('login')">LogIn</a>
+										<a href="javascript:goPage('join')">Join</a>
+									</c:if>
+									<c:if test="${not empty sLevel }">
+										<c:if test="${sLevel>=2 }">
+											<a href="javascript:goPage('manage_list')">관리페이지</a>
+										</c:if>
+										<c:if test="${sLevel==1 }">
+											<a href="javascript:goPage('basket')">장바구니</a>
+										</c:if>
+										<a href="javascript:goPage('mypage')">Mypage</a>
+										<a href="javascript:goPage('logout')">로그아웃</a>
+									</c:if>
 								</div>
 
 						</div>

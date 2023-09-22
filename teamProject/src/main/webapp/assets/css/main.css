@@ -3633,3 +3633,10 @@ table{
 	width:13px;
 	display:inline-block;
 }
+
+.mypage th{
+	text-align:center;
+}
+.mypage td{
+	text-align:left;
+}
