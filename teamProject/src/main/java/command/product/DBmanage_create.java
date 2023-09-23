@@ -28,7 +28,7 @@ public class DBmanage_create {
 			
 			String images = mpr.getFilesystemName("t_images");
 			
-			ProductDto dto = new ProductDto(product_no, price, name, origin_country, sell_country, null, one_sentence, description, images, stock, null);
+			ProductDto dto = new ProductDto(product_no, price, name, origin_country, sell_country, null, one_sentence, description, images, stock, null, null);
 			
 			int k = dao.insertDB(dto);
 			

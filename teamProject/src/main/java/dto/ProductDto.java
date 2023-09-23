@@ -2,10 +2,15 @@ package dto;
 
 public class ProductDto {
 	private String product_no, price, name, origin_country, sell_country, reg_date, one_sentence, description, images, stock
-					,sell_count;
+					, sell_count, status;
+
+	public ProductDto() {
+		super();
+	}
 
 	public ProductDto(String product_no, String price, String name, String origin_country, String sell_country,
-			String reg_date, String one_sentence, String description, String images, String stock, String sell_count) {
+			String reg_date, String one_sentence, String description, String images, String stock, String sell_count,
+			String status) {
 		super();
 		this.product_no = product_no;
 		this.price = price;
@@ -18,10 +23,7 @@ public class ProductDto {
 		this.images = images;
 		this.stock = stock;
 		this.sell_count = sell_count;
-	}
-
-	public ProductDto() {
-		super();
+		this.status = status;
 	}
 
 	public String getProduct_no() {
@@ -111,4 +113,13 @@ public class ProductDto {
 	public void setSell_count(String sell_count) {
 		this.sell_count = sell_count;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

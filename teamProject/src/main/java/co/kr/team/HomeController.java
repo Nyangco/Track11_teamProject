@@ -18,7 +18,9 @@ import command.member.DBmember_update;
 import command.member.Logout;
 import command.member.Mypage;
 import command.product.DBmanage_create;
+import command.product.DBmanage_update;
 import command.product.Manage_create;
+import command.product.Manage_detail;
 import command.product.Manage_list;
 import common.CommonExecute;
 import common.CommonTemplate;
@@ -53,7 +55,7 @@ public class HomeController {
 
 			page = "product/basket";
 		}else if(gubun.equals("detail")) {
-
+			
 			page = "product/detail";
 		}else if(gubun.equals("manage_create")) {
 			CommonExecute ce = new Manage_create();
@@ -63,7 +65,8 @@ public class HomeController {
 			DBmanage_create ce = new DBmanage_create();
 			ce.execute(model, request);
 		}else if(gubun.equals("manage_detail")) {
-			
+			CommonExecute ce = new Manage_detail();
+			ce.execute(model, mdto, session);
 			page = "product/manage_detail";
 		}else if(gubun.equals("manage_list")) {
 			CommonExecute ce = new Manage_list();
@@ -73,8 +76,12 @@ public class HomeController {
 
 			page = "product/manage_statistics";
 		}else if(gubun.equals("manage_update")) {
-
+			CommonExecute ce = new Manage_detail();
+			ce.execute(model, mdto, session);
 			page = "product/manage_update";
+		}else if(gubun.equals("DBmanage_update")) {
+			CommonExecute ce = new DBmanage_update();
+			ce.execute(model, mdto, session);
 		}else if(gubun.equals("purchase_complete")) {
 
 			page = "product/purchase_complete";

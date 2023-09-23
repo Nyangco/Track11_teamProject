@@ -3640,3 +3640,16 @@ table{
 .mypage td{
 	text-align:left;
 }
+
+.manage_detail_img img{
+	width:400px;
+	height:400px;
+	padding:0.75em;
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.manage_update input[type="text"], select{
+	height:2em;
+}

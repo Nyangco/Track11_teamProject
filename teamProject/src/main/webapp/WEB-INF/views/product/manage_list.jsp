@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
+<script>
+	function goManage_detail(pn){
+		product.t_product_no.value=pn;
+		product.method="post";
+		product.action="/team/";
+		product.submit();
+	}
+</script>
+<form name="product">
+	<input type="hidden" name="t_product_no">
+	<input type="hidden" name="t_gubun" value="manage_detail">
+</form>
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
@@ -30,15 +42,20 @@
 											<th>상품명</th>
 											<th>가격</th>
 											<th>등록일</th>
-											<th>판매 건수</th>
+											<th>상태</th>
 										</tr>
 										<c:forEach items="${arr }" var="dto">
 											<tr>
-												<td>${dto.getProduct_no() }</td>
-												<td>${dto.getName() }</td>
+												<td><a href="javascript:goManage_detail('${dto.getProduct_no() }')">${dto.getProduct_no() }</a></td>
+												<td><a href="javascript:goManage_detail('${dto.getProduct_no() }')">${dto.getName() }</a></td>
 												<td style="text-align:left;">${dto.getPrice() }</td>
 												<td>${dto.getReg_date() }</td>
-												<td>${dto.getSell_count() }</td>
+												<td>
+													<c:choose>
+														<c:when test="${dto.getStatus() eq '1' }">판매 중</c:when>
+														<c:when test="${dto.getStatus() eq '0' }">판매 중지</c:when>
+													</c:choose>
+												</td>
 											</tr>
 										</c:forEach>
 									</table>

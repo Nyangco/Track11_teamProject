@@ -9,6 +9,15 @@ public class ModelDto {
 	private String t_id, t_pw, t_name, t_nickname, t_email, t_tel1, t_tel2, t_tel3, t_addr1, t_addr2, t_addr3;
 	
 	//manage_product
+	private String t_product_no;
+	
+	public String getT_product_no() {
+		return t_product_no;
+	}
+
+	public void setT_product_no(String t_product_no) {
+		this.t_product_no = t_product_no;
+	}
 
 	public String getT_gubun() {
 		return t_gubun;
