@@ -32,19 +32,21 @@
 											<th>등록일</th>
 											<th>판매 건수</th>
 										</tr>
-										<tr>
-											<td>001</td>
-											<td>어디로든 문</td>
-											<td style="text-align:left;">9,000,000,000￦</td>
-											<td>2025-40-21</td>
-											<td>3,214</td>
-										</tr>
+										<c:forEach items="${arr }" var="dto">
+											<tr>
+												<td>${dto.getProduct_no() }</td>
+												<td>${dto.getName() }</td>
+												<td style="text-align:left;">${dto.getPrice() }</td>
+												<td>${dto.getReg_date() }</td>
+												<td>${dto.getSell_count() }</td>
+											</tr>
+										</c:forEach>
 									</table>
 								</article>
 							</section>
 							<div class="btn_group sell">
-								<input type="button" value="판매 통계" onclick="goWork('manage_statistics','Product')">
-								<input type="button" value="신규 등록하기" onclick="goWork('manage_create','Product')">
+								<input type="button" value="판매 통계" onclick="goPage('manage_statistics')">
+								<input type="button" value="신규 등록하기" onclick="goPage('manage_create')">
 							</div>
 						</div>
 					</div>

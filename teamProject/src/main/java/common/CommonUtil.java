@@ -84,7 +84,10 @@ public class CommonUtil {
 	
 	//파일 경로 잡는 method
 	public static String getFile_dir(String path) {
-		String result = "attach/"+path+"/";
+		String result = "C:/Users/NyangcoNote/git/Track11_teamProject_spring_mvc/teamProject/src/main/webapp/attach/";
+		if(!path.equals("")) {
+			result+=path+"/";
+		}
 		//String result = "C:/track11_ysm/work_project/Track11/web_servlet_bike/WebContent/attach/"+path+"/";
 		//String result = "C:/Track11_ysm/work_project/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/web_servlet_bike/attach/"+path+"/";
 		return result;

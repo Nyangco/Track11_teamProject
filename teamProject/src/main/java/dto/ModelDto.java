@@ -7,6 +7,8 @@ public class ModelDto {
 
 	//DBSave
 	private String t_id, t_pw, t_name, t_nickname, t_email, t_tel1, t_tel2, t_tel3, t_addr1, t_addr2, t_addr3;
+	
+	//manage_product
 
 	public String getT_gubun() {
 		return t_gubun;

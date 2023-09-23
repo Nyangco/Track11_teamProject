@@ -1,21 +1,15 @@
 package co.kr.team;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import command.member.DBjoin;
@@ -23,6 +17,9 @@ import command.member.DBlogin;
 import command.member.DBmember_update;
 import command.member.Logout;
 import command.member.Mypage;
+import command.product.DBmanage_create;
+import command.product.Manage_create;
+import command.product.Manage_list;
 import common.CommonExecute;
 import common.CommonTemplate;
 import dto.ModelDto;
@@ -59,13 +56,18 @@ public class HomeController {
 
 			page = "product/detail";
 		}else if(gubun.equals("manage_create")) {
-
+			CommonExecute ce = new Manage_create();
+			ce.execute(model, mdto, session);
 			page = "product/manage_create";
+		}else if(gubun.equals("DBmanage_create")) {
+			DBmanage_create ce = new DBmanage_create();
+			ce.execute(model, request);
 		}else if(gubun.equals("manage_detail")) {
-
+			
 			page = "product/manage_detail";
 		}else if(gubun.equals("manage_list")) {
-
+			CommonExecute ce = new Manage_list();
+			ce.execute(model, mdto, session);
 			page = "product/manage_list";
 		}else if(gubun.equals("manage_statistics")) {
 
@@ -150,5 +152,4 @@ public class HomeController {
 		
 		return page;
 	}
-	
 }

@@ -13,6 +13,7 @@ import common.CommonTemplate;
 import common.CommonUtil;
 import dto.MemberDto;
 import dto.ModelDto;
+import dto.ProductDto;
 
 public class MemberDao {
 
