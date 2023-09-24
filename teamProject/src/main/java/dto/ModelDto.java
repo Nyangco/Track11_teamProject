@@ -3,7 +3,7 @@ package dto;
 public class ModelDto {
 	
 	//공통 사용
-	private String t_gubun;
+	private String t_gubun, t_select, t_search;
 
 	//DBSave
 	private String t_id, t_pw, t_name, t_nickname, t_email, t_tel1, t_tel2, t_tel3, t_addr1, t_addr2, t_addr3;
@@ -11,6 +11,22 @@ public class ModelDto {
 	//manage_product
 	private String t_product_no;
 	
+	public String getT_select() {
+		return t_select;
+	}
+
+	public void setT_select(String t_select) {
+		this.t_select = t_select;
+	}
+
+	public String getT_search() {
+		return t_search;
+	}
+
+	public void setT_search(String t_search) {
+		this.t_search = t_search;
+	}
+
 	public String getT_product_no() {
 		return t_product_no;
 	}

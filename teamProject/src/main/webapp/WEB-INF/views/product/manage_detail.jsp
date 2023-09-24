@@ -89,7 +89,7 @@
 													<td>${t_dto.getSell_count() }</td>
 												</tr>
 												<tr>
-													<td>${t_dto.getImages() }</td>
+													<td>${fn:substring(t_dto.getImages(),fn:indexOf(t_dto.getImages(),'_')+1,fn:length(t_dto.getImages())) }</td>
 													<th>상태</th>
 													<td>
 														<c:choose>

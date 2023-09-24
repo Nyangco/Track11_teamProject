@@ -1,5 +1,8 @@
 package command.product;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
@@ -26,7 +29,16 @@ public class DBmanage_create {
 			String description = mpr.getParameter("t_description");
 			String stock = mpr.getParameter("t_stock");
 			
-			String images = mpr.getFilesystemName("t_images");
+			String ori_images = mpr.getFilesystemName("t_images");
+			
+			UUID uuid = UUID.randomUUID();
+			String images = uuid+"_"+ori_images;
+			
+			File img = new File(CommonUtil.getFile_dir(ori_images));
+			if(img.exists()) {
+				File new_img = new File(CommonUtil.getFile_dir(images));
+				img.renameTo(new_img);
+			}
 			
 			ProductDto dto = new ProductDto(product_no, price, name, origin_country, sell_country, null, one_sentence, description, images, stock, null, null);
 			

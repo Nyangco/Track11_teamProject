@@ -1,6 +1,5 @@
 package co.kr.team;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +21,8 @@ import command.product.DBmanage_update;
 import command.product.Manage_create;
 import command.product.Manage_detail;
 import command.product.Manage_list;
+import command.purchase.Detail;
+import command.purchase.Shop;
 import common.CommonExecute;
 import common.CommonTemplate;
 import dto.ModelDto;
@@ -55,7 +56,8 @@ public class HomeController {
 
 			page = "product/basket";
 		}else if(gubun.equals("detail")) {
-			
+			CommonExecute ce = new Detail();
+			ce.execute(model, mdto, session);
 			page = "product/detail";
 		}else if(gubun.equals("manage_create")) {
 			CommonExecute ce = new Manage_create();
@@ -80,8 +82,8 @@ public class HomeController {
 			ce.execute(model, mdto, session);
 			page = "product/manage_update";
 		}else if(gubun.equals("DBmanage_update")) {
-			CommonExecute ce = new DBmanage_update();
-			ce.execute(model, mdto, session);
+			DBmanage_update ce = new DBmanage_update();
+			ce.execute(model, request);
 		}else if(gubun.equals("purchase_complete")) {
 
 			page = "product/purchase_complete";
@@ -89,7 +91,8 @@ public class HomeController {
 
 			page = "product/purchase";
 		}else if(gubun.equals("shop")) {
-
+			CommonExecute ce = new Shop();
+			ce.execute(model, mdto, session);
 			page = "product/shop";
 		}
 		//Member
@@ -155,6 +158,8 @@ public class HomeController {
 		}else if(gubun.equals("qna_write")) {
 
 			page = "board/qna_write";
+		}else {
+			System.out.println("no t_gubun");
 		}
 		
 		return page;

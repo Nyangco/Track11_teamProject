@@ -3650,6 +3650,6 @@ table{
 	left:0;
 }
 
-.manage_update input[type="text"], select{
+.manage_update input[type="text"], .manage_update select{
 	height:2em;
 }

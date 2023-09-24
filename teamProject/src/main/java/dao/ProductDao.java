@@ -16,6 +16,23 @@ public class ProductDao {
 	
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
+	public int updateDB(ProductDto dto) {
+		int k = 0;
+		String price = dto.getPrice().replaceAll("￦", "").replaceAll(",", "").trim();
+		String sql = "update pjt_shop_product set price="+price+", name='"+dto.getName()+"', "
+					+ "origin_country='"+dto.getOrigin_country()+"', sell_country='"+dto.getSell_country()+"', "
+					+ "one_sentence='"+dto.getOne_sentence()+"', description='"+dto.getDescription()+"', "
+					+ "images='"+dto.getImages()+"', stock="+dto.getStock()+", status="+dto.getStatus()+" where product_no='"
+					+dto.getProduct_no()+"'";
+		try {
+			k = template.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("update:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
 	public ProductDto detail(ModelDto mdto) {
 		ProductDto dto = null;
 		String sql = "select product_no, to_char(price,'999,999,999,999l') price, name, origin_country,sell_country, "
@@ -31,10 +48,17 @@ public class ProductDao {
 		return dto;
 	}
 	
-	public ArrayList<ProductDto> listDB(){
+	public ArrayList<ProductDto> listDB(ModelDto dto){
 		ArrayList<ProductDto> arr = new ArrayList<ProductDto>();
+		String select = dto.getT_select();
+		String search = dto.getT_search();
+		if(select==null) {
+			select = "product_no";
+			search = "";
+		}
 		String sql = "select product_no, name, to_char(price,'999,999,999,999l') price, "
-					+ "to_char(reg_date,'yyyy-MM-dd') reg_date, status from pjt_shop_product";
+					+ "to_char(reg_date,'yyyy-MM-dd') reg_date, status from pjt_shop_product "
+					+ "where "+select+" like '%"+search+"%' order by product_no";
 		try {
 			RowMapper<ProductDto> rowmap = new BeanPropertyRowMapper<ProductDto>(ProductDto.class);
 			arr = (ArrayList<ProductDto>)template.query(sql, rowmap);

@@ -24,7 +24,6 @@
 		}else return false;
 	}function goSave(){
 		const extension = manage.t_images.value.substr(manage.t_images.value.indexOf(".")+1).toLowerCase();
-		console.log(extension);
 		if(checkValue(manage.t_images,80,"상품 이미지")) return;
 		else if(extension!="jpg"&&extension!="png"&&extension!="svg"&&extension!="gif"){
 			alert("확장자는 jpg, png, svg, gif만 가능합니다");
