@@ -21,7 +21,12 @@ import command.product.DBmanage_update;
 import command.product.Manage_create;
 import command.product.Manage_detail;
 import command.product.Manage_list;
+import command.purchase.Basket;
+import command.purchase.DBbasket;
+import command.purchase.DBpurchase;
 import command.purchase.Detail;
+import command.purchase.Purchase;
+import command.purchase.Purchase_complete;
 import command.purchase.Shop;
 import common.CommonExecute;
 import common.CommonTemplate;
@@ -51,10 +56,14 @@ public class HomeController {
 		if(gubun.equals("index")) {
 			page = "index";
 		}
-		//Product
+		//Product & Purchase
 		else if(gubun.equals("basket")) {
-
+			CommonExecute ce = new Basket();
+			ce.execute(model, mdto, session);
 			page = "product/basket";
+		}else if(gubun.equals("DBbasket")) {
+			DBbasket ce = new DBbasket();
+			ce.execute(request, model);
 		}else if(gubun.equals("detail")) {
 			CommonExecute ce = new Detail();
 			ce.execute(model, mdto, session);
@@ -84,12 +93,17 @@ public class HomeController {
 		}else if(gubun.equals("DBmanage_update")) {
 			DBmanage_update ce = new DBmanage_update();
 			ce.execute(model, request);
-		}else if(gubun.equals("purchase_complete")) {
-
-			page = "product/purchase_complete";
 		}else if(gubun.equals("purchase")) {
-
+			CommonExecute ce = new Purchase();
+			ce.execute(model, mdto, session);
 			page = "product/purchase";
+		}else if(gubun.equals("DBpurchase")) {
+			DBpurchase ce = new DBpurchase();
+			ce.execute(model, mdto, session, request);
+		}else if(gubun.equals("purchase_complete")) {
+			CommonExecute ce = new Purchase_complete();
+			ce.execute(model, mdto, session);
+			page = "product/purchase_complete";
 		}else if(gubun.equals("shop")) {
 			CommonExecute ce = new Shop();
 			ce.execute(model, mdto, session);

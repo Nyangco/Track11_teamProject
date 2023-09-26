@@ -5,16 +5,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 import common.CommonExecute;
-import dao.PurchaseDao;
 import dto.ModelDto;
 
-public class Detail implements CommonExecute {
+public class Purchase_complete implements CommonExecute {
 
 	@Override
 	public void execute(Model model, ModelDto mdto, HttpSession session) {
 		// TODO Auto-generated method stub
-		PurchaseDao dao = new PurchaseDao();
-		model.addAttribute("dto",dao.detail(mdto));
+		model.addAttribute("t_purchase_no",mdto.getT_purchase_no());
 	}
 
 }

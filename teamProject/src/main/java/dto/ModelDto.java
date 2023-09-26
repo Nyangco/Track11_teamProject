@@ -11,6 +11,106 @@ public class ModelDto {
 	//manage_product
 	private String t_product_no;
 	
+	//purchase
+	private String t_count, t_receive_name, t_receive_tel1, t_receive_tel2, t_receive_tel3, t_receive_memo, t_pay_method, 
+					t_pay_name, t_cash_receipt, t_cash_recipt_number, t_purchase_no, t_bd;
+	
+	public String getT_bd() {
+		return t_bd;
+	}
+
+	public void setT_bd(String t_bd) {
+		this.t_bd = t_bd;
+	}
+
+	public String getT_purchase_no() {
+		return t_purchase_no;
+	}
+
+	public void setT_purchase_no(String t_purchase_no) {
+		this.t_purchase_no = t_purchase_no;
+	}
+
+	public String getT_receive_name() {
+		return t_receive_name;
+	}
+
+	public void setT_receive_name(String t_receive_name) {
+		this.t_receive_name = t_receive_name;
+	}
+
+	public String getT_receive_tel1() {
+		return t_receive_tel1;
+	}
+
+	public void setT_receive_tel1(String t_receive_tel1) {
+		this.t_receive_tel1 = t_receive_tel1;
+	}
+
+	public String getT_receive_tel2() {
+		return t_receive_tel2;
+	}
+
+	public void setT_receive_tel2(String t_receive_tel2) {
+		this.t_receive_tel2 = t_receive_tel2;
+	}
+
+	public String getT_receive_tel3() {
+		return t_receive_tel3;
+	}
+
+	public void setT_receive_tel3(String t_receive_tel3) {
+		this.t_receive_tel3 = t_receive_tel3;
+	}
+
+	public String getT_receive_memo() {
+		return t_receive_memo;
+	}
+
+	public void setT_receive_memo(String t_receive_memo) {
+		this.t_receive_memo = t_receive_memo;
+	}
+
+	public String getT_pay_method() {
+		return t_pay_method;
+	}
+
+	public void setT_pay_method(String t_pay_method) {
+		this.t_pay_method = t_pay_method;
+	}
+
+	public String getT_pay_name() {
+		return t_pay_name;
+	}
+
+	public void setT_pay_name(String t_pay_name) {
+		this.t_pay_name = t_pay_name;
+	}
+
+	public String getT_cash_receipt() {
+		return t_cash_receipt;
+	}
+
+	public void setT_cash_receipt(String t_cash_receipt) {
+		this.t_cash_receipt = t_cash_receipt;
+	}
+
+	public String getT_cash_recipt_number() {
+		return t_cash_recipt_number;
+	}
+
+	public void setT_cash_recipt_number(String t_cash_recipt_number) {
+		this.t_cash_recipt_number = t_cash_recipt_number;
+	}
+
+	public String getT_count() {
+		return t_count;
+	}
+
+	public void setT_count(String t_count) {
+		this.t_count = t_count;
+	}
+
 	public String getT_select() {
 		return t_select;
 	}

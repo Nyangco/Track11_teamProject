@@ -24,19 +24,29 @@
 		check_merchan_count();
 	}function check_merchan_count(){
 		let price = Number($('#price').text().replace(',', '').replaceAll('￦',''));
+		let stock = Number($('.stock').text());
 		console.log(price);
-		if(buy.m_count.value<1||!$.isNumeric(buy.m_count.value)){
+		if(buy.t_count.value<1||!$.isNumeric(buy.t_count.value)){
 			alert("구매수량은 1 이상이여아 합니다.");
 			$('.merchan_count').val(1);
-			buy.m_count.focus();
+			buy.t_count.focus();
+		}else if(buy.t_count.value>stock){
+			alert("재고보다 많은 수량을 구매할 수 없습니다.");
+			$('.merchan_count').val(1);
+			buy.t_count.focus();
 		}else{
 			$('#t_total').val(comma(price*Number($('.merchan_count').val()))+"￦");
 		}
 	}function goPurchase(){
-		
+		if(<c:if test="${empty sLevel}">true</c:if><c:if test="${not empty sLevel}">false</c:if>){
+			alert("로그인 후 시도해주세요");
+		}else{
+			buy.method="post";
+			buy.action="/team/";
+			buy.submit();
+		}
 	}function goBucket(){
-		alert("상품이 장바구니에 담겼습니다");
-		location.href='detail.jsp'
+		//ajax단 처리
 	}
 </script>
 				<!-- Main -->
@@ -68,26 +78,29 @@
 											<div>원산지<span>${dto.getOrigin_country() }</span></div>
 											<div>판매국가<span>${dto.getSell_country() }</span></div>
 											<div>등록일<span>${dto.getReg_date() }</span></div>
+											<div>재고<span class="stock">${dto.getStock() }</span></div>
 										</div>
 										<div class="merchan_desc">${dto.getDescription() }</div>
 									</div>
 								</div>
 								<form class="side_bar" name="buy">
-									<input type="hidden" name="t_gubun">
-									<input type="hidden" name="t_product_no">
+									<input type="hidden" name="t_gubun" value="purchase">
+									<input type="hidden" name="t_product_no" value="${dto.getProduct_no() }">
+									<input type="hidden" name="t_id" value="${sId }">
+									<input type="hidden" name="t_bd" value="detail">
 									<div class="merchan_title">상품 </div>
 									<div>제품명<div>${dto.getName() }</div></div>
 									<div>가격<div id="price">${dto.getPrice() }</div></div>
 									<div class="merchan_number">개수
 										<div>
 											<div onclick="minus()"><i class="fa-solid fa-square-minus fa-2xl"></i></div>
-											<input type="text" value="1" class="merchan_count" name="m_count" onchange="check_merchan_count()">
+											<input type="text" value="1" class="merchan_count" name="t_count" onchange="check_merchan_count()">
 											<div onclick="plus()"><i class="fa-solid fa-square-plus fa-2xl"></i></div>
 										</div>
 									</div>
-									<div>총 금액<input type="text" name="t_total" readonly id="t_total"></div>
+									<div><span style="width:30%;display:inline-block;">총 금액</span><input type="text" name="t_total" readonly id="t_total" value="${dto.getPrice() }" style="width:70%;display:inline-block;"></div>
 									<div class="merchan_butt">
-										<input type="button" onclick="goPage('purchase')" value="구매">
+										<input type="button" onclick="goPurchase()" value="구매">
 										<input type="button" onclick="goBucket()" value="장바구니">
 									</div>
 								</form>

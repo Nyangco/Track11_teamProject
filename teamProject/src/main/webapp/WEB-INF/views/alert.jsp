@@ -10,6 +10,7 @@
 	<form name="fm">
 		<input type="hidden" name="t_gubun" value="${url }">
 		<input type="hidden" name="t_product_no" value="${t_product_no }">
+		<input type="hidden" name="t_purchase_no" value="${t_purchase_no }">
 	</form>
 </body>
 <script>

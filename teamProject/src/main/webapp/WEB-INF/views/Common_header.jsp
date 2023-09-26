@@ -62,7 +62,7 @@
 											<a href="javascript:goPage('basket')">장바구니</a>
 										</c:if>
 										<a href="javascript:goPage('mypage')">Mypage</a>
-										<a href="javascript:goPage('logout')">LogOut`</a>
+										<a href="javascript:goPage('logout')">LogOut</a>
 									</c:if>
 								</div>
 

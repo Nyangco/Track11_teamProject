@@ -22,8 +22,9 @@
 			fm.t_receive_tel1.value="";
 			fm.t_receive_tel2.value="";
 			fm.t_receive_tel3.value="";
-			fm.t_receive_postal_code.value="";
-			fm.t_receive_address.value="";
+			//fm.t_addr1.value="";
+			//fm.t_addr2.value="";
+			//fm.t_addr3.value="";
 			fm.t_receive_memo="";
 		}else{
 			fm.reset();
@@ -42,8 +43,9 @@
 		if(checkValue(fm.t_receive_name,999,"수령인"))return;
 		else if(checkValue(fm.t_receive_tel1,999,"연락처"))return;
 		else if(checkValue(fm.t_receive_tel2,999,"연락처"))return;
-		else if(checkValue(fm.t_receive_postal_code,999,"배송지 주소"))return;
-		else if(checkValue(fm.t_receive_address,999,"배송지 주소"))return;
+		//else if(checkValue(fm.t_addr1,999,"배송지 주소"))return;
+		//else if(checkValue(fm.t_addr2,999,"배송지 주소"))return;
+		//else if(checkValue(fm.t_addr3,999,"배송지 주소"))return;
 		else if(fm.t_pay_method.value=="cash"&&fm.t_pay_name.value==""){
 			alert("입금자명을 입력해주세요");
 			fm.t_pay_name.focus();
@@ -54,7 +56,9 @@
 			fm.t_cash_recipt_number.focus();
 			return;
 		}else{
-			location.href='purchase_complete.jsp'	
+			fm.method="post";
+			fm.action="/team/";
+			fm.submit();
 		}
 	}
 </script>
@@ -72,15 +76,18 @@
 								<div class="main_title">
 									<h1>구매 페이지</h1>
 								</div>
-							</section>
+							</section> 
 							<section>
 								<form class="purchase" name="fm">
+									<input type="hidden" name="t_gubun" value="DBpurchase">
+									<input type="hidden" name="t_id" value="${sId }">
+									<input type="hidden" name="t_count" value="${t_count }">
+									<input type="hidden" name="t_bd" value="${t_bd }">
 									<div class="purchase_desc">
 										<table class="purchase_top">
 											<colgroup>
 												<col width="15%">
 												<col width="*">
-												<col width="10%">
 												<col width="7%">
 												<col width="15%">
 											</colgroup>
@@ -89,32 +96,30 @@
 													상품정보
 												</th>
 												<th>
-													배송비
-												</th>
-												<th>
 													수량
 												</th>
 												<th>
 													상품금액
 												</th>
 											</tr>
-											<tr>
-												<td>
-													<img src="../images/door.png">
-												</td>
-												<td>
-													어디로든 문
-												</td>
-												<td>
-													￦2,500
-												</td>
-												<td>
-													1
-												</td>
-												<td>
-													￦9,000,000,000
-												</td>
-											</tr>
+											<c:forEach items="${p_arr }" var="p_dto" varStatus="status">
+												<tr>
+													<td>
+														<img src="attach/${p_dto.getImages() }">
+														<input type="hidden" name="t_product_no_${status.count }" value="${p_dto.getProduct_no() }">
+													</td>
+													<td>
+														${p_dto.getName() }
+													</td>
+													<td>
+														${p_dto.getCount() }
+														<input type="hidden" name="t_count_${status.count }" value="${p_dto.getCount() }">
+													</td>
+													<td>
+														${p_dto.getPrice() }
+													</td>
+												</tr>
+											</c:forEach>
 										</table>
 										<table class="purchase_who">
 											<colgroup>
@@ -124,13 +129,13 @@
 												<th colspan="2" class="purchase_table_header">구매자 정보</th>
 											</tr>
 											<tr>
-												<td>김개똥</td>
+												<td>${m_dto.getName() }</td>
 											</tr>
 											<tr>
-												<td>012-3456-7890</td>
+												<td>${m_dto.getContact() }</td>
 											</tr>
 											<tr>
-												<td>abc@naver.com</td>
+												<td>${m_dto.getEmail() }</td>
 											</tr>
 										</table>
 										<table class="purchase_where">
@@ -157,7 +162,7 @@
 													수령인
 												</th>
 												<td>
-													<input type="text" value="김개똥" name="t_receive_name">
+													<input type="text" value="${m_dto.getName() }" name="t_receive_name">
 												</td>
 											</tr>	
 											<tr>
@@ -165,19 +170,23 @@
 													연락처
 												</th>
 												<td>
-													<input type="tel" value="012" name="t_receive_tel1">-
-													<input type="tel" value="3456" name="t_receive_tel2">-
-													<input type="tel" value="7890" name="t_receive_tel3">
+													<input type="tel" value="${fn:substring(m_dto.getContact(),0,3) }" name="t_receive_tel1">-
+													<input type="tel" value="${fn:substring(m_dto.getContact(),4,8) }" name="t_receive_tel2">-
+													<input type="tel" value="${fn:substring(m_dto.getContact(),9,13) }" name="t_receive_tel3">
 												</td>
 											</tr>	
 											<tr>
 												<th>
 													배송지 주소
 												</th>
+												<!-- 
+												<input type="text" name="t_addr1" style="width:70%;display:inline" readonly value="${m_dto.getAddr1() }">
+												 -->
 												<td>
-													<input type="text" name="t_receive_postal_code" style="width:70%;display:inline" readonly value="(03172)">
+													<input type="text" name="t_addr1" style="width:70%;display:inline" readonly value="1">
 													<input type="button" onclick="" value="주소 검색">
-													<input type="text" name="t_receive_address" readonly value="서울 종로구 세종대로 175 세종이야기">
+													<input type="text" name="t_addr2" readonly value="2">
+													<input type="text" name="t_addr3" readonly value="3">
 												</td>
 											</tr>	
 											<tr>
@@ -196,7 +205,7 @@
 											</colgroup>
 											<tr>
 												<th>주문 금액</th>
-												<td>￦9,000,002,500</td>
+												<td>${t_total }</td>
 											</tr>
 											<tr>
 												<th>결제 수단 선택</th>

@@ -2,18 +2,64 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
 <script>
-	function plus(){
-		$('.merchan_count').val(Number($('.merchan_count').val())+1);
-		check_merchan_count();
-	}function minus(){
-		$('.merchan_count').val(Number($('.merchan_count').val())-1);
-		check_merchan_count();
-	}function check_merchan_count(){
-		if(basket.m_count.value<1||!$.isNumeric(basket.m_count.value)){
-			alert("구매수량은 1 이상이여아 합니다.");
-			$('.merchan_count').val(1);
-			basket.m_count.focus();
-		}	
+	function comma(num){
+		var len, point, str;  
+		  
+		num = num + "";  
+		point = num.length % 3 ;
+		len = num.length;  
+	  
+		str = num.substring(0, point);  
+		while (point < len) {  
+		    if (str != "") str += ",";  
+		    str += num.substring(point, point + 3);  
+		    point += 3;  
+		}  
+		return str;
+	}function decover(str){
+		return str.replaceAll("￦","").replaceAll(",","");
+	}function cover(str){
+		return "￦"+comma(str);
+	}function plus(pn){
+		const count = "#count_"+pn;
+		$(count).val(Number($(count).val())+1);
+		check_merchan_count(pn);
+	}function minus(pn){
+		const count = "#count_"+pn;
+		$(count).val(Number($(count).val())-1);
+		check_merchan_count(pn);
+	}function check_merchan_count(pn){
+		const count = "#count_"+pn;
+		const stock = "#stock_"+pn;
+		const price = "#price_"+pn;
+		const total = "#total_"+pn;
+		
+		const count_val = Number($(count).val());
+		const stock_val = Number($(stock).text());
+		const price_val = Number($(price).text());
+		
+		if(count_val<1||!$.isNumeric(count_val)){
+			if(confirm("상품을 삭제하시겠습니까?")){
+				//ajax
+			}
+		}else if(Number(count_val)>stock_val){
+			alert("재고보다 많은 수량을 구매할 수 없습니다.");
+			$(count).val(1);
+		}else{
+			const numeric = price_val*count_val;
+			$(total).text("￦"+comma(numeric));
+			let total_all = 0;
+			for(let k=1; k<=${t_count}; k++){
+				let price_str = "#price_"+k;
+				let count_str = "#count_"+k;
+				total_all+= Number($(price_str).text())*Number($(count_str).val());
+			}
+			$('#total_all').text(cover(total_all+2500));
+		}
+	}function goBasket(){
+		basket.method="post";
+		basket.action="/team/";
+		basket.submit();
 	}
 </script>
 				<!-- Main -->
@@ -29,35 +75,58 @@
 							<section class="basket">
 								<article>
 									<form name="basket">
+										<input type="hidden" name="t_gubun" value="DBbasket">
+										<input type="hidden" name="t_total_count" value="${t_count }">
+										<input type="hidden" name="t_id" value="${sId }">
 										<table style="width:100%">
 											<colgroup>
 												<col width="10%">
 												<col width="*">
+												<col width="10%">
 												<col width="10%">
 												<col width="15%">
 											</colgroup>
 											<tr>
 												<th>상품번호</th>
 												<th>상품명</th>
-												<th>가격</th>
+												<th>단가</th>
 												<th>갯수</th>
+												<th>총 가격</th>
+											</tr>
+											<c:forEach items="${t_arr}" var="dto" varStatus="status">
+												<tr>
+													<td>
+														${dto.getProduct_no() }
+														<span style="display:none;" id="stock_${status.count}">${dto.getStock() }</span>
+														<span style="display:none;" id="price_${status.count}">${dto.getPrice() }</span>
+														<input type="hidden" name="t_product_no_${status.count}" value="${dto.getProduct_no() }">
+													</td>
+													<td>${dto.getName() }</td>
+													<td>${dto.getCprice() }</td>
+													<td>
+														<div onclick="minus('${status.count}')"><i class="fa-solid fa-square-minus fa-2xl"></i></div>
+														<input type="text" value="${dto.getCount() }" id="count_${status.count }" class="merchan_count" name="t_count_${status.count}" onchange="check_merchan_count('${status.count}')">
+														<div onclick="plus('${status.count}')"><i class="fa-solid fa-square-plus fa-2xl"></i></div>
+													</td>
+													<td id="total_${status.count }">
+														${dto.getTotal() }
+													</td>
+												</tr>
+											</c:forEach>
+											<tr>
+												<td colspan="4">배송비</td>
+												<td >￦2,500</td>
 											</tr>
 											<tr>
-												<td>001</td>
-												<td>어디로든 문</td>
-												<td>
-													<div onclick="minus()"><i class="fa-solid fa-square-minus fa-2xl"></i></div>
-													<input type="text" value="1" class="merchan_count" name="m_count" onchange="check_merchan_count()">
-													<div onclick="plus()"><i class="fa-solid fa-square-plus fa-2xl"></i></div>
-												</td>
-												<td>2025-40-21</td>
+												<td colspan="4">총 금액</td>
+												<td id="total_all">${t_total }</td>
 											</tr>
 										</table>
 									</form>
 								</article>
 							</section>
 							<div class="btn_group sell">
-								<input type="button" value="구매하기" onclick="goPage('purchase')">
+								<input type="button" value="구매하기" onclick="goBasket()">
 							</div>
 						</div>
 					</div>

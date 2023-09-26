@@ -18,6 +18,19 @@ public class MemberDao {
 
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
+	public MemberDto purchase(String id) {
+		MemberDto dto = null;
+		String sql = "select id,name,contact,email,addr1,addr2,addr3 from pjt_shop_member where id='"+id+"'";
+		try {
+			RowMapper<MemberDto> rowmap = new BeanPropertyRowMapper<MemberDto>(MemberDto.class);
+			dto = template.queryForObject(sql, rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("purchase:"+sql);
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
 	public int member_update(ModelDto dto) {
 		int k = 0;
 		String contact = dto.getT_tel1()+"-"+dto.getT_tel2()+"-"+dto.getT_tel3();
