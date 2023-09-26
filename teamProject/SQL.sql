@@ -1,85 +1,96 @@
-create table pjt_shop_member(
-    id varchar2(20) not null primary key,
-    password char(64) not null,
-    session_level number(1) not null,
-    name varchar2(10) not null,
-    nick varchar2(20) not null,
-    email varchar2(100) not null,
-    contact varchar2(13),
-    addr1 varchar2(100),
-    addr2 varchar2(100),
-    addr3 varchar2(100),
-    reg_date date default SYSDATE,
-    login_date date,
-    up_date date,
-    exit_date date
+CREATE TABLE PJT_SHOP_MEMBER(
+    ID VARCHAR2(20 BYTE) NOT NULL PRIMARY KEY, 
+	PASSWORD CHAR(64 BYTE) NOT NULL , 
+	SESSION_LEVEL NUMBER(1,0) NOT NULL , 
+	NAME VARCHAR2(10 BYTE) NOT NULL , 
+	NICK VARCHAR2(20 BYTE) NOT NULL , 
+	EMAIL VARCHAR2(100 BYTE) NOT NULL , 
+	CONTACT VARCHAR2(13 BYTE), 
+	ADDR1 VARCHAR2(100 BYTE), 
+	ADDR2 VARCHAR2(100 BYTE), 
+	ADDR3 VARCHAR2(100 BYTE), 
+	REG_DATE DATE DEFAULT SYSDATE, 
+	LOGIN_DATE DATE, 
+	UP_DATE DATE, 
+	EXIT_DATE DATE
 );
 
-create table pjt_shop_purchase(
-    purchase_no char(5) not null primary key,
-    buyer_id varchar2(20) references pjt_shop_member(id),
-    receiver_name varchar2(10) not null,
-    receiver_contact varchar2(13) not null,
-    receiver_addr1 varchar2(100) not null,
-    receiver_addr2 varchar2(100) not null,
-    receiver_addr3 varchar2(100) not null,
-    delivery_memo varchar2(200),
-    pay_method char(4) not null,
-    transfer_name varchar2(10),
-    cash_receipt varchar2(20),
-    card_number char(19),
-    card_cvc char(3)
+
+CREATE TABLE PJT_SHOP_FAQ(
+    FAQ_NO CHAR(5 BYTE) NOT NULL PRIMARY KEY, 
+	QUESTION VARCHAR2(200 BYTE) NOT NULL , 
+	ANSWER VARCHAR2(4000 BYTE) NOT NULL , 
+	REG_DATE DATE DEFAULT sysdate
 );
 
-create table pjt_shop_product(
-    product_no char(5) not null primary key,
-    price number(10) not null,
-    name varchar2(80) not null,
-    origin_country varchar2(20) not null,
-    sell_country varchar2(20) not null,
-    reg_date date default sysdate,
-    one_sentence varchar2(200),
-    description varchar2(4000),
-    images varchar2(80),
-    stock number(5)
+
+CREATE TABLE PJT_SHOP_QNA(
+    QNA_NO CHAR(5 BYTE) NOT NULL PRIMARY KEY, 
+	REG_ID VARCHAR2(20 BYTE) NOT NULL REFERENCES PJT_SHOP_MEMBER(ID), 
+	REG_DATE DATE DEFAULT sysdate, 
+	TITLE VARCHAR2(80 BYTE) NOT NULL , 
+	CONTENT VARCHAR2(4000 BYTE) NOT NULL , 
+	UPDATE_DATE DATE, 
+	REPLY VARCHAR2(4000 BYTE), 
+	REPLY_DATE DATE
 );
 
-create table pjt_shop_basket(
-    id varchar2(20) not null references pjt_shop_member(id),
-    product_no char(5) not null references pjt_shop_product(product_no),
-    count number(5) default 1
+
+CREATE TABLE PJT_SHOP_FREE(	
+    FREE_NO CHAR(5 BYTE) NOT NULL PRIMARY KEY, 
+	REG_ID VARCHAR2(20 BYTE) NOT NULL REFERENCES PJT_SHOP_MEMVER(ID), 
+	REG_DATE DATE DEFAULT sysdate, 
+	CONTENT VARCHAR2(4000 BYTE), 
+	REPLY VARCHAR2(4000 BYTE), 
+	DEPTH NUMBER(1,0) DEFAULT 0, 
+	STEP NUMBER DEFAULT 0
 );
 
-create table pjt_shop_purchase_detail(
-    purchase_no char(5) not null references pjt_shop_purchase(purchase_no),
-    product_no char(5) not null references pjt_shop_product(product_no),
-    count number(5) default 1
+
+CREATE TABLE PJT_SHOP_PRODUCT (
+    PRODUCT_NO CHAR(5 BYTE) NOT NULL PRIMARY KEY, 
+	PRICE NUMBER(10,0) NOT NULL , 
+	NAME VARCHAR2(80 BYTE) NOT NULL , 
+	ORIGIN_COUNTRY VARCHAR2(20 BYTE) NOT NULL , 
+	SELL_COUNTRY VARCHAR2(20 BYTE) NOT NULL , 
+	REG_DATE DATE DEFAULT sysdate, 
+	ONE_SENTENCE VARCHAR2(200 BYTE), 
+	DESCRIPTION VARCHAR2(4000 BYTE), 
+	IMAGES VARCHAR2(80 BYTE), 
+	STOCK NUMBER(5,0),
+    SELL_COUNT NUMBER(5,0) DEFAULT 0,
+    STATUS NUMBER(1,0) DEFAULT 1
 );
 
-create table pjt_shop_faq(
-    faq_no char(5) not null primary key,
-    question varchar2(200) not null,
-    answer varchar2(4000) not null,
-    reg_date date default sysdate
+
+CREATE TABLE PJT_SHOP_PURCHASE(
+    PURCHASE_NO CHAR(5 BYTE) NOT NULL PRIMARY KEY, 
+	BUYER_ID VARCHAR2(20 BYTE) REFERENCES PJT_SHOP_MEMBER(ID), 
+	RECEIVER_NAME VARCHAR2(10 BYTE) NOT NULL , 
+	RECEIVER_CONTACT VARCHAR2(13 BYTE) NOT NULL , 
+	RECEIVER_ADDR1 VARCHAR2(100 BYTE) NOT NULL , 
+	RECEIVER_ADDR2 VARCHAR2(100 BYTE) NOT NULL , 
+	RECEIVER_ADDR3 VARCHAR2(100 BYTE) NOT NULL , 
+	DELIVERY_MEMO VARCHAR2(200 BYTE), 
+	PAY_METHOD CHAR(4 BYTE) NOT NULL , 
+	TRANSFER_NAME VARCHAR2(10 BYTE), 
+	CASH_RECEIPT VARCHAR2(20 BYTE), 
+	CARD_NUMBER CHAR(19 BYTE), 
+	CARD_CVC CHAR(3 BYTE)
 );
 
-create table pjt_shop_qna(
-    qna_no char(5) not null primary key,
-    reg_id varchar2(20) not null references pjt_shop_member(id),
-    reg_date date default sysdate,
-    title varchar(80) not null,
-    content varchar2(4000) not null,
-    update_date date,
-    reply varchar2(4000),
-    reply_date date
+
+CREATE TABLE PJT_SHOP_PURCHASE_DETAIL(
+    PURCHASE_NO CHAR(5 BYTE) NOT NULL REFERENCES PJT_SHOP_PURCHASE(PURCHASE_NO), 
+	PRODUCT_NO CHAR(5 BYTE) NOT NULL REFERENCES PJT_SHOP_PRODUCT(PRODUCT_NO), 
+	COUNT NUMBER(5,0) DEFAULT 1,
+    CONSTRAINT PJT_SHOP_PURCHASE_DETAIL_PK PRIMARY KEY(PURCHASE_NO,PRODUCT_NO)
 );
 
-create table pjt_shop_free(
-    free_no char(5) not null primary key,
-    reg_id varchar2(20) not null references pjt_shop_member(id),
-    reg_date date default sysdate,
-    content varchar2(4000),
-    reply varchar2(4000),
-    depth number(1) default 0,
-    step number default 0
-);
+
+CREATE TABLE PJT_SHOP_BASKET(
+    ID VARCHAR2(20 BYTE) NOT NULL REFERENCES PJT_SHOP_MEMBER(ID), 
+	PRODUCT_NO CHAR(5 BYTE) NOT NULL REFERENCES PJT_SHOP_PRODUCT(PRODUCT_NO), 
+	COUNT NUMBER(5,0) DEFAULT 1, 
+    CONSTRAINT PJT_SHOP_BASKET_PK PRIMARY KEY(ID,PRODUCT_NO)
+    );

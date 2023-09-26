@@ -18,28 +18,57 @@
 			mem.t_pw.focus();
 		}
 	}function goJoin(){
-		if(checkValue(mem.t_id,999,"ID")) return;
-		else if(checkValue(mem.t_pw,999,"비밀번호")) return;
-		else if(checkValue(mem.t_pw_cf,999,"비밀번호 확인")) return;
+		if(checkValue(mem.t_id,20,"ID")) return;
+		else if(mem.id_check.value!='0'){
+			alert("ID 중복 확인을 해주세요");
+			mem.t_id.focus();
+			return;
+		}
+		else if(checkValue(mem.t_pw,64,"비밀번호")) return;
+		else if(checkValue(mem.t_pw_cf,64,"비밀번호 확인")) return;
 		else if(mem.t_pw.value!=mem.t_pw_cf.value){
 			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
 			mem.t_pw_cf.focus();
 			return;
 		}
-		else if(checkValue(mem.t_name,999,"성함")) return;
-		else if(checkValue(mem.t_nickname,999,"닉네임")) return;
-		else if(checkValue(mem.t_email,999,"이메일")) return;
-		else if(checkValue(mem.t_tel1,999,"연락처")) return;
-		else if(checkValue(mem.t_tel2,999,"연락처")) return;
-		else if(checkValue(mem.t_tel3,999,"연락처")) return;
-		else if(checkValue(mem.t_postal,999,"주소지")) return;
-		else if(checkValue(mem.t_address,999,"주소지")) return;
+		else if(checkValue(mem.t_name,20,"성함")) return;
+		else if(checkValue(mem.t_nickname,40,"닉네임")) return;
+		else if(mem.nick_confirm.value!='닉네임 사용가능'){
+			alert('사용 불가능한 닉네임입니다');
+			mem.t_nickname.focus();
+			return;
+		}
+		else if(checkValue(mem.t_email,100,"이메일")) return;
+		else if(checkValue(mem.t_tel1,3,"연락처")) return;
+		else if(checkValue(mem.t_tel2,4,"연락처")) return;
+		else if(checkValue(mem.t_tel3,4,"연락처")) return;
+		//else if(checkValue(mem.t_addr1,50,"주소지")) return;
+		//else if(checkValue(mem.t_addr2,50,"주소지")) return;
+		//else if(checkValue(mem.t_addr3,50,"주소지")) return;
 		else {
-			location.href='../index.jsp';
+			mem.method="post";
+			mem.action="/team/"
+			mem.submit();
 		}
 	}function goReset(){
 		mem.reset();
 		mem.t_id.focus();
+	}function tel2focus(){
+		if(mem.t_tel1.value.length==3){
+			mem.t_tel2.focus();
+		}
+	}function tel3focus(){
+		if(mem.t_tel2.value.length==4){
+			mem.t_tel3.focus();
+		}
+	}function checkId(){
+		//ajax단
+		mem.id_confirm.value='0';
+	}function checkNick(){
+		//ajax 단
+		mem.nick_confirm.value='닉네임 사용가능';
+	}function address_confirm(){
+		//ajax 단
 	}
 </script>
 				<!-- Main -->
@@ -50,6 +79,7 @@
 							<section class="">
 								<div>
 									<form name="mem">
+										<input type="hidden" name="t_gubun" value="DBjoin">
 										<fieldset>
 											<legend>Join</legend>
 											<table style="width:50%">
@@ -60,7 +90,8 @@
 													<th>ID</th>
 													<td>
 														<input type="text" name="t_id" style="width:63%;display:inline">
-														<input type="button" onclick="" value="ID 중복 확인">
+														<input type="button" onclick="checkId()" value="ID 중복 확인">
+														<input type="hidden" name="id_check" value="0">
 													</td>	
 												</tr>
 												<tr>
@@ -78,8 +109,8 @@
 												<tr>
 													<th>닉네임</th>
 													<td>
-														<input type="text" name="t_nickname" style="width:55%;display:inline">
-														<input type="button" onclick="" value="닉네임 중복 확인">
+														<input type="text" name="t_nickname" style="width:55%;display:inline-block;" onchange="checkNick()">
+														<input type="text" name="nick_confirm" style="width:44%;display:inline-block;border:none;" disabled>
 													</td>	
 												</tr>
 												<tr>
@@ -89,17 +120,18 @@
 												<tr>
 													<th>연락처</th>
 													<td>
-														<input type="text" name="t_tel1" style="width:30%;display:inline;"> - 
-														<input type="text" name="t_tel2" style="width:30%;display:inline;"> - 
-														<input type="text" name="t_tel3" style="width:30%;display:inline;"> 
+														<input type="text" name="t_tel1" style="width:30%;display:inline;" maxlength="3" onkeypress="tel2focus()"> - 
+														<input type="text" name="t_tel2" style="width:30%;display:inline;" maxlength="4" onkeypress="tel3focus()"> - 
+														<input type="text" name="t_tel3" style="width:30%;display:inline;" maxlength="4"> 
 													</td>
 												</tr>
 												<tr>
 													<th>주소지</th>
 													<td>
-														<input type="text" name="t_postal" value="주소 검색을 클릭해주세요" style="width:70%;display:inline" readonly>
-														<input type="button" onclick="" value="주소 검색">
-														<input type="text" name="t_address" readonly>
+														<input type="text" name="t_addr1" placeholder="주소 검색을 클릭해주세요" style="width:70%;display:inline" readonly>
+														<input type="button" onclick="address_confirm()" value="주소 검색">
+														<input type="text" name="t_addr2" readonly>
+														<input type="text" name="t_addr3" readonly>
 													</td>
 												</tr>
 												<tr></tr>

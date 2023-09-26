@@ -57,7 +57,7 @@
 								</article>
 							</section>
 							<div class="btn_group sell">
-								<input type="button" value="구매하기" onclick="goWork('purchase','Product')">
+								<input type="button" value="구매하기" onclick="goPage('purchase')">
 							</div>
 						</div>
 					</div>

@@ -1,20 +1,30 @@
 package co.kr.team;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import command.member.DBjoin;
+import command.member.DBlogin;
+import command.member.DBmember_update;
+import command.member.Logout;
+import command.member.Mypage;
+import command.product.DBmanage_create;
+import command.product.DBmanage_update;
+import command.product.Manage_create;
+import command.product.Manage_detail;
+import command.product.Manage_list;
+import command.purchase.Detail;
+import command.purchase.Shop;
+import common.CommonExecute;
+import common.CommonTemplate;
 import dto.ModelDto;
 
 /**
@@ -23,11 +33,19 @@ import dto.ModelDto;
 @Controller
 public class HomeController {
 	
+	@Autowired JdbcTemplate template;
+	
+	@Autowired
+	public void setTemplate() {
+		CommonTemplate.setTemplate(template);
+	}
+	
 	@RequestMapping("/")
 	public String PJT(HttpServletRequest request, Model model,
 					@ModelAttribute ModelDto mdto,
 					@RequestParam(value="t_gubun",defaultValue="index") String gubun ) {
 		String page = "alert";
+		HttpSession session = request.getSession();
 		
 		//인덱스
 		if(gubun.equals("index")) {
@@ -38,23 +56,34 @@ public class HomeController {
 
 			page = "product/basket";
 		}else if(gubun.equals("detail")) {
-
+			CommonExecute ce = new Detail();
+			ce.execute(model, mdto, session);
 			page = "product/detail";
 		}else if(gubun.equals("manage_create")) {
-
+			CommonExecute ce = new Manage_create();
+			ce.execute(model, mdto, session);
 			page = "product/manage_create";
+		}else if(gubun.equals("DBmanage_create")) {
+			DBmanage_create ce = new DBmanage_create();
+			ce.execute(model, request);
 		}else if(gubun.equals("manage_detail")) {
-
+			CommonExecute ce = new Manage_detail();
+			ce.execute(model, mdto, session);
 			page = "product/manage_detail";
 		}else if(gubun.equals("manage_list")) {
-
+			CommonExecute ce = new Manage_list();
+			ce.execute(model, mdto, session);
 			page = "product/manage_list";
 		}else if(gubun.equals("manage_statistics")) {
 
 			page = "product/manage_statistics";
 		}else if(gubun.equals("manage_update")) {
-
+			CommonExecute ce = new Manage_detail();
+			ce.execute(model, mdto, session);
 			page = "product/manage_update";
+		}else if(gubun.equals("DBmanage_update")) {
+			DBmanage_update ce = new DBmanage_update();
+			ce.execute(model, request);
 		}else if(gubun.equals("purchase_complete")) {
 
 			page = "product/purchase_complete";
@@ -62,31 +91,44 @@ public class HomeController {
 
 			page = "product/purchase";
 		}else if(gubun.equals("shop")) {
-
+			CommonExecute ce = new Shop();
+			ce.execute(model, mdto, session);
 			page = "product/shop";
 		}
 		//Member
 		else if(gubun.equals("join")) {
-
 			page = "member/join";
+		}else if(gubun.equals("DBjoin")) {
+			CommonExecute ce = new DBjoin();
+			ce.execute(model, mdto, session);
 		}else if(gubun.equals("login")) {
-
-			page = "product/login";
+			page = "member/login";
+		}else if(gubun.equals("DBlogin")) {
+			CommonExecute ce = new DBlogin();
+			ce.execute(model, mdto, session);
+		}else if(gubun.equals("logout")) {
+			CommonExecute ce = new Logout();
+			ce.execute(model, mdto, session);
 		}else if(gubun.equals("mypage")) {
-
-			page = "product/mypage";
+			CommonExecute ce = new Mypage();
+			ce.execute(model, mdto, session);
+			page = "member/mypage";
+		}else if(gubun.equals("member_update")) {
+			CommonExecute ce = new Mypage();
+			ce.execute(model, mdto, session);
+			page = "member/member_update";
+		}else if(gubun.equals("DBmember_update")) {
+			CommonExecute ce = new DBmember_update();
+			ce.execute(model, mdto, session);
 		}else if(gubun.equals("purchase_detail")) {
 
-			page = "product/purchase_detail";
+			page = "member/purchase_detail";
 		}else if(gubun.equals("purchase_list")) {
 
-			page = "product/purchase_list";
+			page = "member/purchase_list";
 		}else if(gubun.equals("refund")) {
 
-			page = "product/refund";
-		}else if(gubun.equals("update")) {
-
-			page = "product/update";
+			page = "member/refund";
 		}
 		//board
 		else if(gubun.equals("faq_detail")) {
@@ -116,9 +158,10 @@ public class HomeController {
 		}else if(gubun.equals("qna_write")) {
 
 			page = "board/qna_write";
+		}else {
+			System.out.println("no t_gubun");
 		}
 		
 		return page;
 	}
-	
 }

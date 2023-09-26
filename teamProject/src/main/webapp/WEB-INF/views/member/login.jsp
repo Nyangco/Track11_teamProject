@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
 <script>
-	let chk = 1;
 	function checkValue(dir,len,obj){
 		if(dir.value==""){
 			alert(obj+"를 입력하세요");
@@ -13,21 +12,6 @@
 			dir.focus();
 			return true;
 		}else return false;
-	}function onload(){
-		$('.lines').hide();
-	}function icon_change(){
-		if(chk==1){
-			$('.list_icon').html('<i class="fa-solid fa-table-cells-large"></i>');
-			$('.tiles').hide();
-			$('.lines').show();
-			chk = 0;
-		}else{
-			$('.list_icon').html('<i class="fa-solid fa-list-ul"></i>');
-			$('.lines').hide();
-			$('.tiles').show();
-			chk = 1;
-		}
-		console.log(chk);
 	}function goPW(){
 		if(event.keyCode==13){
 			mem.t_pw.focus();
@@ -37,10 +21,12 @@
 			goLogin()
 		}
 	}function goLogin(){
-		if(checkValue(mem.t_id,999,"ID")) return;
-		else if(checkValue(mem.t_pw,999,"PW")) return;
+		if(checkValue(mem.t_id,10,"ID")) return;
+		else if(checkValue(mem.t_pw,64,"PW")) return;
 		else {
-			location.href='../index.jsp';
+			mem.method="post";
+			mem.action="/team/"
+			mem.submit();
 		}
 	}
 </script>
@@ -52,6 +38,7 @@
 							<section class="">
 								<div>
 									<form name="mem">
+									<input type="hidden" name="t_gubun" value="DBlogin">
 										<fieldset>
 											<legend>LogIn</legend>
 											<table style="width:35%">
