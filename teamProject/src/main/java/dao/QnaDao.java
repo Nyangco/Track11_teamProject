@@ -1,14 +1,18 @@
 package dao;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import common.CommonTemplate;
 import dto.ModelDto;
+import dto.QnaDto;
 
 public class QnaDao {
 	JdbcTemplate temp = CommonTemplate.getTemplate();
@@ -33,6 +37,28 @@ public class QnaDao {
 			d.printStackTrace();
 		}
 		return k;
+	}
+
+	public ArrayList<QnaDto> getQnaList(String select, String search) {
+		ArrayList<QnaDto> dtos = new ArrayList<QnaDto>();
+		String query ="select q.title,m.name,\r\n" + 
+				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date\r\n" + 
+				"from pjt_shop_qna q, pjt_shop_member m\r\n" + 
+				"where q.reg_id = m.id\r\n" + 
+				"and "+select+" like '%"+search+"%'\r\n" + 
+				"order by reg_date desc";
+		
+		try{
+			RowMapper<QnaDto> rowmapper = 
+					new BeanPropertyRowMapper<QnaDto>(QnaDto.class);
+			dtos = (ArrayList<QnaDto>)temp.query(query, rowmapper);
+		}catch(DataAccessException e){
+			System.out.println("getQnaList:"+query);
+			e.printStackTrace();
+		}
+		System.out.println(select);	
+		System.out.println(search);	
+		return dtos;
 	}
 	
 	
