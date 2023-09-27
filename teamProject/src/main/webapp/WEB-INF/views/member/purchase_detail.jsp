@@ -33,18 +33,20 @@
 													<th>갯수</th>
 													<th>총금액</th>
 												</tr>
-												<tr>
-													<td colspan="2"><a href="">어디로든 문</a></td>
-													<td>1</td>
-													<td>￦9,000,000,000</td>
-												</tr>
+												<c:forEach items="${t_arr }" var="dto">
+													<tr>
+														<td colspan="2"><a href="">${dto.getProduct_name() }</a></td>
+														<td>${dto.getProduct_count() }</td>
+														<td>${dto.getProduct_total() }</td>
+													</tr>
+												</c:forEach>
 												<tr>
 													<td colspan="3">배송비</td>
 													<td>￦2,500</td>
 												</tr>
 												<tr>
 													<td colspan="3">총 금액</td>
-													<td>￦9,000,002,500</td>
+													<td>${t_total }</td>
 												</tr>
 												<tr>
 													<th colspan="4" class="title">배송지 정보</th>

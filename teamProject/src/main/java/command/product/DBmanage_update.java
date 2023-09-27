@@ -19,7 +19,7 @@ public class DBmanage_update {
 	public void execute(Model model, HttpServletRequest request) {
 		try {
 			ProductDao dao = new ProductDao();
-			MultipartRequest mpr = new MultipartRequest(request, CommonUtil.getFile_dir(""), 1024*1024*1024, "utf-8", new DefaultFileRenamePolicy());
+			MultipartRequest mpr = new MultipartRequest(request, CommonUtil.getFile_dir(request.getSession()), 1024*1024*1024, "utf-8", new DefaultFileRenamePolicy());
 			String ori_images = mpr.getParameter("t_ori_images");
 			String product_no = mpr.getParameter("t_product_no");
 			String price = mpr.getParameter("t_price");
@@ -37,9 +37,9 @@ public class DBmanage_update {
 				UUID uuid = UUID.randomUUID();
 				images = uuid+"_"+ori_img;
 				
-				File img = new File(CommonUtil.getFile_dir(ori_img));
+				File img = new File(CommonUtil.getFile_dir(request.getSession()));
 				if(img.exists()) {
-					File new_img = new File(CommonUtil.getFile_dir(images));
+					File new_img = new File(CommonUtil.getFile_dir(request.getSession()));
 					img.renameTo(new_img);
 				}
 			}
@@ -51,7 +51,7 @@ public class DBmanage_update {
 			int k = dao.updateDB(dto);
 			
 			if(ori_images!=null) {
-				File file = new File(CommonUtil.getFile_dir(ori_images));
+				File file = new File(CommonUtil.getFile_dir(request.getSession()));
 				if(file.exists()) {
 					file.delete();
 				}

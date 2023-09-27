@@ -19,7 +19,7 @@ public class DBmanage_create {
 	public void execute(Model model, HttpServletRequest request) {
 		try {
 			ProductDao dao = new ProductDao();
-			MultipartRequest mpr = new MultipartRequest(request, CommonUtil.getFile_dir(""), 1024*1024*1024, "utf-8", new DefaultFileRenamePolicy());
+			MultipartRequest mpr = new MultipartRequest(request, CommonUtil.getFile_dir(request.getSession()), 1024*1024*1024, "utf-8", new DefaultFileRenamePolicy());
 			String product_no = mpr.getParameter("t_product_no");
 			String price = mpr.getParameter("t_price");
 			String name = mpr.getParameter("t_name");
@@ -34,9 +34,9 @@ public class DBmanage_create {
 			UUID uuid = UUID.randomUUID();
 			String images = uuid+"_"+ori_images;
 			
-			File img = new File(CommonUtil.getFile_dir(ori_images));
+			File img = new File(CommonUtil.getFile_dir(request.getSession()));
 			if(img.exists()) {
-				File new_img = new File(CommonUtil.getFile_dir(images));
+				File new_img = new File(CommonUtil.getFile_dir(request.getSession()));
 				img.renameTo(new_img);
 			}
 			

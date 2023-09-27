@@ -16,6 +16,8 @@ import command.member.DBlogin;
 import command.member.DBmember_update;
 import command.member.Logout;
 import command.member.Mypage;
+import command.member.Purchase_detail;
+import command.member.Purchase_list;
 import command.product.DBmanage_create;
 import command.product.DBmanage_update;
 import command.product.Manage_create;
@@ -135,10 +137,12 @@ public class HomeController {
 			CommonExecute ce = new DBmember_update();
 			ce.execute(model, mdto, session);
 		}else if(gubun.equals("purchase_detail")) {
-
+			CommonExecute ce = new Purchase_detail();
+			ce.execute(model, mdto, session);
 			page = "member/purchase_detail";
 		}else if(gubun.equals("purchase_list")) {
-
+			CommonExecute ce = new Purchase_list();
+			ce.execute(model, mdto, session);
 			page = "member/purchase_list";
 		}else if(gubun.equals("refund")) {
 

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import common.CommonTemplate;
 import common.CommonUtil;
 import dto.BasketDto;
+import dto.DetailDto;
 import dto.ModelDto;
 import dto.ProductDto;
 import dto.PurchaseDto;
@@ -19,6 +21,72 @@ import dto.PurchaseDto;
 public class PurchaseDao {
 
 	JdbcTemplate template = CommonTemplate.getTemplate();
+	
+	public DetailDto purchase_detail(ModelDto mdto){
+		String purchase_no = mdto.getT_purchase_no();
+		DetailDto dto = new DetailDto();
+		String sql = "purchase_no, receiver_name, receiver_contact, receiver_addr1, receiver_addr2, receiver_addr3, "
+				+ "delivery_memo, pay_method, cash_receipt, status from pjt_shop_purchase where purchase_no='"+purchase_no+"'";
+		try {
+			RowMapper<DetailDto> rowmap = new BeanPropertyRowMapper<DetailDto>(DetailDto.class);
+			dto = template.queryForObject(sql, rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("purchase_detail:"+sql);
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+	public ArrayList<DetailDto> purchase_detail(String purchase_no){
+		ArrayList<DetailDto> arr = new ArrayList<DetailDto>();
+		String sql = "select pr.product_no, pr.name product_name, pr.price*d.count product_total, "
+					+ "d.count product_count from pjt_shop_product pr, pjt_shop_purchase pu, pjt_shop_purchase_detail d "
+					+ "where pr.product_no=d.product_no and pu.purchase_no=d.purchase_no and pu.purchase_no='"+purchase_no+"'";
+		try {
+			RowMapper<DetailDto> rowmap = new BeanPropertyRowMapper<DetailDto>(DetailDto.class);
+			arr = (ArrayList<DetailDto>)template.query(sql, rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("purchase_detail:"+sql);
+			e.printStackTrace();
+		}
+		return arr;
+	}
+	
+	public ArrayList<DetailDto> purchase_list(String id){
+		ArrayList<DetailDto> arr = new ArrayList<DetailDto>();
+		String sql1 = "select purchase_no, status from pjt_shop_purchase where buyer_id='"+id+"'";
+		String sql2 = null;
+		String sql3 = null;
+		try {
+			RowMapper<DetailDto> rowmap = new BeanPropertyRowMapper<DetailDto>(DetailDto.class);
+			arr = (ArrayList<DetailDto>)template.query(sql1, rowmap);
+			for(int k=0; k<arr.size(); k++) {
+				String purchase_no = arr.get(k).getPurchase_no();
+				sql2 = "select pr.name product_name from pjt_shop_purchase_detail d, pjt_shop_purchase pu, "
+						+ "pjt_shop_product pr where d.product_no=pr.product_no and d.purchase_no=pu.purchase_no "
+						+ "and d.purchase_no='"+purchase_no+"'";
+				ArrayList<DetailDto> tmp = (ArrayList<DetailDto>)template.query(sql2, rowmap);
+				if(tmp.size()>1) {
+					arr.get(k).setProduct_name(tmp.get(0).getProduct_name()+" 외 "+tmp.size()+" 건");
+				}else if(tmp.size()==1) {
+					arr.get(k).setProduct_name(tmp.get(0).getProduct_name());
+				}
+				sql3 = "select sum(pr.price) from pjt_shop_purchase_detail d, pjt_shop_purchase pu, "
+						+ "pjt_shop_product pr where d.product_no=pr.product_no and d.purchase_no=pu.purchase_no and "
+						+ "d.purchase_no='"+purchase_no+"' group by pu.purchase_no";
+				int temp = template.queryForInt(sql3)+2500;
+				DecimalFormat df = new DecimalFormat("￦###,###");
+				arr.get(k).setPurchase_total(df.format(temp));
+			}
+		}catch(DataAccessException e) {
+			System.out.println("purchase_list:");
+			System.out.println(sql1);
+			System.out.println(sql2);
+			System.out.println(sql3);
+			e.printStackTrace();
+		}
+		return arr;
+	}
 	
 	public int updateBasket(String id, String[] cnt, String[] pn) {
 		int result = 0;
