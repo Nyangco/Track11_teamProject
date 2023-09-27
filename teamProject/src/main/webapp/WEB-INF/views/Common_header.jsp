@@ -37,7 +37,7 @@
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="javascript:goIndex()" class="logo">
+								<a href="javascript:goPage('index')" class="logo">
 									<span class="symbol"><img src="images/logo.png" alt="" /></span>
 								</a>
 

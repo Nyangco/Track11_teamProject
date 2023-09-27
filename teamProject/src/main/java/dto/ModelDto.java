@@ -11,6 +11,74 @@ public class ModelDto {
 	//manage_product
 	private String t_product_no;
 	
+	//qna
+	private String t_qna_no,t_reg_id,t_reg_date,t_title,t_content,
+					t_update_date,t_reply,t_reply_date;
+	
+	public String getT_qna_no() {
+		return t_qna_no;
+	}
+
+	public void setT_qna_no(String t_qna_no) {
+		this.t_qna_no = t_qna_no;
+	}
+
+	public String getT_reg_id() {
+		return t_reg_id;
+	}
+
+	public void setT_reg_id(String t_reg_id) {
+		this.t_reg_id = t_reg_id;
+	}
+
+	public String getT_reg_date() {
+		return t_reg_date;
+	}
+
+	public void setT_reg_date(String t_reg_date) {
+		this.t_reg_date = t_reg_date;
+	}
+
+	public String getT_title() {
+		return t_title;
+	}
+
+	public void setT_title(String t_title) {
+		this.t_title = t_title;
+	}
+
+	public String getT_content() {
+		return t_content;
+	}
+
+	public void setT_content(String t_content) {
+		this.t_content = t_content;
+	}
+
+	public String getT_update_date() {
+		return t_update_date;
+	}
+
+	public void setT_update_date(String t_update_date) {
+		this.t_update_date = t_update_date;
+	}
+
+	public String getT_reply() {
+		return t_reply;
+	}
+
+	public void setT_reply(String t_reply) {
+		this.t_reply = t_reply;
+	}
+
+	public String getT_reply_date() {
+		return t_reply_date;
+	}
+
+	public void setT_reply_date(String t_reply_date) {
+		this.t_reply_date = t_reply_date;
+	}
+
 	public String getT_select() {
 		return t_select;
 	}

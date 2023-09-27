@@ -23,6 +23,8 @@ import command.product.Manage_detail;
 import command.product.Manage_list;
 import command.purchase.Detail;
 import command.purchase.Shop;
+import command.qna.DBqna_write;
+import command.qna.Qna_write;
 import common.CommonExecute;
 import common.CommonTemplate;
 import dto.ModelDto;
@@ -156,8 +158,12 @@ public class HomeController {
 
 			page = "board/qna_update";
 		}else if(gubun.equals("qna_write")) {
-
+			CommonExecute ce = new Qna_write();
+			ce.execute(model, mdto, session);
 			page = "board/qna_write";
+		}else if(gubun.equals("DBqna_write")) {
+			CommonExecute ce = new DBqna_write();
+			ce.execute(model, mdto, session);
 		}else {
 			System.out.println("no t_gubun");
 		}

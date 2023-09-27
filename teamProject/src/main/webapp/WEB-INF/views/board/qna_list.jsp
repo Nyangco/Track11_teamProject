@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
+<script type="text/javascript">
+	function goWrite(){
+		qnaWork.t_gubun.value="qna_write";
+		qnaWork.method="post";
+		qnaWork.action="/team/";
+		qnaWork.submit();
+	}
+</script>
+<form name="qnaWork">
+	<input type="hidden" name="t_gubun">
+	<input type="hidden" name="t_no">
+</form>
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
@@ -45,6 +57,7 @@
 											<td>2020-80-94</td>
 										</tr>
 									</table>
+									<input type="button" value="글쓰기" onclick="goWrite()" style="float:right; margin-top:10px;">
 								</article>
 							</section>
 						</div>
