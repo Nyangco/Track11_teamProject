@@ -53,31 +53,38 @@
 												</tr>
 												<tr>
 													<th>수령인</th>
-													<td colspan="3">김개똥</td>
+													<td colspan="3">${t_dto.getReceiver_name() }</td>
 												</tr>
 												<tr>
 													<th>연락처</th>
-													<td colspan="3">012-3456-7890</td>
+													<td colspan="3">${t_dto.getReceiver_contact() }</td>
 												</tr>
 												<tr>
 													<th>배송지</th>
-													<td colspan="3">(03172)서울 종로구 세종대로 175 세종이야기</td>
+													<td colspan="3">(${t_dto.getReceiver_addr1() })${t_dto.getReceiver_addr2() }<br>${t_dto.getReceiver_addr3() }</td>
 												</tr>
 												<tr>
 													<th>배송메모</th>
-													<td colspan="3">-</td>
+													<td colspan="3">${t_dto.getDelivery_memo() }</td>
 												</tr>
 												<tr>
 													<th colspan="4" class="title">결제 정보</th>
 												</tr>
 												<tr>
 													<th>결제 수단</th>
-													<td colspan="3">현금</td>
+													<td colspan="3">
+														<c:choose>
+															<c:when test="${t_dto.getPay_method() eq 'cash' }">현금</c:when>
+															<c:when test="${t_dto.getPay_method() eq 'card' }">카드</c:when>
+														</c:choose>
+													</td>
 												</tr>
-												<tr>
-													<th>현금영수증</th>
-													<td colspan="3">소득공제(012-3456-7890)</td>
-												</tr>
+												<c:if test="${not empty t_dto.getCash_receipt() }">
+													<tr>
+														<th>현금영수증 번호</th>
+														<td colspan="3">${t_dto.getCash_receipt() }</td>
+													</tr>
+												</c:if>
 												<tr>
 													<th colspan="4" style="padding-top:0.75em;text-align:center;">
 														<input type="button" value="목록으로" onclick="goWork('purchase_list','Member')" style="display:inline-block;">

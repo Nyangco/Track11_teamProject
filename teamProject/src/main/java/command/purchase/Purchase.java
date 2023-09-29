@@ -1,5 +1,6 @@
 package command.purchase;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,14 @@ public class Purchase implements CommonExecute {
 			count = pdao.count(id);
 			model.addAttribute("t_bd","basket");
 		}
+		DecimalFormat df = new DecimalFormat("￦###,###");
+		int total = 2500;
+		for(int k=0; k<p_arr.size();k++) {
+			int price = Integer.parseInt(p_arr.get(k).getPrice());
+			total+=price*Integer.parseInt(p_arr.get(k).getCount());
+			p_arr.get(k).setPrice(df.format(price));
+		}
+		model.addAttribute("t_total",df.format(total));
 		model.addAttribute("p_arr",p_arr);
 		model.addAttribute("t_count",count);
 	}

@@ -28,7 +28,7 @@ public class Purchase_detail implements CommonExecute {
 			arr.get(k).setProduct_total(df.format(tot));
 		}
 		model.addAttribute("t_total",df.format(total));
-		//model.addAttribute("t_dto",dao.purchase_detail(mdto));
+		model.addAttribute("t_dto",dao.purchase_detail(mdto));
 	}
 
 }

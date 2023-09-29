@@ -3653,3 +3653,7 @@ table{
 .manage_update input[type="text"], .manage_update select{
 	height:2em;
 }
+
+body{
+	background-color:#F8E0E6;
+}

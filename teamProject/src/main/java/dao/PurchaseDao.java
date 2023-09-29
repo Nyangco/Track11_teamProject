@@ -22,10 +22,23 @@ public class PurchaseDao {
 
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
+	//model.addAttribute("t_shop",dao.shop_name(shop));
+	public String shop_name(String shop) {
+		String result = null;
+		String sql = "select shop_name from pjt_shop_shop where shop_no='"+shop+"'";
+		try {
+			result = template.queryForObject(sql, String.class);
+		}catch(DataAccessException e) {
+			System.out.println("shop_name:"+sql);
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public DetailDto purchase_detail(ModelDto mdto){
 		String purchase_no = mdto.getT_purchase_no();
 		DetailDto dto = new DetailDto();
-		String sql = "purchase_no, receiver_name, receiver_contact, receiver_addr1, receiver_addr2, receiver_addr3, "
+		String sql = "select purchase_no, receiver_name, receiver_contact, receiver_addr1, receiver_addr2, receiver_addr3, "
 				+ "delivery_memo, pay_method, cash_receipt, status from pjt_shop_purchase where purchase_no='"+purchase_no+"'";
 		try {
 			RowMapper<DetailDto> rowmap = new BeanPropertyRowMapper<DetailDto>(DetailDto.class);
@@ -42,6 +55,7 @@ public class PurchaseDao {
 		String sql = "select pr.product_no, pr.name product_name, pr.price*d.count product_total, "
 					+ "d.count product_count from pjt_shop_product pr, pjt_shop_purchase pu, pjt_shop_purchase_detail d "
 					+ "where pr.product_no=d.product_no and pu.purchase_no=d.purchase_no and pu.purchase_no='"+purchase_no+"'";
+		System.out.println(sql);
 		try {
 			RowMapper<DetailDto> rowmap = new BeanPropertyRowMapper<DetailDto>(DetailDto.class);
 			arr = (ArrayList<DetailDto>)template.query(sql, rowmap);
@@ -231,11 +245,11 @@ public class PurchaseDao {
 		return dto;
 	}
 
-	public ArrayList<ProductDto> shop_list(String select, String search){
+	public ArrayList<ProductDto> shop_list(String select, String search,String shop){
 		ArrayList<ProductDto> arr = new ArrayList<ProductDto>();
 		String sql = "select product_no, to_char(price,'l999,999,999,999') price, name, "
 				+ "to_char(reg_date,'yyyy-MM-dd') reg_date, images, sell_count from pjt_shop_product "
-				+ "where "+select+" like '%"+search+"%'";
+				+ "where "+select+" like '%"+search+"%' and shop_no='"+shop+"'";
 		try {
 			RowMapper<ProductDto> rowmapper = new BeanPropertyRowMapper<ProductDto>(ProductDto.class);
 			arr = (ArrayList<ProductDto>)template.query(sql, rowmapper);

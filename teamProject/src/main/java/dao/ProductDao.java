@@ -16,6 +16,11 @@ public class ProductDao {
 	
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
+	//model.addAttribute("t_shop",dao.shop_list());
+	public ArrayList<String[]> shop_list(){
+		ArrayList<String[]> arr = new ArrayList<String[]>();
+	}
+	
 	public int updateDB(ProductDto dto) {
 		int k = 0;
 		String price = dto.getPrice().replaceAll("￦", "").replaceAll(",", "").trim();

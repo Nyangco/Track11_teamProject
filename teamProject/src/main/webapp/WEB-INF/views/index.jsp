@@ -11,7 +11,7 @@
 									<span class="image">
 										<img src="images/food.jpg" alt="" />
 									</span>
-									<a href="javascript:goPage('shop')">
+									<a href="javascript:goShop('S0001')">
 										<h2>식료품</h2>
 										<div class="content">
 											<p>저렴하고 맛있는 식품</p>
@@ -22,7 +22,7 @@
 									<span class="image">
 										<img src="images/cloth.jpg" alt="" />
 									</span>
-									<a href="javascript:goPage('shop')">
+									<a href="javascript:goShop('S0002')">
 										<h2>의류</h2>
 										<div class="content">
 											<p>저렴하고 맛있는 의류</p>
@@ -33,7 +33,7 @@
 									<span class="image">
 										<img src="images/antique.jpg" alt="" />
 									</span>
-									<a href="javascript:goPage('shop')">
+									<a href="javascript:goShop('S0003')">
 										<h2>앤티크</h2>
 										<div class="content">
 											<p>저렴하고 맛있는 앤티크</p>
@@ -44,7 +44,7 @@
 									<span class="image">
 										<img src="images/plant.jpg" alt="" />
 									</span>
-									<a href="javascript:goPage('shop')">
+									<a href="javascript:goShop('S0004')">
 										<h2>원예</h2>
 										<div class="content">
 											<p>저렴하고 맛있는 식물</p>
@@ -55,7 +55,7 @@
 									<span class="image">
 										<img src="images/record.jpg" alt="" />
 									</span>
-									<a href="javascript:goPage('shop')">
+									<a href="javascript:goShop('S0005')">
 										<h2>음반</h2>
 										<div class="content">
 											<p>저렴하고 맛있는 음반</p>
@@ -66,7 +66,7 @@
 									<span class="image">
 										<img src="images/tools.jpg" alt="" />
 									</span>
-									<a href="javascript:goPage('shop')">
+									<a href="javascript:goShop('S0006')">
 										<h2>공구</h2>
 										<div class="content">
 											<p>저렴하고 맛있는 공구</p>

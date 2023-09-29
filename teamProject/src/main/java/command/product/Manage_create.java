@@ -15,6 +15,7 @@ public class Manage_create implements CommonExecute {
 		// TODO Auto-generated method stub
 		ProductDao dao = new ProductDao();
 		model.addAttribute("product_no",dao.getProduct_no());
+		model.addAttribute("t_shop",dao.shop_list());
 	}
 
 }

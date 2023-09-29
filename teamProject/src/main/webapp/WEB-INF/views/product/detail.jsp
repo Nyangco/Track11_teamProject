@@ -25,8 +25,8 @@
 	}function check_merchan_count(){
 		let price = Number($('#price').text().replace(',', '').replaceAll('￦',''));
 		let stock = Number($('.stock').text());
-		console.log(price);
-		if(buy.t_count.value<1||!$.isNumeric(buy.t_count.value)){
+		console.log($.isNumeric(buy.t_count.value));
+		if(Number(buy.t_count.value)<1||!$.isNumeric(buy.t_count.value)){
 			alert("구매수량은 1 이상이여아 합니다.");
 			$('.merchan_count').val(1);
 			buy.t_count.focus();
@@ -83,7 +83,7 @@
 										<div class="merchan_desc">${dto.getDescription() }</div>
 									</div>
 								</div>
-								<form class="side_bar" name="buy">
+								<form class="side_bar" name="buy" style="border:1px solid black;">
 									<input type="hidden" name="t_gubun" value="purchase">
 									<input type="hidden" name="t_product_no" value="${dto.getProduct_no() }">
 									<input type="hidden" name="t_id" value="${sId }">

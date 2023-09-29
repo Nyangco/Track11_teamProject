@@ -19,15 +19,17 @@ public class Shop implements CommonExecute {
 		// TODO Auto-generated method stub
 		String select = mdto.getT_select();
 		String search = mdto.getT_search();
+		String shop = mdto.getT_shop();
 		if(select==null) {
 			select = "product_no";
 			search = "";
 		}
 		PurchaseDao dao = new PurchaseDao();
-		ArrayList<ProductDto> arr = dao.shop_list(select,search);
+		ArrayList<ProductDto> arr = dao.shop_list(select,search,shop);
 		model.addAttribute("arr",arr);
 		model.addAttribute("t_select",select);
 		model.addAttribute("t_search",search);
+		model.addAttribute("t_shop",dao.shop_name(shop));
 	}
 
 }
