@@ -25,6 +25,7 @@ public class DBmanage_create {
 			String name = mpr.getParameter("t_name");
 			String origin_country = mpr.getParameter("t_origin_country");
 			String sell_country = mpr.getParameter("t_sell_country");
+			String shop = mpr.getParameter("t_shop");
 			String one_sentence = mpr.getParameter("t_one_sentence");
 			String description = mpr.getParameter("t_description");
 			String stock = mpr.getParameter("t_stock");
@@ -34,13 +35,13 @@ public class DBmanage_create {
 			UUID uuid = UUID.randomUUID();
 			String images = uuid+"_"+ori_images;
 			
-			File img = new File(CommonUtil.getFile_dir(request.getSession()));
+			File img = new File(CommonUtil.getFile_dir(request.getSession())+ori_images);
 			if(img.exists()) {
-				File new_img = new File(CommonUtil.getFile_dir(request.getSession()));
+				File new_img = new File(CommonUtil.getFile_dir(request.getSession())+images);
 				img.renameTo(new_img);
 			}
 			
-			ProductDto dto = new ProductDto(product_no, price, name, origin_country, sell_country, null, one_sentence, description, images, stock, null, null);
+			ProductDto dto = new ProductDto(product_no, price, name, origin_country, sell_country, shop, one_sentence, description, images, stock, null, null);
 			
 			int k = dao.insertDB(dto);
 			

@@ -39,12 +39,12 @@
 										<fieldset>
 											<table style="width:90%">
 												<colgroup>
-													<col width="44%">
+													<col width="50%">
 													<col width="10%">
 													<col width="*">
 												</colgroup>
 												<tr>
-													<td rowspan="8" class="manage_detail_img" style="position:relative;width:400px;height:400px;"><img src="attach/${t_dto.getImages() }"></td>
+													<td rowspan="9" class="manage_detail_img" style="position:relative;"><img src="attach/${t_dto.getImages() }"></td>
 													<th>상품번호</th>
 													<td>
 														${t_dto.getProduct_no() }
@@ -61,6 +61,10 @@
 													<td>
 														${t_dto.getPrice() }
 													</td>													
+												</tr>
+												<tr>
+													<th>상품 구분</th>
+													<td>${t_dto.getShop() }</td>
 												</tr>
 												<tr>
 													<th>원산지</th>

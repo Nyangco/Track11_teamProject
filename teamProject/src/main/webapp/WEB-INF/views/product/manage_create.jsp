@@ -35,6 +35,7 @@
 		else if(checkValue(manage.t_stock,5,"재고")) return;
 		else if(checkValue(manage.t_origin_country,10,"원산지")) return;
 		else if(checkValue(manage.t_sell_country,10,"판매국가")) return;
+		else if(checkValue(manage.t_shop,10,"상품 구분")) return;
 		else if(checkValue(manage.t_one_sentence,100,"한줄 설명")) return;
 		else if(checkValue(manage.t_description,2000,"상세 설명")) return;
 		else {
@@ -106,7 +107,7 @@ $(function(){
 													<td colspan="4"><img id="preview-image" style="float:right;border:1px solid gray;display:none;width:100%;height:100%;"></td>
 												</tr>
 												<tr>
-													<td colspan="4"><span>이미지는 400px*400px로 등록해주세요</span><br><input type="file" class="input600" name="t_images" id="input-image" ></td>
+													<td colspan="4"><span>이미지는 500px*500px 이상으로 등록해주세요</span><br><input type="file" class="input600" name="t_images" id="input-image" ></td>
 												</tr>
 												<tr>
 													<th>상품번호</th>
@@ -136,6 +137,21 @@ $(function(){
 													<th>판매국가</th>
 													<td>
 														<input type="text" name="t_sell_country" >
+													</td>	
+												</tr>
+												<tr>
+													<th>상품구분</th>
+													<td>
+														<select name="t_shop">
+															<option value="">상품 구분</option>
+															<c:forEach items="${t_shop }" var="dto">
+																<option value="${dto.getShop() }">${dto.getShop() }</option>
+															</c:forEach>
+														</select>
+													</td>
+													<th>등록일</th>
+													<td>
+														${t_today }
 													</td>	
 												</tr>
 												<tr>

@@ -2,7 +2,7 @@ package dto;
 
 public class ProductDto {
 	private String product_no, price, name, origin_country, sell_country, reg_date, one_sentence, description, images, stock
-					, sell_count, status;
+					, sell_count, status, shop;
 
 	public ProductDto() {
 		super();
@@ -24,6 +24,14 @@ public class ProductDto {
 		this.stock = stock;
 		this.sell_count = sell_count;
 		this.status = status;
+	}
+
+	public String getShop() {
+		return shop;
+	}
+
+	public void setShop(String shop) {
+		this.shop = shop;
 	}
 
 	public String getProduct_no() {

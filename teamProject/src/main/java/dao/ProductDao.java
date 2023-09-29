@@ -2,6 +2,8 @@ package dao;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -16,9 +18,17 @@ public class ProductDao {
 	
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
-	//model.addAttribute("t_shop",dao.shop_list());
-	public ArrayList<String[]> shop_list(){
-		ArrayList<String[]> arr = new ArrayList<String[]>();
+	public ArrayList<ProductDto> shop_list(){
+		ArrayList<ProductDto> arr = new ArrayList<ProductDto>();
+		String sql = "select shop from pjt_shop_shop";
+		try {
+			RowMapper<ProductDto> rowmap = new BeanPropertyRowMapper<ProductDto>(ProductDto.class);
+			arr = (ArrayList<ProductDto>)template.query(sql,rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("shop_list:"+sql);
+			e.printStackTrace();
+		}
+		return arr;
 	}
 	
 	public int updateDB(ProductDto dto) {
@@ -42,7 +52,7 @@ public class ProductDao {
 		ProductDto dto = null;
 		String sql = "select product_no, to_char(price,'l999,999,999,999') price, name, origin_country,sell_country, "
 					+ "to_char(reg_date,'yyyy-MM-dd') reg_date, one_sentence, description, images, stock, sell_count, "
-					+ "status from pjt_shop_product where product_no='"+mdto.getT_product_no()+"'";
+					+ "status, shop from pjt_shop_product where product_no='"+mdto.getT_product_no()+"'";
 		try {
 			RowMapper<ProductDto> rowmapper = new BeanPropertyRowMapper<ProductDto>(ProductDto.class);
 			dto = template.queryForObject(sql, rowmapper);
@@ -90,9 +100,9 @@ public class ProductDao {
 
 	public int insertDB(ProductDto dto) {
 		int k = 0;
-		String sql = "insert into pjt_shop_product (product_no, price, name, origin_country, sell_country, one_sentence, "
+		String sql = "insert into pjt_shop_product (product_no, price, name, origin_country, sell_country, shop, one_sentence, "
 					+ "description, images, stock) values('"+dto.getProduct_no()+"',"+dto.getPrice()+",'"+dto.getName()
-					+"','"+dto.getOrigin_country()+"','"+dto.getSell_country()+"','"+dto.getOne_sentence()+"','"
+					+"','"+dto.getOrigin_country()+"','"+dto.getSell_country()+"','"+dto.getReg_date()+"','"+dto.getOne_sentence()+"','"
 					+dto.getDescription()+"','"+dto.getImages()+"',"+dto.getStock()+")";
 		try {
 			k = template.update(sql);

@@ -249,7 +249,7 @@ public class PurchaseDao {
 		ArrayList<ProductDto> arr = new ArrayList<ProductDto>();
 		String sql = "select product_no, to_char(price,'l999,999,999,999') price, name, "
 				+ "to_char(reg_date,'yyyy-MM-dd') reg_date, images, sell_count from pjt_shop_product "
-				+ "where "+select+" like '%"+search+"%' and shop_no='"+shop+"'";
+				+ "where "+select+" like '%"+search+"%' and shop='"+shop+"'";
 		try {
 			RowMapper<ProductDto> rowmapper = new BeanPropertyRowMapper<ProductDto>(ProductDto.class);
 			arr = (ArrayList<ProductDto>)template.query(sql, rowmapper);

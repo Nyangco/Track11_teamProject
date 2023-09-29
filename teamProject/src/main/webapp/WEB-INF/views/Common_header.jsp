@@ -79,12 +79,12 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="javascript:goShop('S0001')">식료품</a></li>
-							<li><a href="javascript:goShop('S0002')">의류</a></li>
-							<li><a href="javascript:goShop('S0003')">앤티크</a></li>
-							<li><a href="javascript:goShop('S0004')">원예</a></li>
-							<li><a href="javascript:goShop('S0005')">음반</a></li>
-							<li><a href="javascript:goShop('S0006')">공구</a></li>
+							<li><a href="javascript:goShop('식료품')">식료품</a></li>
+							<li><a href="javascript:goShop('의류')">의류</a></li>
+							<li><a href="javascript:goShop('앤티크')">앤티크</a></li>
+							<li><a href="javascript:goShop('원예')">원예</a></li>
+							<li><a href="javascript:goShop('음반')">음반</a></li>
+							<li><a href="javascript:goShop('공구')">공구</a></li>
 							<li><a href="javascript:goPage('qna_list')">QNA</a></li>
 							<li><a href="javascript:goPage('faq_list')">FAQ</a></li>
 							<li><a href="javascript:goPage('free_board')">담벼락</a></li>

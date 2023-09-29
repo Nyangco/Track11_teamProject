@@ -35,6 +35,7 @@
 											<option value="product_no" <c:if test="${select eq 'product_no' }">selected</c:if>>상품번호</option>
 											<option value="name" <c:if test="${select eq 'name' }">selected</c:if>>상품명</option>
 											<option value="status" <c:if test="${select eq 'status' }">selected</c:if>>상태</option>
+											<option value="shop" <c:if test="${select eq 'shop' }">selected</c:if>>상품구분</option>
 										</select>
 									</div>
 								</form>

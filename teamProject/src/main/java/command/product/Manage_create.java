@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 import common.CommonExecute;
+import common.CommonUtil;
 import dao.ProductDao;
 import dto.ModelDto;
 
@@ -16,6 +17,7 @@ public class Manage_create implements CommonExecute {
 		ProductDao dao = new ProductDao();
 		model.addAttribute("product_no",dao.getProduct_no());
 		model.addAttribute("t_shop",dao.shop_list());
+		model.addAttribute("t_today",CommonUtil.getToday());
 	}
 
 }

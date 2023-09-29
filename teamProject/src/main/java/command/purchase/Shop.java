@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 import common.CommonExecute;
+import common.CommonUtil;
 import dao.ProductDao;
 import dao.PurchaseDao;
 import dto.ModelDto;
@@ -29,7 +30,7 @@ public class Shop implements CommonExecute {
 		model.addAttribute("arr",arr);
 		model.addAttribute("t_select",select);
 		model.addAttribute("t_search",search);
-		model.addAttribute("t_shop",dao.shop_name(shop));
+		model.addAttribute("t_shop",shop);
 	}
 
 }

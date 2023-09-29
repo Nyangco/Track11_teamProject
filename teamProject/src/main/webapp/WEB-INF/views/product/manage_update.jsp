@@ -78,11 +78,6 @@
 		})	
 	});	
 </script>
-<style>
-	#preview-image {
-		border:1px solid gray;
-	}					
-</style>
 <!-- Main -->
 <div id="main">
 	<div class="inner">
@@ -105,7 +100,7 @@
 								<col width="*">
 							</colgroup>
 							<tr>
-								<td rowspan="7" class="manage_detail_img" style="position:relative;width:400px;height:400px;"><img id="preview-image" src="attach/${t_dto.getImages() }"></td>
+								<td rowspan="7" class="manage_detail_img" style="position:relative;"><img id="preview-image" src="attach/${t_dto.getImages() }"></td>
 								<th>상품번호</th>
 								<td>
 									<input type="text" name="t_product_no" value="${t_dto.getProduct_no() }" readonly>
@@ -148,7 +143,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td><input type="file" class="input600" name="t_images" id="input-image"></td>
+								<td><span>이미지는 500px*500px 이상으로 등록해주세요</span><br><input type="file" class="input600" name="t_images" id="input-image"></td>
 								<th>상태</th>
 								<td>
 									<select name="t_status">

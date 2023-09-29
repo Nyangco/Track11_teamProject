@@ -22,7 +22,7 @@ public class DBmanage_update {
 			MultipartRequest mpr = new MultipartRequest(request, CommonUtil.getFile_dir(request.getSession()), 1024*1024*1024, "utf-8", new DefaultFileRenamePolicy());
 			String ori_images = mpr.getParameter("t_ori_images");
 			String product_no = mpr.getParameter("t_product_no");
-			String price = mpr.getParameter("t_price");
+			String price = mpr.getParameter("t_price").replaceAll("￦", "").replaceAll(",", "");
 			String name = mpr.getParameter("t_name");
 			String origin_country = mpr.getParameter("t_origin_country");
 			String sell_country = mpr.getParameter("t_sell_country");
@@ -37,9 +37,9 @@ public class DBmanage_update {
 				UUID uuid = UUID.randomUUID();
 				images = uuid+"_"+ori_img;
 				
-				File img = new File(CommonUtil.getFile_dir(request.getSession()));
+				File img = new File(CommonUtil.getFile_dir(request.getSession())+ori_img);
 				if(img.exists()) {
-					File new_img = new File(CommonUtil.getFile_dir(request.getSession()));
+					File new_img = new File(CommonUtil.getFile_dir(request.getSession())+images);
 					img.renameTo(new_img);
 				}
 			}
@@ -51,7 +51,7 @@ public class DBmanage_update {
 			int k = dao.updateDB(dto);
 			
 			if(ori_images!=null) {
-				File file = new File(CommonUtil.getFile_dir(request.getSession()));
+				File file = new File(CommonUtil.getFile_dir(request.getSession())+ori_images);
 				if(file.exists()) {
 					file.delete();
 				}
