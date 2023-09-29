@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import common.CommonTemplate;
 import dto.ModelDto;
+import dto.ProductDto;
 import dto.QnaDto;
 
 public class QnaDao {
@@ -41,13 +42,12 @@ public class QnaDao {
 
 	public ArrayList<QnaDto> getQnaList(String select, String search) {
 		ArrayList<QnaDto> dtos = new ArrayList<QnaDto>();
-		String query ="select q.title,m.name,\r\n" + 
+		String query ="select q.qna_no,q.title,m.name,\r\n" + 
 				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date\r\n" + 
 				"from pjt_shop_qna q, pjt_shop_member m\r\n" + 
 				"where q.reg_id = m.id\r\n" + 
 				"and "+select+" like '%"+search+"%'\r\n" + 
 				"order by reg_date desc";
-		
 		try{
 			RowMapper<QnaDto> rowmapper = 
 					new BeanPropertyRowMapper<QnaDto>(QnaDto.class);
@@ -56,10 +56,24 @@ public class QnaDao {
 			System.out.println("getQnaList:"+query);
 			e.printStackTrace();
 		}
-		System.out.println(select);	
-		System.out.println(search);	
 		return dtos;
 	}
-	
+	public QnaDto detail(ModelDto mdto) {
+		QnaDto dto = null;
+		String sql = "select q.title,q.content,m.name,\r\n" + 
+				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date\r\n" + 
+				"from pjt_shop_qna q, pjt_shop_member m\r\n" + 
+				"where q.reg_id = m.id\r\n" + 
+				"and q.qna_no = '"+mdto.getT_qna_no()+"'\r\n" + 
+				"order by reg_date desc";
+		try {
+			RowMapper<QnaDto> rowmapper = new BeanPropertyRowMapper<QnaDto>(QnaDto.class);
+			dto = temp.queryForObject(sql, rowmapper);
+		}catch(DataAccessException e) {
+			System.out.println("detail:"+sql);
+			e.printStackTrace();
+		}
+		return dto;
+	}
 	
 }

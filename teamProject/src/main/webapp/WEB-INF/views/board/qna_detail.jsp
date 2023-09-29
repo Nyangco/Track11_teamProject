@@ -19,10 +19,6 @@
 							<section class="">
 								<div class="main_title">
 									<h1>QNA</h1>
-									<input type="text" placeholder="검색어를 입력하세요" class="search" style="width:300px;float:right;margin-left:0.5em;">
-									<select style="width:170px;float:right;margin-left:0.5em;">
-										<option>가나다라마바사</option>
-									</select>
 								</div>
 							</section>
 							<section class="border_detail">
@@ -36,17 +32,17 @@
 										</colgroup>
 										<tr>
 											<th>제목</th>
-											<td colspan="3">오늘 아침 추천좀</td>
+											<td colspan="3">${t_dto.getTitle()}</td>
 										</tr>
 										<tr>
 											<th>글 내용</th>
-											<td colspan="3"><textarea readonly style="resize:none;width:100%;padding-bottom:300px;">오늘 아침 추천좀 해주세요.</textarea></td>
+											<td colspan="3"><textarea readonly style="resize:none;width:100%;padding-bottom:300px;">${t_dto.getContent()}</textarea></td>
 										</tr>
 										<tr>
 											<th>작성자</th>
-											<td>작성자1</td>
+											<td>${t_dto.getName()}</td>
 											<th>작성일</th>
-											<td>2020-80-94</td>
+											<td>${t_dto.getReg_date()}</td>
 										</tr>
 										<tr>
 											<td colspan="4">

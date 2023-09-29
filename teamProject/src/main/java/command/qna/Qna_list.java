@@ -22,7 +22,7 @@ public class Qna_list implements CommonExecute {
 		String select = mdto.getT_select();
 		String search = mdto.getT_search();
 		if(select==null || search == null) {
-			select= "title";
+			select= "q.title";
 			search= "";
 		}
 		ArrayList<QnaDto> dtos = dao.getQnaList(select,search);

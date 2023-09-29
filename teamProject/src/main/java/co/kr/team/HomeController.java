@@ -24,6 +24,7 @@ import command.product.Manage_list;
 import command.purchase.Detail;
 import command.purchase.Shop;
 import command.qna.DBqna_write;
+import command.qna.Qna_detail;
 import command.qna.Qna_list;
 import command.qna.Qna_write;
 import common.CommonExecute;
@@ -150,7 +151,8 @@ public class HomeController {
 
 			page = "board/free_board";
 		}else if(gubun.equals("qna_detail")) {
-
+			CommonExecute ce = new Qna_detail();
+			ce.execute(model, mdto, session);
 			page = "board/qna_detail";
 		}else if(gubun.equals("qna_list")) {
 			CommonExecute ce = new Qna_list();
