@@ -26,6 +26,8 @@ import command.purchase.Shop;
 import command.qna.DBqna_write;
 import command.qna.Qna_detail;
 import command.qna.Qna_list;
+import command.qna.DBqna_delete;
+import command.qna.DBqna_update;
 import command.qna.Qna_write;
 import common.CommonExecute;
 import common.CommonTemplate;
@@ -159,14 +161,21 @@ public class HomeController {
 			ce.execute(model, mdto, session);
 			page = "board/qna_list";
 		}else if(gubun.equals("qna_update")) {
-
+			CommonExecute ce = new Qna_detail();
+			ce.execute(model, mdto, session);
 			page = "board/qna_update";
+		}else if(gubun.equals("DBqna_update")) {
+			CommonExecute ce = new DBqna_update();
+			ce.execute(model, mdto, session);
 		}else if(gubun.equals("qna_write")) {
 			CommonExecute ce = new Qna_write();
 			ce.execute(model, mdto, session);
 			page = "board/qna_write";
 		}else if(gubun.equals("DBqna_write")) {
 			CommonExecute ce = new DBqna_write();
+			ce.execute(model, mdto, session);
+		}else if(gubun.equals("qna_delete")) {
+			CommonExecute ce = new DBqna_delete();
 			ce.execute(model, mdto, session);
 		}else {
 			System.out.println("no t_gubun");

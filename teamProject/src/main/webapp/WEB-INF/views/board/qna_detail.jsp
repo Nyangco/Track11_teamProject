@@ -2,14 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
 <script>
-	function goUpdate(){
-		location.href='qna_update.jsp';
-	}function goDelete(){
+	function goUpdate(no){
+		qnaWork.t_gubun.value="qna_update";
+		qnaWork.t_qna_no.value= no;
+		qnaWork.method="post";
+		qnaWork.action="/team/";
+		qnaWork.submit();
+	}
+	function goDelete(no){
 		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href='qna_list.jsp';
+			qnaWork.t_gubun.value="qna_delete";
+			qnaWork.t_qna_no.value= no;
+			qnaWork.method="post";
+			qnaWork.action="/team/";
+			qnaWork.submit();
 		}
 	}
 </script>
+<form name="qnaWork">
+	<input type="hidden" name="t_gubun">
+	<input type="hidden" name="t_qna_no">
+</form>
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
@@ -46,8 +59,8 @@
 										</tr>
 										<tr>
 											<td colspan="4">
-												<input type="button" value="수정" onclick="goWork('qna_update','Board')">
-												<input type="button" value="삭제" onclick="goDelete()">
+												<input type="button" value="수정" onclick="goUpdate('${t_dto.getQna_no()}')">
+												<input type="button" value="삭제" onclick="goDelete('${t_dto.getQna_no()}')">
 											</td>
 										</tr>
 									</table>

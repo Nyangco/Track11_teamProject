@@ -1,5 +1,6 @@
 package dao;
 
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import common.CommonTemplate;
+import common.CommonUtil;
 import dto.ModelDto;
 import dto.ProductDto;
 import dto.QnaDto;
@@ -60,7 +62,7 @@ public class QnaDao {
 	}
 	public QnaDto detail(ModelDto mdto) {
 		QnaDto dto = null;
-		String sql = "select q.title,q.content,m.name,\r\n" + 
+		String sql = "select q.qna_no,q.title,q.content,m.name,\r\n" + 
 				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date\r\n" + 
 				"from pjt_shop_qna q, pjt_shop_member m\r\n" + 
 				"where q.reg_id = m.id\r\n" + 
@@ -74,6 +76,36 @@ public class QnaDao {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	public int qna_update(ModelDto mdto) {
+		int k = 0;
+		String sql = "update pjt_shop_qna \r\n" + 
+				"set title = '"+mdto.getT_title()+"',\r\n" + 
+				"    content = '"+mdto.getT_content()+"',\r\n" + 
+				"    update_date ='"+CommonUtil.getToday()+"'\r\n" + 
+				"where qna_no = '"+mdto.getT_qna_no()+"'";
+		try {
+				k = temp.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("qna_update:"+sql);
+			e.printStackTrace();
+		}		
+		return k;
+	}
+
+	public int qna_delete(ModelDto mdto) {
+		int k = 0;
+		String sql = "delete pjt_shop_qna\r\n" + 
+				"where qna_no ='"+mdto.getT_qna_no()+"'";
+		System.out.println(sql);
+		try {
+				k = temp.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("qna_delete:"+sql);
+			e.printStackTrace();
+		}		
+		return k;
 	}
 	
 }
