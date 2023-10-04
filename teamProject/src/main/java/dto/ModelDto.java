@@ -14,6 +14,8 @@ public class ModelDto {
 	//qna
 	private String t_qna_no,t_reg_id,t_reg_date,t_title,t_content,
 					t_update_date,t_reply,t_reply_date;
+	//faq
+	private String t_faq_no,t_question,t_answer;
 	
 	public String getT_qna_no() {
 		return t_qna_no;
@@ -197,6 +199,30 @@ public class ModelDto {
 
 	public void setT_addr3(String t_addr3) {
 		this.t_addr3 = t_addr3;
+	}
+
+	public String getT_faq_no() {
+		return t_faq_no;
+	}
+
+	public void setT_faq_no(String t_faq_no) {
+		this.t_faq_no = t_faq_no;
+	}
+
+	public String getT_question() {
+		return t_question;
+	}
+
+	public void setT_question(String t_question) {
+		this.t_question = t_question;
+	}
+
+	public String getT_answer() {
+		return t_answer;
+	}
+
+	public void setT_answer(String t_answer) {
+		this.t_answer = t_answer;
 	}
 	
 	

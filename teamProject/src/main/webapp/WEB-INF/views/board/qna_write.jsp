@@ -4,7 +4,7 @@
 <script>
 	function goReset(){
 		fm.reset();
-		fm.t_b_title.focus();
+		fm.t_title.focus();
 	}
 	function checkValue(dir,len,obj){
 		if(dir.value==""){

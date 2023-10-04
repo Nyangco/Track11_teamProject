@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import command.faq.DBfaq_write;
+import command.faq.Faq_detail;
+import command.faq.Faq_list;
+import command.faq.Faq_write;
 import command.member.DBjoin;
 import command.member.DBlogin;
 import command.member.DBmember_update;
@@ -138,17 +142,23 @@ public class HomeController {
 		}
 		//board
 		else if(gubun.equals("faq_detail")) {
-
+			CommonExecute ce = new Faq_detail();
+			ce.execute(model, mdto, session);
 			page = "board/faq_detail";
 		}else if(gubun.equals("faq_list")) {
-
+			CommonExecute ce = new Faq_list();
+			ce.execute(model, mdto, session);
 			page = "board/faq_list";
 		}else if(gubun.equals("faq_update")) {
 
 			page = "board/faq_update";
 		}else if(gubun.equals("faq_write")) {
-
+			CommonExecute ce = new Faq_write();
+			ce.execute(model, mdto, session);
 			page = "board/faq_write";
+		}else if(gubun.equals("DBfaq_write")) {
+			CommonExecute ce = new DBfaq_write();
+			ce.execute(model, mdto, session);
 		}else if(gubun.equals("free_board")) {
 
 			page = "board/free_board";
