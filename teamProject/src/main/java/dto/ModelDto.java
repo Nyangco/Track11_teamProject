@@ -34,6 +34,7 @@ public class ModelDto {
 
 	public void setT_nowPage(String t_nowPage) {
 		this.t_nowPage = t_nowPage;
+	}
 	
 	public String getT_qna_no() {
 		return t_qna_no;
