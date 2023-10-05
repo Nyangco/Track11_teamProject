@@ -31,7 +31,7 @@
 							</header>
 							<section class="">
 								<div class="main_title">
-									<h1>FAQ</h1>
+									<h1>FAQ Detail</h1>
 								</div>
 							</section>
 							<section class="border_detail">

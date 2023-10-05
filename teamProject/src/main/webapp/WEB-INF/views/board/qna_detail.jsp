@@ -31,7 +31,7 @@
 							</header>
 							<section class="">
 								<div class="main_title">
-									<h1>QNA</h1>
+									<h1>QNA Detail</h1>
 								</div>
 							</section>
 							<section class="border_detail">
