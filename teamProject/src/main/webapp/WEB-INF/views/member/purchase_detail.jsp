@@ -5,7 +5,9 @@
 	function goList(){
 		location.href='purchase_list.jsp';
 	}function goRefund(){
-		location.href='refund.jsp';
+		mem.method="post";
+		mem.action="/team/";
+		mem.submit();
 	}
 </script>
 				<!-- Main -->
@@ -16,6 +18,8 @@
 							<section class="purchase_detail">
 								<div>
 									<form name="mem">
+										<input type="hidden" name="t_gubun" value="refund">
+										<input type="hidden" name="t_purchase_no" value="${t_dto.getPurchase_no() }">
 										<fieldset>
 											<legend>상세 보기</legend>
 											<table style="width:80%">
@@ -87,8 +91,8 @@
 												</c:if>
 												<tr>
 													<th colspan="4" style="padding-top:0.75em;text-align:center;">
-														<input type="button" value="목록으로" onclick="goWork('purchase_list','Member')" style="display:inline-block;">
-														<input type="button" value="반품/교환" onclick="goWork('refund','Member')" style="display:inline-block;">
+														<input type="button" value="목록으로" onclick="goPage('purchase_list')" style="display:inline-block;">
+														<input type="button" value="반품/교환" onclick="goRefund()" style="display:inline-block;">
 													</th>
 												</tr>
 											</table>

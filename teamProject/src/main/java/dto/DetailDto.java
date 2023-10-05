@@ -4,7 +4,15 @@ public class DetailDto {
 
 	private String purchase_no, product_no, product_name, product_count, product_total, purchase_total,
 			receiver_name, receiver_contact, receiver_addr1, receiver_addr2, receiver_addr3,delivery_memo,
-			pay_method,transfer_name,cash_receipt,card_number,card_cvc,status,purchase_date;
+			pay_method,transfer_name,cash_receipt,card_number,card_cvc,status,purchase_date,rnum;
+
+	public String getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(String rnum) {
+		this.rnum = rnum;
+	}
 
 	public String getPurchase_date() {
 		return purchase_date;

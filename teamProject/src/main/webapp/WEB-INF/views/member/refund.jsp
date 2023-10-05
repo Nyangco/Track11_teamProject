@@ -1,21 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
+<script>
+	function goRefund(){
+		if(confirm("정말 환불/교환 신청을 하시겠습니까?")){
+			if(mem.t_search.value==""){
+				alert("환불/반품 사유를 적어주세요");
+				mem.t_search.focus();
+				return;
+			}else{
+				mem.method="post";
+				mem.action="/team/";
+				mem.submit();
+			}
+		}
+	}
+</script>
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<header>
-								<div id="tags">
-									<div class="tag_box">
-										<span>#태그1</span>
-										<span>#태그2</span>
-										<span>#태그3</span>
-										<span>#태그4</span>
-										<span>#태그5</span>
-										<span style="float:right;border-right:1px solid white;border-left:1px solid gray;">장바구니</span>
-									</div>
-								</div>	
-							</header>
 							<section class="">
 								<div class="main_title">
 									<h1 style="text-align:center;">환불/교환</h1>
@@ -23,10 +26,12 @@
 							</section>
 							<section class="lines">
 								<article>
-									<form name="fm">
-										<table style="width:40%">
+									<form name="mem">
+										<input type="hidden" name="t_gubun" value="DBrefund">
+										<input type="hidden" name="t_purchase_no" value="${t_purchase_no }">
+										<table style="width:45%">
 											<colgroup>
-												<col width="20%">
+												<col width="30%">
 												<col width="*">
 											</colgroup>
 											<tr>
@@ -41,13 +46,13 @@
 											<tr>
 												<th>환불/교환 사유</th>
 												<td>
-													<input type="text" name="t_reason">
+													<input type="text" name="t_search">
 												</td>
 											</tr>
 											<tr>
-												<th colspan="2">
-													<input type="button" value="환불/교환 신청" onclick="location.href='purchase_list.jsp'">
-													<input type="button" value="목록" onclick="location.href='purchase_list.jsp'">
+												<th colspan="2" style="padding-top:0.75em;">
+													<input type="button" value="환불/교환 신청" onclick="goRefund()">
+													<input type="button" value="목록" onclick="goPage('purchase_list')">
 												</th>
 											</tr>
 										</table>

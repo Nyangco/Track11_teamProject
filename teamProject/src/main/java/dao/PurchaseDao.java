@@ -22,7 +22,30 @@ public class PurchaseDao {
 
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
-	//model.addAttribute("t_shop",dao.shop_name(shop));
+	public int changeStatus(String purchase_no, String status) {
+		int k = 0;
+		String sql = "update pjt_shop_purchase set status="+status+" where purchase_no='"+purchase_no+"'";
+		try {
+			k = template.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("changeStatus:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
+	public int totalCountDB(String select, String search) {
+		int k = 0;
+		String sql = "select count(*) from pjt_shop_purchase where "+select+" like '%"+search+"%'";
+		try {
+			k = template.queryForInt(sql);
+		}catch(DataAccessException e) {
+			System.out.println("totalCountDB:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
 	public String shop_name(String shop) {
 		String result = null;
 		String sql = "select shop_name from pjt_shop_shop where shop_no='"+shop+"'";
@@ -53,9 +76,8 @@ public class PurchaseDao {
 	public ArrayList<DetailDto> purchase_detail(String purchase_no){
 		ArrayList<DetailDto> arr = new ArrayList<DetailDto>();
 		String sql = "select pr.product_no, pr.name product_name, pr.price*d.count product_total, "
-					+ "d.count product_count from pjt_shop_product pr, pjt_shop_purchase pu, pjt_shop_purchase_detail d "
+					+ "d.count product_count, pu.status from pjt_shop_product pr, pjt_shop_purchase pu, pjt_shop_purchase_detail d "
 					+ "where pr.product_no=d.product_no and pu.purchase_no=d.purchase_no and pu.purchase_no='"+purchase_no+"'";
-		System.out.println(sql);
 		try {
 			RowMapper<DetailDto> rowmap = new BeanPropertyRowMapper<DetailDto>(DetailDto.class);
 			arr = (ArrayList<DetailDto>)template.query(sql, rowmap);
@@ -66,9 +88,49 @@ public class PurchaseDao {
 		return arr;
 	}
 	
-	public ArrayList<DetailDto> purchase_list(String id){
+	public ArrayList<DetailDto> purchase_list(String select, String search, int start, int end){
 		ArrayList<DetailDto> arr = new ArrayList<DetailDto>();
-		String sql1 = "select purchase_no, status from pjt_shop_purchase where buyer_id='"+id+"'";
+		String sql1 = "select * from (select rownum rnum, tbl.* from (select purchase_no, "
+					+ "status from pjt_shop_purchase where "+select+" like '%"+search+"%' order by purchase_no desc) tbl) "
+					+ "where rnum>="+start+" and rnum<="+end;
+		String sql2 = null;
+		String sql3 = null;
+		try {
+			RowMapper<DetailDto> rowmap = new BeanPropertyRowMapper<DetailDto>(DetailDto.class);
+			arr = (ArrayList<DetailDto>)template.query(sql1, rowmap);
+			for(int k=0; k<arr.size(); k++) {
+				String purchase_no = arr.get(k).getPurchase_no();
+				sql2 = "select pr.name product_name from pjt_shop_purchase_detail d, pjt_shop_purchase pu, "
+						+ "pjt_shop_product pr where d.product_no=pr.product_no and d.purchase_no=pu.purchase_no "
+						+ "and d.purchase_no='"+purchase_no+"'";
+				ArrayList<DetailDto> tmp = (ArrayList<DetailDto>)template.query(sql2, rowmap);
+				if(tmp.size()>1) {
+					arr.get(k).setProduct_name(tmp.get(0).getProduct_name()+" 외 "+tmp.size()+" 건");
+				}else if(tmp.size()==1) {
+					arr.get(k).setProduct_name(tmp.get(0).getProduct_name());
+				}
+				sql3 = "select sum(pr.price) from pjt_shop_purchase_detail d, pjt_shop_purchase pu, "
+						+ "pjt_shop_product pr where d.product_no=pr.product_no and d.purchase_no=pu.purchase_no and "
+						+ "d.purchase_no='"+purchase_no+"' group by pu.purchase_no";
+				int temp = template.queryForInt(sql3)+2500;
+				DecimalFormat df = new DecimalFormat("￦###,###");
+				arr.get(k).setPurchase_total(df.format(temp));
+			}
+		}catch(DataAccessException e) {
+			System.out.println("purchase_list:");
+			System.out.println(sql1);
+			System.out.println(sql2);
+			System.out.println(sql3);
+			e.printStackTrace();
+		}
+		return arr;
+	}
+	
+	public ArrayList<DetailDto> purchase_list(String id, String select, String search, int start, int end){
+		ArrayList<DetailDto> arr = new ArrayList<DetailDto>();
+		String sql1 = "select * from (select rownum rnum, tbl.* from (select purchase_no, status from pjt_shop_purchase "
+					+ "where "+select+" like '%"+search+"%' and buyer_id='"+id+"' order by purchase_no desc) tbl) "
+					+ "where rnum>="+start+" and rnum<="+end;
 		String sql2 = null;
 		String sql3 = null;
 		try {

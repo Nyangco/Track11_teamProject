@@ -16,6 +16,7 @@
 		<script type="text/javascript" src="assets/js/jquery.min.js"></script>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script src="https://kit.fontawesome.com/34253ab9f2.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 	</head>
 	<script type="text/javascript">
 		function goPage(gubun){
@@ -29,6 +30,22 @@
 			team.method="post";
 			team.action="/team/";
 			team.submit();
+		}function comma(num){
+			var len, point, str;  
+			  
+			num = num + "";  
+			point = num.length % 3 ;
+			len = num.length;  
+		  
+			str = num.substring(0, point);  
+			while (point < len) {  
+			    if (str != "") str += ",";  
+			    str += num.substring(point, point + 3);  
+			    point += 3;  
+			}  
+			
+			return str;
+		
 		}
 	</script>
 	<body class="is-preload">

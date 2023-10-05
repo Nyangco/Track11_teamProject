@@ -125,7 +125,7 @@ public class CommonUtil {
  		//첫번째 페이지 인덱스 화면이 아닌경우
  		if(current_page > pagenumber){
  			curpage = startpage -1;  //시작페이지 번호보다 1적은 페이지로 이동
- 			strList = strList +"<a href=javascript:goPage('"+curpage+"') ><i class='fa fa-angle-double-left'></i></a>";
+ 			strList = strList +"<a href=javascript:goPaging('"+curpage+"') ><i class='fa fa-angle-double-left'></i></a>";
  		}
  						
  		//시작페이지 번호부터 마지막 페이지 번호까지 화면에 표시
@@ -134,14 +134,14 @@ public class CommonUtil {
  			if(curpage == current_page){
  				strList = strList +"<a class='active'>"+current_page+"</a>";
  			} else {
- 				strList = strList +"<a href=javascript:goPage('"+curpage+"')>"+curpage+"</a>";
+ 				strList = strList +"<a href=javascript:goPaging('"+curpage+"')>"+curpage+"</a>";
  			}
  			curpage++;
  		}
  		//뒤에 페이지가 더 있는 경우
  		if(total_page > endpage){
  			curpage = endpage+1;
- 			strList = strList + "<a href=javascript:goPage('"+curpage+"') ><i class='fa fa-angle-double-right'></i></a>";
+ 			strList = strList + "<a href=javascript:goPaging('"+curpage+"') ><i class='fa fa-angle-double-right'></i></a>";
  		}
  		return strList;
  	}

@@ -13,9 +13,20 @@
 		}
 	}function goSearch(){
 		product.t_gubun.value="manage_list";
+		product.t_nowPage.value="1";
 		product.method="post";
 		product.action="/team/";
 		product.submit();
+	}function goPaging(pn){
+		product.t_nowPage.value=pn;
+		product.t_gubun.value="manage_list";
+		product.method="post";
+		product.action="/team/";
+		product.submit();
+	}function goCheck(){
+		if(event.keycode==65){
+			alert("키누름");
+		}
 	}
 </script>
 				<!-- Main -->
@@ -25,12 +36,13 @@
 							</header>
 							<section class="manage_list">
 								<form name="product">
+									<input type="hidden" name="t_nowPage" value="${t_nowPage }">
 									<input type="hidden" name="t_product_no">
 									<input type="hidden" name="t_gubun" value="manage_detail">
 									<div class="main_title">
-										<h1>관리 페이지</h1>
+										<h1>상품 관리</h1>
 										<a href="javascript:" onclick="goSearch()" style="float:right;font-size:27px;margin-left:0.25em;"><i class="fa-solid fa-magnifying-glass"></i></a>
-										<input type="text" name="t_search" value="${search }" placeholder="검색어를 입력하세요" class="search" style="width:300px;float:right;margin-left:0.5em;">
+										<input type="text" name="t_search" value="${search }" placeholder="검색어를 입력하세요" class="search" onkeypress="if(event.keyCode==13){goSearch()}" style="width:300px;float:right;margin-left:0.5em;">
 										<select name="t_select" style="width:170px;float:right;margin-left:0.5em;" onchange="stsconfirm()">
 											<option value="product_no" <c:if test="${select eq 'product_no' }">selected</c:if>>상품번호</option>
 											<option value="name" <c:if test="${select eq 'name' }">selected</c:if>>상품명</option>
@@ -74,7 +86,11 @@
 									</table>
 								</article>
 							</section>
+							<div class="paging">
+								${t_paging }
+							</div>
 							<div class="btn_group sell">
+								<input type="button" value="판매 관리" onclick="goPage('sold_list')">
 								<input type="button" value="판매 통계" onclick="goPage('manage_statistics')">
 								<input type="button" value="신규 등록하기" onclick="goPage('manage_create')">
 							</div>

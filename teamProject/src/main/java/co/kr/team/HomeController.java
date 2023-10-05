@@ -1,8 +1,17 @@
 package co.kr.team;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -19,15 +28,20 @@ import command.faq.Faq_write;
 import command.member.DBjoin;
 import command.member.DBlogin;
 import command.member.DBmember_update;
+import command.member.DBrefund;
 import command.member.Logout;
 import command.member.Mypage;
 import command.member.Purchase_detail;
 import command.member.Purchase_list;
+import command.member.Refund;
 import command.product.DBmanage_create;
 import command.product.DBmanage_update;
 import command.product.Manage_create;
 import command.product.Manage_detail;
 import command.product.Manage_list;
+import command.product.Sold_detail;
+import command.product.Sold_list;
+import command.product.Statistics_list;
 import command.purchase.Basket;
 import command.purchase.DBbasket;
 import command.purchase.DBpurchase;
@@ -44,7 +58,10 @@ import command.qna.Qna_write;
 import common.CommonExecute;
 import common.CommonTemplate;
 import common.CommonUtil;
+import dao.ProductDao;
+import dao.PurchaseDao;
 import dto.ModelDto;
+import dto.StatisticsDto;
 
 /**
  * Handles requests for the application home page.
@@ -192,8 +209,12 @@ public class HomeController {
 				ce.execute(model, mdto, session);
 				page = "member/purchase_list";
 			}else if(gubun.equals("refund")) {
-
+				CommonExecute ce = new Refund();
+				ce.execute(model, mdto, session);
 				page = "member/refund";
+			}else if(gubun.equals("DBrefund")) {
+				CommonExecute ce = new DBrefund();
+				ce.execute(model, mdto, session);
 			}
 			
 		//관리자 접근 가능
@@ -216,7 +237,8 @@ public class HomeController {
 				ce.execute(model, mdto, session);
 				page = "product/manage_list";
 			}else if(gubun.equals("manage_statistics")) {
-
+				CommonExecute ce = new Statistics_list();
+				ce.execute(model, mdto, session);
 				page = "product/manage_statistics";
 			}else if(gubun.equals("manage_update")) {
 				CommonExecute ce = new Manage_detail();
@@ -225,6 +247,14 @@ public class HomeController {
 			}else if(gubun.equals("DBmanage_update")) {
 				DBmanage_update ce = new DBmanage_update();
 				ce.execute(model, request);
+			}else if(gubun.equals("sold_list")) {
+				CommonExecute ce = new Sold_list();
+				ce.execute(model, mdto, session);
+				page = "product/sold_list";
+			}else if(gubun.equals("sold_detail")) {
+				CommonExecute ce = new Sold_detail();
+				ce.execute(model, mdto, session);
+				page = "product/sold_detail";
 			}
 			
 			//board
@@ -251,5 +281,95 @@ public class HomeController {
 			model.addAttribute("url","index");
 		}
 		return page;
+	}
+	
+	@RequestMapping("Statics_month")
+	public void Statistics(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("utf-8");
+			response.setContentType("utf-8");
+			PrintWriter out = response.getWriter();
+			ProductDao dao = new ProductDao();
+			
+			String month = request.getParameter("t_month");
+			
+			ArrayList<String> arr_1 = dao.getTC_TS(month);
+			ArrayList<StatisticsDto> arr_2 = dao.getPC(month);
+			ArrayList<StatisticsDto> arr_3 = dao.getCC(month);
+			String t_count = arr_1.get(0);
+			String t_sell = arr_1.get(1);
+			if(t_sell==null) t_sell="0";
+			
+			HashMap<String, Object> hM = new HashMap<String, Object>();
+			JSONObject jsob1 = new JSONObject();
+			JSONObject jsob2 = new JSONObject();
+			JSONArray jsar1 = new JSONArray();
+			JSONArray jsar2 = new JSONArray();
+			JSONObject finaljsob = new JSONObject();
+			
+			for(int k=0; k<arr_2.size(); k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label",arr_2.get(k).getProduct_no());
+				hM.put("value",arr_2.get(k).getCount());
+				jsob1 = new JSONObject(hM);
+				jsar1.add(jsob1);
+			}for(int k=arr_2.size();k<5;k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label","");
+				hM.put("value","");
+				jsob1 = new JSONObject(hM);
+				jsar1.add(jsob1);
+			}
+			
+			
+			for(int k=0; k<arr_3.size(); k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label",arr_3.get(k).getId());
+				hM.put("value",arr_3.get(k).getPrice());
+				jsob2 = new JSONObject(hM);
+				jsar2.add(jsob2);
+			}for(int k=arr_3.size();k<5;k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label","");
+				hM.put("value","");
+				jsob2 = new JSONObject(hM);
+				jsar2.add(jsob2);
+			}
+			
+			finaljsob.put("t_t_count_m", t_count);
+			finaljsob.put("t_t_sell_m", t_sell);
+			finaljsob.put("t_p_count_m",jsar1);
+			finaljsob.put("t_c_cell_m",jsar2);
+			
+			out.print(finaljsob);
+		}catch(UnsupportedEncodingException e) {
+			System.out.println("인코딩 오류");
+			e.printStackTrace();
+		}catch(IOException e) {
+			System.out.println("입출력 오류");
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("Change_status")
+	public void Change_status(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("utf-8");
+			response.setContentType("utf-8");
+			PrintWriter out = response.getWriter();
+			PurchaseDao dao = new PurchaseDao();
+			
+			String pn = request.getParameter("t_purchase_no");
+			pn = pn.substring(0, 6)+"_"+pn.substring(6);
+			
+			int k = dao.changeStatus(pn,request.getParameter("t_status"));
+			out.print(k);
+		}catch(UnsupportedEncodingException e) {
+			System.out.println("인코딩 오류");
+			e.printStackTrace();
+		}catch(IOException e) {
+			System.out.println("입출력 오류");
+			e.printStackTrace();
+		}
 	}
 }

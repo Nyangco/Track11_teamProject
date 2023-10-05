@@ -7,35 +7,42 @@
 		purchase.method="post";
 		purchase.action="/team/";
 		purchase.submit();
+	}function alertSelect(){
+		if(purchase.t_select.value=="status"){
+			alert("0:입금 대기중\n1:결제 완료\n2:배송 대기중\n3:배송중\n4:배송완료\n5:구매 완료\n6:반품 대기중\n7:반품 완료\n8:교환 대기중\n9:교환 완료");
+		}
+	}function goSearch(){
+		purchase.t_nowPage.value="1";
+		purchase.t_gubun.value="purchase_list";
+		purchase.method="post";
+		purchase.action="/team/";
+		purchase.submit();
+	}function goPaging(pn){
+		purchase.t_nowPage.value=pn;
+		purchase.t_gubun.value="purchase_list";
+		purchase.method="post";
+		purchase.action="/team/";
+		purchase.submit();
 	}
 </script>
-<form name="purchase">
-	<input type="hidden" name="t_gubun" value="purchase_detail">
-	<input type="hidden" name="t_purchase_no">
-</form>
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<header>
-								<div id="tags">
-									<div class="tag_box">
-										<span>#태그1</span>
-										<span>#태그2</span>
-										<span>#태그3</span>
-										<span>#태그4</span>
-										<span>#태그5</span>
-										<span style="float:right;border-right:1px solid white;border-left:1px solid gray;">장바구니</span>
-									</div>
-								</div>	
-							</header>
 							<section class="">
-								<div class="main_title">
-									<h1>구매 이력</h1>
-									<input type="text" placeholder="검색어를 입력하세요" class="search" style="width:300px;float:right;margin-left:0.5em;">
-									<select style="width:170px;float:right;margin-left:0.5em;">
-										<option>가나다라마바사</option>
-									</select>
-								</div>
+								<form name="purchase">
+									<input type="hidden" name="t_gubun" value="purchase_detail">
+									<input type="hidden" name="t_purchase_no">
+									<input type="hidden" name="t_nowPage" value="${t_nowPage }">
+									<div class="main_title">
+										<h1>구매 이력</h1>
+										<a href="javascript:" onclick="goSearch()" style="float:right;font-size:27px;margin-left:0.25em;"><i class="fa-solid fa-magnifying-glass"></i></a>
+										<input type="text" name="t_search" onkeypress="if(event.keycode==13){goSearch()}" placeholder="검색어를 입력하세요" class="search" style="width:300px;float:right;margin-left:0.5em;">
+										<select onchange="alertSelect()" name="t_select" style="width:170px;float:right;margin-left:0.5em;">
+											<option value="purchase_no">구매번호</option>
+											<option value="status">배송상태</option>
+										</select>
+									</div>
+								</form>
 							</section>
 							<section class="lines">
 								<article>
@@ -79,6 +86,9 @@
 									</table>
 								</article>
 							</section>
+							<div class="paging">
+								${t_paging }
+							</div>
 						</div>
 					</div>
 <%@ include file="../Common_footer.jsp"%>
