@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import command.faq.DBfaq_delete;
 import command.faq.DBfaq_write;
 import command.faq.Faq_detail;
 import command.faq.Faq_list;
@@ -150,8 +151,12 @@ public class HomeController {
 			ce.execute(model, mdto, session);
 			page = "board/faq_list";
 		}else if(gubun.equals("faq_update")) {
-
+			CommonExecute ce = new Faq_detail();
+			ce.execute(model, mdto, session);	
 			page = "board/faq_update";
+		}else if(gubun.equals("faq_delete")) {
+			CommonExecute ce = new DBfaq_delete();
+			ce.execute(model, mdto, session);
 		}else if(gubun.equals("faq_write")) {
 			CommonExecute ce = new Faq_write();
 			ce.execute(model, mdto, session);

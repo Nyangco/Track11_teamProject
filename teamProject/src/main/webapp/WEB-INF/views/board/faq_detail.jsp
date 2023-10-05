@@ -59,8 +59,8 @@
 										</tr>
 										<tr>
 											<td colspan="4">
-												<input type="button" value="수정" onclick="goWork('faq_update','Board')">
-												<input type="button" value="삭제" onclick="goDelete()">
+												<input type="button" value="수정" onclick="goUpdate('${t_dto.getFaq_no()}')">
+												<input type="button" value="삭제" onclick="goDelete('${t_dto.getFaq_no()}')">
 											</td>
 										</tr>
 									</table>

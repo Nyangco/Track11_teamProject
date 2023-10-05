@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import common.CommonTemplate;
+import common.CommonUtil;
 import dto.FaqDto;
 import dto.ModelDto;
 
@@ -59,7 +60,7 @@ public class FaqDao {
 
 	public Object detail(ModelDto mdto) {
 		FaqDto dto = null;
-		String sql = "select question,answer,\r\n" + 
+		String sql = "select faq_no,question,answer,\r\n" + 
 				"to_char(to_date(reg_date),'yyyy-mm-dd') reg_date\r\n" + 
 				"from pjt_shop_faq\r\n" + 
 				"where faq_no = '"+mdto.getT_faq_no()+"'\r\n" + 
@@ -72,6 +73,35 @@ public class FaqDao {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	public int faq_update(ModelDto mdto) {
+		int k = 0;
+		String sql = "update pjt_shop_faq \r\n" + 
+				"set question = '"+mdto.getT_question()+"',\r\n" + 
+				"    answer = '"+mdto.getT_answer()+"'\r\n" + 
+				"where faq_no = '"+mdto.getT_faq_no()+"'";
+		try {
+				k = temp.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("faq_update:"+sql);
+			e.printStackTrace();
+		}		
+		return k;
+	}
+
+	public int qna_delete(ModelDto mdto) {
+		int k = 0;
+		String sql = "delete pjt_shop_faq\r\n" + 
+				"where faq_no ='"+mdto.getT_faq_no()+"'";
+		System.out.println(sql);
+		try {
+				k = temp.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("qna_delete:"+sql);
+			e.printStackTrace();
+		}		
+		return k;
 	}
 
 }
