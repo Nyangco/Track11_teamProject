@@ -13,7 +13,15 @@ public class ModelDto {
 	
 	//purchase
 	private String t_count, t_receive_name, t_receive_tel1, t_receive_tel2, t_receive_tel3, t_receive_memo, t_pay_method, 
-					t_pay_name, t_cash_receipt, t_cash_recipt_number, t_purchase_no, t_bd;
+					t_pay_name, t_cash_receipt, t_cash_recipt_number, t_purchase_no, t_bd, t_total;
+
+	public String getT_total() {
+		return t_total;
+	}
+
+	public void setT_total(String t_total) {
+		this.t_total = t_total;
+	}
 
 	public String getT_nowPage() {
 		return t_nowPage;

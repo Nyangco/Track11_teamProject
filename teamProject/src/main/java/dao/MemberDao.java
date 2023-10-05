@@ -18,6 +18,22 @@ public class MemberDao {
 
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
+	public int refund(ModelDto mdto) {
+		int k = 0;
+		int status = 0;
+		if(mdto.getT_select().equals("refund")) status=6;
+		else status=8;
+		String sql = "update pjt_shop_purchase set reason='"+mdto.getT_search()+"', status="+status+" "
+				+ "where purchase_no='"+mdto.getT_purchase_no()+"'";
+		try {
+			k = template.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("refund:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
 	public MemberDto purchase(String id) {
 		MemberDto dto = null;
 		String sql = "select id,name,contact,email,addr1,addr2,addr3 from pjt_shop_member where id='"+id+"'";

@@ -23,13 +23,19 @@ public class DBpurchase {
 			cnt[k]=request.getParameter("t_count_"+(k+1));
 		}
 		String purchase_no = dao.purchaseSave(mdto,pn,cnt,request.getParameter("t_bd"));
-		String msg = "구매에 실패했습니다. 다시 구매해주세요.";
+		String msg = "주문에 실패했습니다. 다시 구매해주세요.";
 		String url = "detail";
 		
 		if(purchase_no!=null) {
-			msg = "구매 성공!";
+			String pm = mdto.getT_pay_method();
+			msg = "주문에 성공했습니다.\\n주문번호:"+purchase_no;
+			if(pm.equals("cash")) {
+				msg+="\\n입금 계좌:012345-67-890123";
+			}
 			url = "purchase_complete";
 			model.addAttribute("t_purchase_no",purchase_no);
+			model.addAttribute("t_pay_method",pm);
+			model.addAttribute("t_total",mdto.getT_total());
 		}else {
 			model.addAttribute("t_product_no",product_no);
 		}

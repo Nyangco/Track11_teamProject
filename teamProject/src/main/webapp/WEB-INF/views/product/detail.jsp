@@ -52,13 +52,6 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<header>
-								<div id="tags">
-									<div class="tag_box">
-										<span style="float:right;border-right:1px solid white;border-left:1px solid gray;">장바구니</span>
-									</div>
-								</div>	
-							</header>
 							<section class="">
 								<div class="main_title">
 									<h1>Detail</h1>
@@ -89,16 +82,16 @@
 									<input type="hidden" name="t_id" value="${sId }">
 									<input type="hidden" name="t_bd" value="detail">
 									<div class="merchan_title">상품 </div>
-									<div>제품명<div>${dto.getName() }</div></div>
-									<div>가격<div id="price">${dto.getPrice() }</div></div>
-									<div class="merchan_number">개수
+									<div><span>제품명</span><div>${dto.getName() }</div></div>
+									<div><span>가격</span><div id="price">${dto.getPrice() }</div></div>
+									<div class="merchan_number"><span>개수</span>
 										<div>
 											<div onclick="minus()"><i class="fa-solid fa-square-minus fa-2xl"></i></div>
 											<input type="text" value="1" class="merchan_count" name="t_count" onchange="check_merchan_count()">
 											<div onclick="plus()"><i class="fa-solid fa-square-plus fa-2xl"></i></div>
 										</div>
 									</div>
-									<div><span style="width:30%;display:inline-block;">총 금액</span><input type="text" name="t_total" readonly id="t_total" value="${dto.getPrice() }" style="width:70%;display:inline-block;"></div>
+									<div><span>총 금액</span><input type="text" name="t_total" readonly id="t_total" value="${dto.getPrice() }" style="width:70%;display:inline-block;"></div>
 									<div class="merchan_butt">
 										<input type="button" onclick="goPurchase()" value="구매">
 										<input type="button" onclick="goBucket()" value="장바구니">

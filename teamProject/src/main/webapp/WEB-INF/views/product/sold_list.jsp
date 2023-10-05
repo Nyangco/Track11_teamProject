@@ -13,13 +13,13 @@
 		}
 	}function goSearch(){
 		purchase.t_nowPage.value="1";
-		purchase.t_gubun.value="purchase_list";
+		purchase.t_gubun.value="sold_list";
 		purchase.method="post";
 		purchase.action="/team/";
 		purchase.submit();
 	}function goPaging(pn){
 		purchase.t_nowPage.value=pn;
-		purchase.t_gubun.value="purchase_list";
+		purchase.t_gubun.value="sold_list";
 		purchase.method="post";
 		purchase.action="/team/";
 		purchase.submit();
@@ -30,11 +30,11 @@
 						<div class="inner">
 							<section class="">
 								<form name="purchase">
-									<input type="hidden" name="t_gubun" value="purchase_detail">
+									<input type="hidden" name="t_gubun" value="sold_detail">
 									<input type="hidden" name="t_purchase_no">
 									<input type="hidden" name="t_nowPage" value="${t_nowPage }">
 									<div class="main_title">
-										<h1>구매 이력</h1>
+										<h1>판매 관리</h1>
 										<a href="javascript:" onclick="goSearch()" style="float:right;font-size:27px;margin-left:0.25em;"><i class="fa-solid fa-magnifying-glass"></i></a>
 										<input type="text" name="t_search" onkeypress="if(event.keycode==13){goSearch()}" placeholder="검색어를 입력하세요" class="search" style="width:300px;float:right;margin-left:0.5em;">
 										<select onchange="alertSelect()" name="t_select" style="width:170px;float:right;margin-left:0.5em;">
@@ -84,6 +84,7 @@
 											</tr>
 										</c:forEach>
 									</table>
+									<input type="button" value="상품 관리" onclick="goPage('manage_list')" style="margin-top:10px;float:right;">
 								</article>
 							</section>
 							<div class="paging">

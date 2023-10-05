@@ -3400,6 +3400,7 @@ table{
 	top: 15%;
 	width: 30%;
 	background-color: beige;
+	padding-bottom:1em;
 }
 
 .detail_img{
@@ -3469,14 +3470,18 @@ table{
 }
 
 .side_bar>div>div{
-	float:right;
-	display:block;
+	display:inline-block;
 	width:70%;
 	font-size:16px;
 	text-align:left;
 	color:#666;	
 	margin: 2px 0;	
 	padding:0 0 0 5px;
+}
+
+.side_bar>div>span{
+	width:25%;
+	display:inline-block;
 }
 
 .side_bar select{
@@ -3656,4 +3661,31 @@ table{
 
 body{
 	background-color:#F8E0E6;
+}
+
+.paging{
+	text-align:center;
+	font-size:25px;
+}
+
+.paging a{
+	margin:20px 5px;
+}
+
+.viewpage h2{
+	font-size:0.9em;
+	font-weight:700;
+	color:#000;
+	line-height:1.2;
+}
+
+.viewpage p{
+	font-size:1.1em;
+	font-weight:900;
+	color:#F99;
+}
+
+.viewpage h2:hover{
+	transition:0.5s;
+	color:#FFF;	
 }

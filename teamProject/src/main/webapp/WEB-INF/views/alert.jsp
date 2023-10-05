@@ -11,6 +11,8 @@
 		<input type="hidden" name="t_gubun" value="${url }">
 		<input type="hidden" name="t_product_no" value="${t_product_no }">
 		<input type="hidden" name="t_purchase_no" value="${t_purchase_no }">
+		<input type="hidden" name="t_pay_method" value="${t_pay_method }">
+		<input type="hidden" name="t_total" value="${t_total }">
 	</form>
 </body>
 <script>

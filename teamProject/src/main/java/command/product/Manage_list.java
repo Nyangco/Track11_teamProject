@@ -32,6 +32,7 @@ public class Manage_list implements CommonExecute {
 		int pageNumber_count = 3;  //한페이지당 출력 페이지 갯수
 		
 		String nowPage = mdto.getT_nowPage();
+		model.addAttribute("t_nowPage",nowPage);
 		int current_page = 0; // 현재페이지 번호
 		int total_page = 0;    // 전체 페이지 수
 		

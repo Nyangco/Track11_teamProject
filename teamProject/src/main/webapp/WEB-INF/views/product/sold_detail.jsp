@@ -2,12 +2,24 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
 <script>
-	function goList(){
-		location.href='purchase_list.jsp';
-	}function goRefund(){
-		mem.method="post";
-		mem.action="/team/";
-		mem.submit();
+	function goChange(pn){
+		console.log(${t_purchase_no});
+		$.ajax({
+			type:'post',
+			url:'Change_status',
+			data:'t_purchase_no='+${t_purchase_no}+'&t_status='+pn,
+			dataType:'text',
+			error : function(){
+				alert('통신 실패');
+			},
+			success : function(data){
+				if(Number(data)==1){
+					alert('배송상태 변경에 성공했습니다');
+				}else{
+					alert('배송상태 변경에 실패했습니다');
+				}
+			}
+		})
 	}
 </script>
 				<!-- Main -->
@@ -18,8 +30,6 @@
 							<section class="purchase_detail">
 								<div>
 									<form name="mem">
-										<input type="hidden" name="t_gubun" value="refund">
-										<input type="hidden" name="t_purchase_no" value="${t_dto.getPurchase_no() }">
 										<fieldset>
 											<legend>상세 보기</legend>
 											<table style="width:80%">
@@ -68,6 +78,23 @@
 													<td colspan="3">(${t_dto.getReceiver_addr1() })${t_dto.getReceiver_addr2() }<br>${t_dto.getReceiver_addr3() }</td>
 												</tr>
 												<tr>
+													<th>배송상태</th>
+													<td colspan="3">
+														<select name="t_status" onchange="goChange(this.value)">
+															<option value="0" <c:if test="${t_dto.getStatus() eq '0' }">selected</c:if>>입금 대기중</option>
+															<option value="1" <c:if test="${t_dto.getStatus() eq '1' }">selected</c:if>>결제 완료</option>
+															<option value="2" <c:if test="${t_dto.getStatus() eq '2' }">selected</c:if>>배송 대기중</option>
+															<option value="3" <c:if test="${t_dto.getStatus() eq '3' }">selected</c:if>>배송중</option>
+															<option value="4" <c:if test="${t_dto.getStatus() eq '4' }">selected</c:if>>배송완료</option>
+															<option value="5" <c:if test="${t_dto.getStatus() eq '5' }">selected</c:if>>구매 완료</option>
+															<option value="6" <c:if test="${t_dto.getStatus() eq '6' }">selected</c:if>>반품 대기중</option>
+															<option value="7" <c:if test="${t_dto.getStatus() eq '7' }">selected</c:if>>반품 완료</option>
+															<option value="8" <c:if test="${t_dto.getStatus() eq '8' }">selected</c:if>>교환 대기중</option>
+															<option value="9" <c:if test="${t_dto.getStatus() eq '9' }">selected</c:if>>교환 완료</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
 													<th>배송메모</th>
 													<td colspan="3">${t_dto.getDelivery_memo() }</td>
 												</tr>
@@ -92,7 +119,6 @@
 												<tr>
 													<th colspan="4" style="padding-top:0.75em;text-align:center;">
 														<input type="button" value="목록으로" onclick="goPage('purchase_list')" style="display:inline-block;">
-														<input type="button" value="반품/교환" onclick="goRefund()" style="display:inline-block;">
 													</th>
 												</tr>
 											</table>

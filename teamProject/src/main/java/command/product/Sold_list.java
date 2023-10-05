@@ -1,4 +1,4 @@
-package command.member;
+package command.product;
 
 
 import java.util.ArrayList;
@@ -9,11 +9,12 @@ import org.springframework.ui.Model;
 
 import common.CommonExecute;
 import common.CommonUtil;
+import dao.ProductDao;
 import dao.PurchaseDao;
 import dto.DetailDto;
 import dto.ModelDto;
 
-public class Purchase_list implements CommonExecute {
+public class Sold_list implements CommonExecute {
 
 	@Override
 	public void execute(Model model, ModelDto mdto, HttpSession session) {
@@ -52,7 +53,7 @@ public class Purchase_list implements CommonExecute {
 		
 		model.addAttribute("t_paging", CommonUtil.pageListPost(current_page, total_page, pageNumber_count));
 
-		model.addAttribute("t_arr", dao.purchase_list((String)session.getAttribute("sId"),select,search,start,end));
+		model.addAttribute("t_arr", dao.purchase_list(select,search,start,end));
 
 		int k = total_count - (current_page -1) * list_setup_count;
 		model.addAttribute("t_order", k);

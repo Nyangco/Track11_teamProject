@@ -65,13 +65,6 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<header>
-								<div id="tags">
-									<div class="tag_box">
-										<span style="float:right;border-right:1px solid white;border-left:1px solid gray;">장바구니</span>
-									</div>
-								</div>	
-							</header>
 							<section class="">
 								<div class="main_title">
 									<h1>구매 페이지</h1>
@@ -205,7 +198,7 @@
 											</colgroup>
 											<tr>
 												<th>주문 금액</th>
-												<td>${t_total }</td>
+												<td><input type="text" name="t_total" value="${t_total }" readonly></td>
 											</tr>
 											<tr>
 												<th>결제 수단 선택</th>
@@ -236,6 +229,7 @@
 										</table>
 										<div class="btn_group">
 											<input type="button" value="결제하기" onclick="goBuy()">
+											<input type="button" value="뒤로가기" onclick="history.go(-1)">;
 										</div>
 									</div>
 								</form>
