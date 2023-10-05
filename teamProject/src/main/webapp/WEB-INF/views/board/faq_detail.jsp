@@ -2,14 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
 <script>
-	function goUpdate(){
-		location.href='faq_update.jsp';
-	}function goDelete(){
+	function goUpdate(no){
+		faqWork.t_gubun.value="faq_update";
+		faqWork.t_faq_no.value= no;
+		faqWork.method="post";
+		faqWork.action="/team/";
+		faqWork.submit();
+	}
+	function goDelete(no){
 		if(confirm("정말로 삭제하시겠습니까?")){
-			location.href='faq_list.jsp';
+			faqWork.t_gubun.value="faq_delete";
+			faqWork.t_faq_no.value= no;
+			faqWork.method="post";
+			faqWork.action="/team/";
+			faqWork.submit();
 		}
 	}
 </script>
+<form name="faqWork">
+	<input type="hidden" name="t_gubun">
+	<input type="hidden" name="t_faq_no">
+</form>
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
@@ -18,11 +31,7 @@
 							</header>
 							<section class="">
 								<div class="main_title">
-									<h1>FAQ</h1>
-									<input type="text" placeholder="검색어를 입력하세요" class="search" style="width:300px;float:right;margin-left:0.5em;">
-									<select style="width:170px;float:right;margin-left:0.5em;">
-										<option>가나다라마바사</option>
-									</select>
+									<h1>FAQ Detail</h1>
 								</div>
 							</section>
 							<section class="border_detail">
@@ -36,22 +45,22 @@
 										</colgroup>
 										<tr>
 											<th>제목</th>
-											<td colspan="3">오늘 아침 추천좀</td>
+											<td colspan="3">${t_dto.getQuestion()}</td>
 										</tr>
 										<tr>
 											<th>글 내용</th>
-											<td colspan="3"><textarea readonly style="resize:none;width:100%;padding-bottom:300px;">오늘 아침 추천좀 해주세요.</textarea></td>
+											<td colspan="3"><textarea readonly style="resize:none;width:100%;padding-bottom:300px;">${t_dto.getAnswer()}</textarea></td>
 										</tr>
 										<tr>
 											<th>작성자</th>
-											<td>작성자1</td>
+											<td>매니저</td>
 											<th>작성일</th>
-											<td>2020-80-94</td>
+											<td>${t_dto.getReg_date()}</td>
 										</tr>
 										<tr>
 											<td colspan="4">
-												<input type="button" value="수정" onclick="goWork('faq_update','Board')">
-												<input type="button" value="삭제" onclick="goDelete()">
+												<input type="button" value="수정" onclick="goUpdate('${t_dto.getFaq_no()}')">
+												<input type="button" value="삭제" onclick="goDelete('${t_dto.getFaq_no()}')">
 											</td>
 										</tr>
 									</table>

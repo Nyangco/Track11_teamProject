@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import command.faq.DBfaq_delete;
+import command.faq.DBfaq_write;
+import command.faq.Faq_detail;
+import command.faq.Faq_list;
+import command.faq.Faq_write;
 import command.member.DBjoin;
 import command.member.DBlogin;
 import command.member.DBmember_update;
@@ -44,6 +49,12 @@ import command.purchase.Detail;
 import command.purchase.Purchase;
 import command.purchase.Purchase_complete;
 import command.purchase.Shop;
+import command.qna.DBqna_delete;
+import command.qna.DBqna_update;
+import command.qna.DBqna_write;
+import command.qna.Qna_detail;
+import command.qna.Qna_list;
+import command.qna.Qna_write;
 import common.CommonExecute;
 import common.CommonTemplate;
 import common.CommonUtil;
@@ -110,20 +121,38 @@ public class HomeController {
 			
 			//board
 			else if(gubun.equals("faq_detail")) {
-
+				CommonExecute ce = new Faq_detail();
+				ce.execute(model, mdto, session);
 				page = "board/faq_detail";
 			}else if(gubun.equals("faq_list")) {
-
+				CommonExecute ce = new Faq_list();
+				ce.execute(model, mdto, session);
 				page = "board/faq_list";
-			}else if(gubun.equals("free_board")) {
-
-				page = "board/free_board";
 			}else if(gubun.equals("qna_detail")) {
-
+				CommonExecute ce = new Qna_detail();
+				ce.execute(model, mdto, session);
 				page = "board/qna_detail";
 			}else if(gubun.equals("qna_list")) {
-
+				CommonExecute ce = new Qna_list();
+				ce.execute(model, mdto, session);
 				page = "board/qna_list";
+			}else if(gubun.equals("qna_update")) {
+				CommonExecute ce = new Qna_detail();
+				ce.execute(model, mdto, session);
+				page = "board/qna_update";
+			}else if(gubun.equals("DBqna_update")) {
+				CommonExecute ce = new DBqna_update();
+				ce.execute(model, mdto, session);
+			}else if(gubun.equals("qna_write")) {
+				CommonExecute ce = new Qna_write();
+				ce.execute(model, mdto, session);
+				page = "board/qna_write";
+			}else if(gubun.equals("DBqna_write")) {
+				CommonExecute ce = new DBqna_write();
+				ce.execute(model, mdto, session);
+			}else if(gubun.equals("qna_delete")) {
+				CommonExecute ce = new DBqna_delete();
+				ce.execute(model, mdto, session);
 			}
 			
 		//이메일 미인증 회원 접근 가능
@@ -230,17 +259,19 @@ public class HomeController {
 			
 			//board
 			else if(gubun.equals("faq_update")) {
-
+				CommonExecute ce = new Faq_detail();
+				ce.execute(model, mdto, session);	
 				page = "board/faq_update";
+			}else if(gubun.equals("faq_delete")) {
+				CommonExecute ce = new DBfaq_delete();
+				ce.execute(model, mdto, session);
 			}else if(gubun.equals("faq_write")) {
-
+				CommonExecute ce = new Faq_write();
+				ce.execute(model, mdto, session);
 				page = "board/faq_write";
-			}else if(gubun.equals("qna_update")) {
-
-				page = "board/qna_update";
-			}else if(gubun.equals("qna_write")) {
-
-				page = "board/qna_write";
+			}else if(gubun.equals("DBfaq_write")) {
+				CommonExecute ce = new DBfaq_write();
+				ce.execute(model, mdto, session);
 			}
 		}		
 		if(gubun.equals("root")) {
