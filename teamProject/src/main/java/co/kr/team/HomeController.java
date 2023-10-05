@@ -23,6 +23,7 @@ import command.product.DBmanage_update;
 import command.product.Manage_create;
 import command.product.Manage_detail;
 import command.product.Manage_list;
+import command.product.Statistics_list;
 import command.purchase.Basket;
 import command.purchase.DBbasket;
 import command.purchase.DBpurchase;
@@ -187,7 +188,8 @@ public class HomeController {
 				ce.execute(model, mdto, session);
 				page = "product/manage_list";
 			}else if(gubun.equals("manage_statistics")) {
-
+				CommonExecute ce = new Statistics_list();
+				ce.execute(model, mdto, session);
 				page = "product/manage_statistics";
 			}else if(gubun.equals("manage_update")) {
 				CommonExecute ce = new Manage_detail();

@@ -16,6 +16,7 @@
 		<script type="text/javascript" src="assets/js/jquery.min.js"></script>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script src="https://kit.fontawesome.com/34253ab9f2.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 	</head>
 	<script type="text/javascript">
 		function goPage(gubun){

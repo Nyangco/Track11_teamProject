@@ -2,8 +2,6 @@ package dao;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,10 +11,104 @@ import org.springframework.jdbc.core.RowMapper;
 import common.CommonTemplate;
 import dto.ModelDto;
 import dto.ProductDto;
+import dto.StatisticsDto;
 
 public class ProductDao {
 	
 	JdbcTemplate template = CommonTemplate.getTemplate();
+	
+	public ArrayList<StatisticsDto> getCC(String month){
+		ArrayList<StatisticsDto> arr = new ArrayList<>();
+		String sql4="select m.id, sum(pr.price*d.count) as price "
+					+ "from pjt_shop_member m, pjt_shop_product pr, pjt_shop_purchase pu, pjt_shop_purchase_detail d "
+					+ "where m.id=pu.buyer_id and pr.product_no=d.product_no and pu.purchase_no=d.purchase_no and "
+					+ "pu.status='5' and to_char(to_date(substr(pu.purchase_no,1,6),'yyMMdd'),'yyyy-MM')='"+month+"' "
+					+ "group by m.id";
+		
+		try {
+			RowMapper<StatisticsDto> rowMapper = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
+			arr = (ArrayList<StatisticsDto>)template.query(sql4, rowMapper);
+		}catch(DataAccessException e) {
+			System.out.println("getCC:"+sql4);
+			e.printStackTrace();
+		}return arr;
+	}
+	
+	public ArrayList<StatisticsDto> getCC(){
+		ArrayList<StatisticsDto> arr = new ArrayList<>();
+		String sql4="select m.id, sum(pr.price*d.count) as price from pjt_shop_member m, pjt_shop_product pr, "
+					+ "pjt_shop_purchase pu, pjt_shop_purchase_detail d where pu.status='5' and m.id=pu.buyer_id "
+					+ "and pr.product_no=d.product_no and pu.purchase_no=d.purchase_no group by m.id";
+		try {
+			RowMapper<StatisticsDto> rowMapper = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
+			arr = (ArrayList<StatisticsDto>)template.query(sql4, rowMapper);
+		}catch(DataAccessException e) {
+			System.out.println("getCC:"+sql4);
+			e.printStackTrace();
+		}return arr;
+	}
+	
+	public ArrayList<StatisticsDto> getPC(String month){
+		ArrayList<StatisticsDto> arr = new ArrayList<>();
+		String sql3="select d.product_no, count(d.product_no) as count from pjt_shop_purchase_detail d, "
+					+ "pjt_shop_purchase p where p.status='5' and d.purchase_no=p.purchase_no and "
+					+ "to_char(to_date(substr(p.purchase_no,1,6),'yyMMdd'),'yyyy-MM')='"+month+"' group by d.product_no;";
+		
+		try {
+			RowMapper<StatisticsDto> rowmap = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
+			arr = (ArrayList<StatisticsDto>)template.query(sql3, rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("getPC:"+sql3);
+			e.printStackTrace();
+		}return arr;
+	}
+	
+	public ArrayList<StatisticsDto> getPC(){
+		ArrayList<StatisticsDto> arr = new ArrayList<>();
+		String sql3="select d.product_no, count(d.product_no) as count from pjt_shop_purchase_detail d, pjt_shop_purchase p "
+					+ "where p.status='5' and d.purchase_no=p.purchase_no group by d.product_no";
+		
+		try {
+			RowMapper<StatisticsDto> rowmap = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
+			arr = (ArrayList<StatisticsDto>)template.query(sql3, rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("getPC:"+sql3);
+			e.printStackTrace();
+		}return arr;
+	}
+	
+	public ArrayList<String> getTC_TS(String month){
+		ArrayList<String> arr = new ArrayList<>();
+		String sql1="select count(*) as count from pjt_shop_purchase where status='5' and "
+				+ "to_char(to_date(substr(purchase_no,1,6),'yyMMdd'),'yyyy-mm')='"+month+"'";
+		String sql2="select sum(pr.price*d.count) as price from pjt_shop_purchase_detail d, "
+				+ "pjt_shop_product pr, pjt_shop_purchase pu where d.product_no=pr.product_no "
+				+ "and d.purchase_no=pu.purchase_no and pu.status='5' and "
+				+ "to_char(to_date(substr(pu.purchase_no,1,6),'yyMMdd'),'yyyy-mm')='"+month+"'"; 
+		try {
+			arr.add(template.queryForObject(sql1, String.class));
+			arr.add(template.queryForObject(sql2, String.class));
+		}catch(DataAccessException e) {
+			System.out.println("getTC_TS:\n sql1:"+sql1+"\n sql2:"+sql2);
+			e.printStackTrace();
+		}return arr;
+	}
+	
+	public ArrayList<String> getTC_TS(){
+		ArrayList<String> arr = new ArrayList<>();
+		String sql1="select count(*) as count from pjt_shop_purchase where status='5'";
+		String sql2="select sum(pr.price*d.count) as price from pjt_shop_purchase_detail d, "
+				+ "pjt_shop_product pr, pjt_shop_purchase pu where d.product_no=pr.product_no "
+				+ "and d.purchase_no=pu.purchase_no and pu.status='5'"; 
+		
+		try {
+			arr.add(template.queryForObject(sql1, String.class));
+			arr.add(template.queryForObject(sql2, String.class));
+		}catch(DataAccessException e) {
+			System.out.println("getTC_TS:\n sql1:"+sql1+"\n sql2:"+sql2);
+			e.printStackTrace();
+		}return arr;
+	}
 	
 	public ArrayList<ProductDto> shop_list(){
 		ArrayList<ProductDto> arr = new ArrayList<ProductDto>();
