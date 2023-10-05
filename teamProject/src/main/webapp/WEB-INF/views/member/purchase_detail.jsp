@@ -33,49 +33,58 @@
 													<th>갯수</th>
 													<th>총금액</th>
 												</tr>
-												<tr>
-													<td colspan="2"><a href="">어디로든 문</a></td>
-													<td>1</td>
-													<td>￦9,000,000,000</td>
-												</tr>
+												<c:forEach items="${t_arr }" var="dto">
+													<tr>
+														<td colspan="2"><a href="">${dto.getProduct_name() }</a></td>
+														<td>${dto.getProduct_count() }</td>
+														<td>${dto.getProduct_total() }</td>
+													</tr>
+												</c:forEach>
 												<tr>
 													<td colspan="3">배송비</td>
 													<td>￦2,500</td>
 												</tr>
 												<tr>
 													<td colspan="3">총 금액</td>
-													<td>￦9,000,002,500</td>
+													<td>${t_total }</td>
 												</tr>
 												<tr>
 													<th colspan="4" class="title">배송지 정보</th>
 												</tr>
 												<tr>
 													<th>수령인</th>
-													<td colspan="3">김개똥</td>
+													<td colspan="3">${t_dto.getReceiver_name() }</td>
 												</tr>
 												<tr>
 													<th>연락처</th>
-													<td colspan="3">012-3456-7890</td>
+													<td colspan="3">${t_dto.getReceiver_contact() }</td>
 												</tr>
 												<tr>
 													<th>배송지</th>
-													<td colspan="3">(03172)서울 종로구 세종대로 175 세종이야기</td>
+													<td colspan="3">(${t_dto.getReceiver_addr1() })${t_dto.getReceiver_addr2() }<br>${t_dto.getReceiver_addr3() }</td>
 												</tr>
 												<tr>
 													<th>배송메모</th>
-													<td colspan="3">-</td>
+													<td colspan="3">${t_dto.getDelivery_memo() }</td>
 												</tr>
 												<tr>
 													<th colspan="4" class="title">결제 정보</th>
 												</tr>
 												<tr>
 													<th>결제 수단</th>
-													<td colspan="3">현금</td>
+													<td colspan="3">
+														<c:choose>
+															<c:when test="${t_dto.getPay_method() eq 'cash' }">현금</c:when>
+															<c:when test="${t_dto.getPay_method() eq 'card' }">카드</c:when>
+														</c:choose>
+													</td>
 												</tr>
-												<tr>
-													<th>현금영수증</th>
-													<td colspan="3">소득공제(012-3456-7890)</td>
-												</tr>
+												<c:if test="${not empty t_dto.getCash_receipt() }">
+													<tr>
+														<th>현금영수증 번호</th>
+														<td colspan="3">${t_dto.getCash_receipt() }</td>
+													</tr>
+												</c:if>
 												<tr>
 													<th colspan="4" style="padding-top:0.75em;text-align:center;">
 														<input type="button" value="목록으로" onclick="goWork('purchase_list','Member')" style="display:inline-block;">

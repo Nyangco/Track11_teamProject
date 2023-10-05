@@ -18,18 +18,21 @@
 			mem.t_pw.focus();
 		}
 	}function goUpdate(){
-		if(checkValue(mem.t_id,999,"ID")) return;
-		else if(checkValue(mem.t_pw,999,"비밀번호")) return;
-		else if(checkValue(mem.t_name,999,"성함")) return;
-		else if(checkValue(mem.t_nickname,999,"닉네임")) return;
-		else if(checkValue(mem.t_email,999,"이메일")) return;
-		else if(checkValue(mem.t_tel1,999,"연락처")) return;
-		else if(checkValue(mem.t_tel2,999,"연락처")) return;
-		else if(checkValue(mem.t_tel3,999,"연락처")) return;
-		else if(checkValue(mem.t_postal,999,"주소지")) return;
-		else if(checkValue(mem.t_address,999,"주소지")) return;
+		if(checkValue(mem.t_id,20,"ID")) return;
+		else if(checkValue(mem.t_pw,64,"비밀번호")) return;
+		else if(checkValue(mem.t_name,20,"성함")) return;
+		else if(checkValue(mem.t_nickname,40,"닉네임")) return;
+		else if(checkValue(mem.t_email,100,"이메일")) return;
+		else if(checkValue(mem.t_tel1,3,"연락처")) return;
+		else if(checkValue(mem.t_tel2,4,"연락처")) return;
+		else if(checkValue(mem.t_tel3,4,"연락처")) return;
+		//else if(checkValue(mem.t_addr1,50,"주소지")) return;
+		//else if(checkValue(mem.t_addr2,50,"주소지")) return;
+		//else if(checkValue(mem.t_addr3,50,"주소지")) return;
 		else {
-			location.href='mypage.jsp';
+			mem.method="post";
+			mem.action="/team/"
+			mem.submit();
 		}
 	}function goReset(){
 		mem.reset();
@@ -44,16 +47,18 @@
 							<section class="">
 								<div>
 									<form name="mem">
+									<input type="hidden" name="t_gubun" value="DBmember_update">
 										<fieldset>
 											<legend>회원정보 수정</legend>
-											<table style="width:50%">
+											<table style="width:60%">
 												<colgroup>
-												
+													<col width="25%">
+													<col width="*">
 												</colgroup>
 												<tr>
 													<th>ID</th>
 													<td>
-														<input type="text" name="t_id" style="border:none;" value="manager" disabled>
+														<input type="text" name="t_id" style="border:none;" value="${sId }" readonly>
 													</td>	
 												</tr>
 												<tr>
@@ -62,33 +67,33 @@
 												</tr>
 												<tr>
 													<th>성함</th>
-													<td><input type="text" name="t_name" value="김개똥"></td>
+													<td><input type="text" name="t_name" value="${sName }"></td>
 												</tr>
 												<tr>
 													<th>닉네임</th>
 													<td>
-														<input type="text" name="t_nickname" style="width:55%;display:inline" value="홍길동">
-														<input type="button" onclick="" value="닉네임 중복 확인">
+														<input type="text" name="t_nickname" value="${t_dto.getNick() }">
 													</td>	
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="text" name="t_email" value="abc@naver.com"></td>
+													<td><input type="text" name="t_email" value="${t_dto.getEmail() }"></td>
 												</tr>
 												<tr>
 													<th>연락처</th>
 													<td>
-														<input type="text" name="t_tel1" style="width:30%;display:inline;" value="012"> - 
-														<input type="text" name="t_tel2" style="width:30%;display:inline;" value="3456"> - 
-														<input type="text" name="t_tel3" style="width:30%;display:inline;" value="7890"> 
+														<input type="text" name="t_tel1" style="width:30%;display:inline;" value="${fn:substring(t_dto.getContact(),0,3) }"> - 
+														<input type="text" name="t_tel2" style="width:30%;display:inline;" value="${fn:substring(t_dto.getContact(),4,8) }"> - 
+														<input type="text" name="t_tel3" style="width:30%;display:inline;" value="${fn:substring(t_dto.getContact(),9,13) }"> 
 													</td>
 												</tr>
 												<tr>
 													<th>주소지</th>
 													<td>
-														<input type="text" name="t_postal" value="(03172)" style="width:70%;display:inline" readonly >
+														<input type="text" name="t_addr1" value="${t_dto.getAddr1() }" placeholder="주소 검색을 클릭해주세요" style="width:70%;display:inline" readonly>
 														<input type="button" onclick="" value="주소 검색">
-														<input type="text" name="t_address" readonly value="서울 종로구 세종대로 175 세종이야기">
+														<input type="text" name="t_addr2" value="${t_dto.getAddr2() }" readonly>
+														<input type="text" name="t_addr3" value="${t_dto.getAddr3() }" readonly>
 													</td>
 												</tr>
 												<tr></tr>

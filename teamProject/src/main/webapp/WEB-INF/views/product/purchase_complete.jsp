@@ -14,11 +14,11 @@
 							<section class="purchase_complete">
 								<div>
 									<h1>구매가 완료되었습니다.</h1>
-									<h6>구매 번호 : 2080940001</h6>
+									<h6>구매 번호 : ${t_purchase_no }</h6>
 									<p>배송에는 통상 2~3일 정도 소요됩니다.</p>
-									<p>자세한 사항은 구매 이력을 참조해주세요.</p>
+									<p>자세한 사항은 마이 페이지의 구매 이력을 참조해주세요.</p>
 								</div>
-								<div style="text-align:center;"><input type="button" value="홈으로" onclick="location.href='../index.jsp'"></div>
+								<div style="text-align:center;"><input type="button" value="홈으로" onclick="goPage('index')"></div>
 							</section>
 						</div>
 					</div>

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
 <script>
-	let chk = 1;
 	function checkValue(dir,len,obj){
 		if(dir.value==""){
 			alert(obj+"을/를 입력하세요");
@@ -13,18 +12,35 @@
 			dir.focus();
 			return true;
 		}else return false;
+	}function confirmValue(dir,len,obj){
+		if(dir.value==""){
+			alert(obj+"을/를 입력하세요");
+			dir.focus();
+			return true;
+		}else if(dir.value.length!=len){
+			alert(obj+"은/는 "+len+"자로 입력해주세요.");
+			dir.focus();
+			return true;
+		}else return false;
 	}function goSave(){
-		if(checkValue(manage.t_c_count,999,"상품번호")) return;
-		else if(checkValue(manage.t_c_name,999,"상품명")) return;
-		else if(checkValue(manage.t_c_price,999,"가격")) return;
-		else if(checkValue(manage.t_c_ori_country,999,"원산지")) return;
-		else if(checkValue(manage.t_c_sell_country,999,"판매국가")) return;
-		else if(checkValue(manage.t_c_reg_date,999,"등록일")) return;
-		else if(checkValue(manage.t_c_one_sent,999,"한줄 설명")) return;
-		else if(checkValue(manage.t_c_desc,999,"상세 설명")) return;
+		const extension = manage.t_images.value.substr(manage.t_images.value.indexOf(".")+1).toLowerCase();
+		if(checkValue(manage.t_images,80,"상품 이미지")) return;
+		else if(extension!="jpg"&&extension!="png"&&extension!="svg"&&extension!="gif"){
+			alert("확장자는 jpg, png, svg, gif만 가능합니다");
+			return;
+		}
+		else if(confirmValue(manage.t_product_no,5,"상품번호")) return;
+		else if(checkValue(manage.t_name,40,"상품명")) return;
+		else if(checkValue(manage.t_price,10,"가격")) return;
+		else if(checkValue(manage.t_stock,5,"재고")) return;
+		else if(checkValue(manage.t_origin_country,10,"원산지")) return;
+		else if(checkValue(manage.t_sell_country,10,"판매국가")) return;
+		else if(checkValue(manage.t_shop,10,"상품 구분")) return;
+		else if(checkValue(manage.t_one_sentence,100,"한줄 설명")) return;
+		else if(checkValue(manage.t_description,2000,"상세 설명")) return;
 		else {
 			manage.method="post";
-			manage.action="manage_list.jsp";
+			manage.action="/team/?t_gubun=DBmanage_create";
 			manage.submit();
 		}
 	}function goReset(){
@@ -33,33 +49,33 @@
 	}
 </script>
 <script type="text/javascript">
-	$(function(){					
-		function readImage(input) {
-			// 인풋 태그에 파일이 있는 경우
-			if(input.files && input.files[0]) {
-				// 이미지 파일인지 검사 (생략)
-				// FileReader 인스턴스 생성
-				const reader = new FileReader()
-				// 이미지가 로드가 된 경우
-				reader.onload = e => {
-					const previewImage = document.getElementById("preview-image")
-					previewImage.src = e.target.result;
-				}
-				// reader가 이미지 읽도록 하기
-				reader.readAsDataURL(input.files[0])
-			} else {
-				// 이미지 안올렸으면
-				$("#preview-image").attr('src','');
-				$("#preview-image").css("display","none");
-			}
-		}
-		// input file에 change 이벤트 부여
-		const inputImage = document.getElementById("input-image");
-		inputImage.addEventListener("change", e => {
-			$("#preview-image").css("display","block");
-			readImage(e.target)
-		})	
-	});	
+$(function(){					
+	function readImage(input) {
+	    // 인풋 태그에 파일이 있는 경우
+	    if(input.files && input.files[0]) {
+	        // 이미지 파일인지 검사 (생략)
+	        // FileReader 인스턴스 생성
+	        const reader = new FileReader();
+	        // 이미지가 로드가 된 경우
+	        reader.onload = e => {
+	            const previewImage = document.getElementById("preview-image");
+	            previewImage.src = e.target.result;
+	        }
+	        // reader가 이미지 읽도록 하기
+	        reader.readAsDataURL(input.files[0]);
+	    } else {
+	    	// 이미지 안올렸으면
+			$("#preview-image").attr('src','');
+			$("#preview-image").css("display","none");
+	    }
+	}
+	// input file에 change 이벤트 부여
+	const inputImage = document.getElementById("input-image");
+	inputImage.addEventListener("change", e => {
+		$("#preview-image").css("display","block");
+	    readImage(e.target);
+	})	
+});	
 </script>
 <style>
 	#preview-image {
@@ -78,64 +94,78 @@
 							</section>
 							<section class="">
 								<div>
-									<form name="manage">
+									<form name="manage" enctype="multipart/form-data">
 										<fieldset>
 											<table style="width:90%">
 												<colgroup>
-													<col width="47.5%">
 													<col width="10%">
-													<col width="*">
+													<col width="40%">
+													<col width="10%">
+													<col width="40%">
 												</colgroup>
 												<tr>
-													<td rowspan="6"><img id="preview-image" style="border:1px solid gray;display:none;height:400px;width:400px;"></td>
-													<th>상품번호</th>
-													<td>
-														<input type="text" name="t_c_count">
-													</td>	
+													<td colspan="4"><img id="preview-image" style="float:right;border:1px solid gray;display:none;width:100%;height:100%;"></td>
 												</tr>
 												<tr>
+													<td colspan="4"><span>이미지는 500px*500px 이상으로 등록해주세요</span><br><input type="file" class="input600" name="t_images" id="input-image" ></td>
+												</tr>
+												<tr>
+													<th>상품번호</th>
+													<td>
+														<input type="text" name="t_product_no" value="${product_no }" readonly>
+													</td>
 													<th>상품명</th>
 													<td>
-														<input type="text" name="t_c_name">
-													</td>													</tr>
+														<input type="text" name="t_name">
+													</td>	
+												</tr>
 												<tr>
 													<th>가격</th>
 													<td>
-														<input type="text" name="t_c_price">
-													</td>													</tr>
+														<input type="text" name="t_price">
+													</td>
+													<th>재고</th>
+													<td>
+														<input type="text" name="t_stock" >
+													</td>
+												</tr>
 												<tr>
 													<th>원산지</th>
 													<td>
-														<input type="text" name="t_c_ori_country" >
+														<input type="text" name="t_origin_country" >
 													</td>
-												</tr>
-												<tr>
 													<th>판매국가</th>
 													<td>
-														<input type="text" name="t_c_sell_country" >
+														<input type="text" name="t_sell_country" >
 													</td>	
 												</tr>
 												<tr>
+													<th>상품구분</th>
+													<td>
+														<select name="t_shop">
+															<option value="">상품 구분</option>
+															<c:forEach items="${t_shop }" var="dto">
+																<option value="${dto.getShop() }">${dto.getShop() }</option>
+															</c:forEach>
+														</select>
+													</td>
 													<th>등록일</th>
 													<td>
-														<input type="text" name="t_c_reg_date" >
-													</td>
+														${t_today }
+													</td>	
 												</tr>
 												<tr>
-													<td><input type="file" class="input600" name="t_attach" id="input-image"></td>
 													<th>한줄 설명</th>
-													<td>
-														<input type="text" name="t_c_one_sent" >
+													<td colspan="3">
+														<input type="text" name="t_one_sentence" >
 													</td>
 												</tr>
 												<tr>
-													<th colspan="3" style="text-align:center;font-size:24px;">상세 설명</th>
+													<th>상세 설명</th>
+													<td colspan="3"><textarea name="t_description"></textarea></td>
 												</tr>
 												<tr>
-													<td colspan="3"><textarea name="t_c_desc"></textarea></td>
-												</tr>
-												<tr>
-													<th colspan="3" style="padding-top:0.75em;text-align:center;">
+													<th colspan="4" style="padding-top:0.75em;text-align:center;">
 														<input type="button" value="상품 등록" onclick="goSave()" style="display:inline-block;">
 														<input type="button" value="다시 쓰기" onclick="goReset()" style="display:inline-block;">
 													</th>
