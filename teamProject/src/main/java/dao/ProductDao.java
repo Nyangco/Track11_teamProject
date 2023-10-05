@@ -17,6 +17,18 @@ public class ProductDao {
 	
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
+	public int totalCountDB(String select, String search) {
+		int k = 0;
+		String sql = "select count(*) from pjt_shop_product where "+select+" like '%"+search+"%'";
+		try {
+			k = template.queryForInt(sql);
+		}catch(DataAccessException e) {
+			System.out.println("totalCountDB:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
 	public ArrayList<StatisticsDto> getCC(String month){
 		ArrayList<StatisticsDto> arr = new ArrayList<>();
 		String sql4="select m.id, sum(pr.price*d.count) as price "
@@ -50,9 +62,10 @@ public class ProductDao {
 	
 	public ArrayList<StatisticsDto> getPC(String month){
 		ArrayList<StatisticsDto> arr = new ArrayList<>();
-		String sql3="select d.product_no, count(d.product_no) as count from pjt_shop_purchase_detail d, "
-					+ "pjt_shop_purchase p where p.status='5' and d.purchase_no=p.purchase_no and "
-					+ "to_char(to_date(substr(p.purchase_no,1,6),'yyMMdd'),'yyyy-MM')='"+month+"' group by d.product_no;";
+		String sql3="select d.product_no, count(d.product_no) as count from pjt_shop_purchase_detail d, pjt_shop_purchase p "
+					+ "where p.status='5' and d.purchase_no=p.purchase_no "
+					+ "and to_char(to_date(substr(p.purchase_no,1,6),'yyMMdd'),'yyyy-MM')='"+month+"' "
+					+ "group by d.product_no";
 		
 		try {
 			RowMapper<StatisticsDto> rowmap = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
@@ -155,17 +168,12 @@ public class ProductDao {
 		return dto;
 	}
 	
-	public ArrayList<ProductDto> listDB(ModelDto dto){
+	public ArrayList<ProductDto> listDB(String select, String search, int start, int end){
 		ArrayList<ProductDto> arr = new ArrayList<ProductDto>();
-		String select = dto.getT_select();
-		String search = dto.getT_search();
-		if(select==null) {
-			select = "product_no";
-			search = "";
-		}
-		String sql = "select product_no, name, to_char(price,'999,999,999,999l') price, "
-					+ "to_char(reg_date,'yyyy-MM-dd') reg_date, status from pjt_shop_product "
-					+ "where "+select+" like '%"+search+"%' order by product_no";
+		String sql = "select * from (select rownum as rnum, tbl.* from "
+				+ "(select product_no, name, to_char(price,'999,999,999,999l') price, to_char(reg_date,'yyyy-MM-dd') reg_date, "
+				+ "status from pjt_shop_product where "+select+" like '%"+search+"%' order by product_no) tbl) "
+				+ "where rnum<="+end+" and rnum>="+start;
 		try {
 			RowMapper<ProductDto> rowmap = new BeanPropertyRowMapper<ProductDto>(ProductDto.class);
 			arr = (ArrayList<ProductDto>)template.query(sql, rowmap);

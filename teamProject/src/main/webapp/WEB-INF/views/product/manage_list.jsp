@@ -74,6 +74,9 @@
 									</table>
 								</article>
 							</section>
+							<div class="paging">
+								${t_paging }
+							</div>
 							<div class="btn_group sell">
 								<input type="button" value="판매 통계" onclick="goPage('manage_statistics')">
 								<input type="button" value="신규 등록하기" onclick="goPage('manage_create')">

@@ -1,8 +1,17 @@
 package co.kr.team;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -34,7 +43,9 @@ import command.purchase.Shop;
 import common.CommonExecute;
 import common.CommonTemplate;
 import common.CommonUtil;
+import dao.ProductDao;
 import dto.ModelDto;
+import dto.StatisticsDto;
 
 /**
  * Handles requests for the application home page.
@@ -222,5 +233,72 @@ public class HomeController {
 			model.addAttribute("url","index");
 		}
 		return page;
+	}
+	
+	@RequestMapping("Statics_month")
+	public void Statistics(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("utf-8");
+			response.setContentType("utf-8");
+			PrintWriter out = response.getWriter();
+			ProductDao dao = new ProductDao();
+			
+			String month = request.getParameter("t_month");
+			
+			ArrayList<String> arr_1 = dao.getTC_TS(month);
+			ArrayList<StatisticsDto> arr_2 = dao.getPC(month);
+			ArrayList<StatisticsDto> arr_3 = dao.getCC(month);
+			String t_count = arr_1.get(0);
+			String t_sell = arr_1.get(1);
+			
+			HashMap<String, Object> hM = new HashMap<String, Object>();
+			JSONObject jsob1 = new JSONObject();
+			JSONObject jsob2 = new JSONObject();
+			JSONArray jsar1 = new JSONArray();
+			JSONArray jsar2 = new JSONArray();
+			JSONObject finaljsob = new JSONObject();
+			
+			for(int k=0; k<arr_2.size(); k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label",arr_2.get(k).getProduct_no());
+				hM.put("value",arr_2.get(k).getCount());
+				jsob1 = new JSONObject(hM);
+				jsar1.add(jsob1);
+			}for(int k=arr_2.size();k<5;k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label","");
+				hM.put("value","");
+				jsob1 = new JSONObject(hM);
+				jsar1.add(jsob1);
+			}
+			
+			
+			for(int k=0; k<arr_3.size(); k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label",arr_2.get(k).getId());
+				hM.put("value",arr_2.get(k).getPrice());
+				jsob2 = new JSONObject(hM);
+				jsar2.add(jsob2);
+			}for(int k=arr_3.size();k<5;k++) {
+				hM = new HashMap<String, Object>();
+				hM.put("label","");
+				hM.put("value","");
+				jsob2 = new JSONObject(hM);
+				jsar2.add(jsob2);
+			}
+			
+			finaljsob.put("t_t_count_m", t_count);
+			finaljsob.put("t_t_sell_m", t_sell);
+			finaljsob.put("t_p_count_m",jsar1);
+			finaljsob.put("t_c_cell_m",jsar2);
+			
+			out.print(finaljsob);
+		}catch(UnsupportedEncodingException e) {
+			System.out.println("인코딩 오류");
+			e.printStackTrace();
+		}catch(IOException e) {
+			System.out.println("입출력 오류");
+			e.printStackTrace();
+		}
 	}
 }

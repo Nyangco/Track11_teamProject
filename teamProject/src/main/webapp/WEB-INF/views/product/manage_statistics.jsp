@@ -122,6 +122,7 @@
 				var sell = comma(jsob.t_t_sell_m);
 				admin.t_count_m.value = count
 				admin.t_sell_m.value = sell;
+				console.log(jsob);
 				
 				var labels = jsob.t_p_count_m.map(function(e) {
 				   return e.label;

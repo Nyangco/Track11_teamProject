@@ -3,7 +3,7 @@ package dto;
 public class ModelDto {
 	
 	//공통 사용
-	private String t_gubun, t_select, t_search, t_shop;
+	private String t_gubun, t_select, t_search, t_shop, t_nowPage;
 
 	//DBSave
 	private String t_id, t_pw, t_name, t_nickname, t_email, t_tel1, t_tel2, t_tel3, t_addr1, t_addr2, t_addr3;
@@ -14,7 +14,15 @@ public class ModelDto {
 	//purchase
 	private String t_count, t_receive_name, t_receive_tel1, t_receive_tel2, t_receive_tel3, t_receive_memo, t_pay_method, 
 					t_pay_name, t_cash_receipt, t_cash_recipt_number, t_purchase_no, t_bd;
-	
+
+	public String getT_nowPage() {
+		return t_nowPage;
+	}
+
+	public void setT_nowPage(String t_nowPage) {
+		this.t_nowPage = t_nowPage;
+	}
+
 	public String getT_shop() {
 		return t_shop;
 	}
