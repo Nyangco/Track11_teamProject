@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../Common_header.jsp"%>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
 	function receipt_change(){
 		if($('#receipt_sel').val()!='n'){
