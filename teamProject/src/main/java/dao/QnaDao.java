@@ -45,7 +45,8 @@ public class QnaDao {
 	public ArrayList<QnaDto> getQnaList(String select, String search) {
 		ArrayList<QnaDto> dtos = new ArrayList<QnaDto>();
 		String query ="select q.qna_no,q.title,m.name,\r\n" + 
-				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date\r\n" + 
+				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date,\r\n" + 
+				"q.reply\r\n" + 
 				"from pjt_shop_qna q, pjt_shop_member m\r\n" + 
 				"where q.reg_id = m.id\r\n" + 
 				"and "+select+" like '%"+search+"%'\r\n" + 
@@ -62,8 +63,10 @@ public class QnaDao {
 	}
 	public QnaDto detail(ModelDto mdto) {
 		QnaDto dto = null;
-		String sql = "select q.qna_no,q.title,q.content,m.name,\r\n" + 
-				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date\r\n" + 
+		String sql = "select q.title,q.content,m.name,\r\n" + 
+				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date,\r\n" + 
+				"q.reply,\r\n" + 
+				"to_char(to_date(q.reply_date),'yyyy-mm-dd') reply_date\r\n" + 
 				"from pjt_shop_qna q, pjt_shop_member m\r\n" + 
 				"where q.reg_id = m.id\r\n" + 
 				"and q.qna_no = '"+mdto.getT_qna_no()+"'\r\n" + 
@@ -105,6 +108,21 @@ public class QnaDao {
 			System.out.println("qna_delete:"+sql);
 			e.printStackTrace();
 		}		
+		return k;
+	}
+
+	public int QnaReplyUpdate(ModelDto mdto, HttpSession session) {
+		int k =0;
+		String query="update pjt_shop_qna \r\n" + 
+				"set reply = '"+mdto.getT_reply()+"',\r\n" + 
+				"    reply_date = '"+mdto.getT_reply_date()+"'\r\n" + 
+				"where qna_no = '"+mdto.getT_qna_no()+"'";
+		try {
+			k = temp.update(query);
+		}catch(DataAccessException d){
+			System.out.println("QnaSave:"+query);
+			d.printStackTrace();
+		}
 		return k;
 	}
 	

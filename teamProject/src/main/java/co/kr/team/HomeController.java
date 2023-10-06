@@ -50,10 +50,12 @@ import command.purchase.Purchase;
 import command.purchase.Purchase_complete;
 import command.purchase.Shop;
 import command.qna.DBqna_delete;
+import command.qna.DBqna_reply;
 import command.qna.DBqna_update;
 import command.qna.DBqna_write;
 import command.qna.Qna_detail;
 import command.qna.Qna_list;
+import command.qna.Qna_reply;
 import command.qna.Qna_write;
 import common.CommonExecute;
 import common.CommonTemplate;
@@ -149,6 +151,13 @@ public class HomeController {
 				page = "board/qna_write";
 			}else if(gubun.equals("DBqna_write")) {
 				CommonExecute ce = new DBqna_write();
+				ce.execute(model, mdto, session);
+			}else if(gubun.equals("qna_reply")) {
+				CommonExecute ce = new Qna_reply();
+				ce.execute(model, mdto, session);
+				page = "board/qna_reply";
+			}else if(gubun.equals("DBqna_reply")) {
+				CommonExecute ce = new DBqna_reply();
 				ce.execute(model, mdto, session);
 			}else if(gubun.equals("qna_delete")) {
 				CommonExecute ce = new DBqna_delete();

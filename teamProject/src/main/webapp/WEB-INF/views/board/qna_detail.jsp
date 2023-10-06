@@ -18,10 +18,17 @@
 			qnaWork.submit();
 		}
 	}
+	function goReply(){
+		qnaWork.t_gubun.value="qna_reply";
+		//qnaWork.t_qna_no.value= no;
+		qnaWork.method="post";
+		qnaWork.action="/team/";
+		qnaWork.submit();
+	}
 </script>
 <form name="qnaWork">
 	<input type="hidden" name="t_gubun">
-	<input type="hidden" name="t_qna_no">
+	<input type="hidden" name="t_qna_no" value="${t_dto.getQna_no()}">
 </form>
 				<!-- Main -->
 					<div id="main">
@@ -57,11 +64,30 @@
 											<th>작성일</th>
 											<td>${t_dto.getReg_date()}</td>
 										</tr>
+										<c:if test="${not empty t_dto.getReply()}">
+										<tr>
+											<th colspan="4" style="text-align: center; border:none; "></th>
+										</tr>
+										<tr>
+											<th colspan="4" style="text-align: center;">답변</th>
+										</tr>
+										<tr>
+											<th>글 내용</th>
+											<td colspan="3"><textarea style="resize:none;width:100%;padding-bottom:300px;" name="t_reply">${t_dto.getReply()}</textarea></td>
+										</tr>
+										<tr>
+											<th>작성자</th>
+											<td>매니저</td>
+											<th>작성일</th>
+											<td>${t_dto.getReply_date()}</td>
+										</tr>
+										</c:if>
 										<c:if test="${t_dto.getName() == sName or sLevel eq '3' }">
 										<tr>
 											<td colspan="4">
 												<input type="button" value="수정" onclick="goUpdate('${t_dto.getQna_no()}')">
 												<input type="button" value="삭제" onclick="goDelete('${t_dto.getQna_no()}')">
+												<input type="button" value="답변" onclick="goReply()">
 											</td>
 										</tr>
 										</c:if>
