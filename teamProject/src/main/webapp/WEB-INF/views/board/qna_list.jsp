@@ -68,7 +68,9 @@
 										</tr>
 										</c:forEach>
 									</table>
+									<c:if test="${sLevel eq '1' }">
 									<input type="button" value="글쓰기" onclick="goWrite()" style="float:right; margin-top:10px;">
+									</c:if>
 								</article>
 							</section>
 						</div>

@@ -57,12 +57,14 @@
 											<th>작성일</th>
 											<td>${t_dto.getReg_date()}</td>
 										</tr>
+										<c:if test="${sLevel eq '3' }">
 										<tr>
 											<td colspan="4">
 												<input type="button" value="수정" onclick="goUpdate('${t_dto.getFaq_no()}')">
 												<input type="button" value="삭제" onclick="goDelete('${t_dto.getFaq_no()}')">
 											</td>
 										</tr>
+										</c:if>
 									</table>
 								</article>
 							</section>
