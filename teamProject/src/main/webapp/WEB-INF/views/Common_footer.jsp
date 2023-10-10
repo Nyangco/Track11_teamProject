@@ -3,23 +3,10 @@
 					<footer id="footer">
 						<div class="inner">							
 							<section>
-								<h2>이메일 문의</h2>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<input type="text" name="name" id="name" placeholder="Name" />
-										</div>
-										<div class="field half">
-											<input type="email" name="email" id="email" placeholder="Email" />
-										</div>
-										<div class="field">
-											<textarea name="message" id="message" placeholder="Message"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send" class="primary" /></li>
-									</ul>
-								</form>
+								<p>|<span onclick="location.reload()">개인 정보 보호 설정</span> | <span onclick="location.reload()">개인정보처리방침</span> | <span onclick="location.reload()">이용약관</span> |</p>
+								<p>JSL 인재개발원 대전 중구 계룡로 825 희영빌딩 5층, 7층 / 대표: 공석 |</p>
+								<p>사업자등록번호: 123-45-67890/ 통신판매업신고번호: 제2023-서울강남-9999호|</p>
+								<p>고객상담실 : 1234-5678|</p>
 							</section>
 							<section>
 								<h2>Follow</h2>

@@ -3689,3 +3689,7 @@ body{
 	transition:0.5s;
 	color:#FFF;	
 }
+
+#footer p{
+	text-align:center;
+}
