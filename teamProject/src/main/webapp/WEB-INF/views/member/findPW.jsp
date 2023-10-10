@@ -13,19 +13,11 @@
 			return true;
 		}else return false;
 	}function goPW(){
-		if(event.keyCode==13){
-			mem.t_pw.focus();
-		}
-	}function goNext(){
-		if(event.keyCode==13){
-			goLogin()
-		}
-	}function goLogin(){
-		if(checkValue(mem.t_id,10,"ID")) return;
-		else if(checkValue(mem.t_pw,64,"PW")) return;
-		else {
+		if(checkValue(mem.t_id,20,"ID"))return;
+		else if(checkValue(mem.t_email,100,"이메일"))return;
+		else{
 			mem.method="post";
-			mem.action="/team/"
+			mem.action="/team/";
 			mem.submit();
 		}
 	}
@@ -38,26 +30,22 @@
 							<section class="">
 								<div>
 									<form name="mem">
-									<input type="hidden" name="t_gubun" value="DBlogin">
+									<input type="hidden" name="t_gubun" value="DBfindPW">
 										<fieldset>
-											<legend>LogIn</legend>
+											<legend>비밀번호 찾기</legend>
 											<table style="width:35%">
-												<colgroup>
-												
-												</colgroup>
 												<tr>
 													<th>ID</th>
 													<td><input type="text" name="t_id" autofocus></td>
 												</tr>
 												<tr>
-													<th>PW</th>
-													<td><input type="password" name="t_pw"></td>
+													<th>Email</th>
+													<td><input type="text" name="t_email" autofocus></td>
 												</tr>
 												<tr>
 													<th colspan="2" style="padding-top:0.75em;text-align:center;">
-														<input type="button" value="로그인" onclick="goLogin()" style="margin:auto;display:inline-block;">
-														<input type="button" value="ID찾기" onclick="goID()" style="margin:auto;display:inline-block;">
 														<input type="button" value="PW찾기" onclick="goPW()" style="margin:auto;display:inline-block;">
+														<input type="button" value="돌아가기" onclick="javascript:history.go(-1)" style="margin:auto;display:inline-block;">
 													</th>
 												</tr>
 											</table>
