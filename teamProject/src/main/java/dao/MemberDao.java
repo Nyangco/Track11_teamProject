@@ -224,7 +224,7 @@ public class MemberDao {
 					+"','"+contact+"','"+mdto.getT_addr1()+"','"+mdto.getT_addr2()+"','"+mdto.getT_addr3()+"','"+uuid+"')";
 			k = template.update(sql);
 			if(k==1) {
-				String mailSet_Server="smtp.mail.nate.com"; // 보내는 메일 server
+				String mailSet_Server=Private.server; // 보내는 메일 server
 				String mailSet_ID=Private.id;        // 보내는 메일 ID
 				String mailSet_PW=Private.pw;        // 보내는 메일 비밀번호
 

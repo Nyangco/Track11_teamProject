@@ -25,7 +25,7 @@ public class DBfindID implements CommonExecute {
 		String id = dao.findID(email);
 		
 		if(id!=null) {
-			String mailSet_Server="smtp.mail.nate.com"; // 보내는 메일 server
+			String mailSet_Server=Private.server; // 보내는 메일 server
 			String mailSet_ID=Private.id;        // 보내는 메일 ID
 			String mailSet_PW=Private.pw;        // 보내는 메일 비밀번호
 
