@@ -63,7 +63,7 @@ public class QnaDao {
 	}
 	public QnaDto detail(ModelDto mdto) {
 		QnaDto dto = null;
-		String sql = "select q.title,q.content,m.name,\r\n" + 
+		String sql = "select q.qna_no,q.title,q.content,m.name,\r\n" + 
 				"to_char(to_date(q.reg_date),'yyyy-mm-dd') reg_date,\r\n" + 
 				"q.reply,\r\n" + 
 				"to_char(to_date(q.reply_date),'yyyy-mm-dd') reply_date\r\n" + 
