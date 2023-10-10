@@ -29,7 +29,6 @@ public class Qna_list implements CommonExecute {
 		model.addAttribute("t_dtos",dtos);
 		
 		
-		
 	}
 
 }
