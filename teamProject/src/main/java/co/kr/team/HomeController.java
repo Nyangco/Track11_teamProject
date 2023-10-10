@@ -25,6 +25,10 @@ import command.faq.DBfaq_write;
 import command.faq.Faq_detail;
 import command.faq.Faq_list;
 import command.faq.Faq_write;
+import command.member.DBchangePW;
+import command.member.DBconfirmEmail;
+import command.member.DBfindID;
+import command.member.DBfindPW;
 import command.member.DBjoin;
 import command.member.DBlogin;
 import command.member.DBmember_update;
@@ -119,6 +123,16 @@ public class HomeController {
 			}else if(gubun.equals("DBlogin")) {
 				CommonExecute ce = new DBlogin();
 				ce.execute(model, mdto, session);
+			}else if(gubun.equals("findID")) {
+				page = "member/findID";
+			}else if(gubun.equals("DBfindID")) {
+				CommonExecute ce = new DBfindID();
+				ce.execute(model, mdto, session);
+			}else if(gubun.equals("findPW")) {
+				page = "member/findPW";
+			}else if(gubun.equals("DBfindPW")) {
+				CommonExecute ce = new DBfindPW();
+				ce.execute(model, mdto, session);
 			}
 			
 			//board
@@ -181,6 +195,16 @@ public class HomeController {
 				page = "member/member_update";
 			}else if(gubun.equals("DBmember_update")) {
 				CommonExecute ce = new DBmember_update();
+				ce.execute(model, mdto, session);
+			}else if(gubun.equals("changePW")) {
+				page = "member/member_changePW";
+			}else if(gubun.equals("DBchangePW")) {
+				CommonExecute ce = new DBchangePW();
+				ce.execute(model, mdto, session);
+			}else if(gubun.equals("confirmEmail")) {
+				page = "member/member_confirmEmail";
+			}else if(gubun.equals("DBconfirmEmail")) {
+				CommonExecute ce = new DBconfirmEmail();
 				ce.execute(model, mdto, session);
 			}
 			

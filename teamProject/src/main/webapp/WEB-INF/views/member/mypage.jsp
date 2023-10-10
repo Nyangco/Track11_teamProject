@@ -72,8 +72,12 @@
 												<tr>
 													<th colspan="2" style="padding-top:0.75em;text-align:center;">
 														<input type="button" value="회원 정보 변경" onclick="goPage('member_update')" style="display:inline-block;">
-														<input type="button" value="회원 탈퇴" onclick="if(confirm('정말로 삭제하시겠습니까?')) goPage('exit')" style="display:inline-block;">
+														<input type="button" value="비밀 번호 변경" onclick="goPage('changePW')" style="display:inline-block;"><br>
 														<input type="button" value="구매 이력" onclick="goPage('purchase_list')" style="display:inline-block;">
+														<c:if test="${sLevel==0 }">
+															<input type="button" value="이메일 인증" onclick="goPage('confirmEmail')" style="display:inline-block;">
+														</c:if>
+														<input type="button" value="회원 탈퇴" onclick="if(confirm('정말로 삭제하시겠습니까?')) goPage('exit')" style="display:inline-block;">
 													</th>
 												</tr>
 											</table>

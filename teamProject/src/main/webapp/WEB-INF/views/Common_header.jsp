@@ -104,8 +104,6 @@
 							<li><a href="javascript:goShop('공구')">공구</a></li>
 							<li><a href="javascript:goPage('qna_list')">QNA</a></li>
 							<li><a href="javascript:goPage('faq_list')">FAQ</a></li>
-							<li><a href="javascript:goPage('free_board')">담벼락</a></li>
-							<li><a href="elements.jsp">Elements</a></li>
 						</ul>
 					</nav>
 
