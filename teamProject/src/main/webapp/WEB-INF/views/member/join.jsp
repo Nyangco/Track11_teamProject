@@ -63,11 +63,46 @@
 			mem.t_tel3.focus();
 		}
 	}function checkId(){
-		//ajax단
-		mem.id_confirm.value='0';
+		if(checkValue(mem.t_id, 10, "ID" )) return;
+		$.ajax({
+			type : "POST",
+			url : "MemberCheckId",
+			data: "t_id="+mem.t_id.value+"&t_gubun=MemberCheckId",
+			dataType : "text",
+			error : function(){
+				alert('통신실패!!!!!');
+			},
+			success : function(data){
+				//alert("=== "+data+" ===");
+				//if(data =="사용가능")
+				if(data == "1"){
+					alert('중복된 아이디 입니다');
+					mem.id_confirm.value = "";
+				} else {
+					alert('사용 가능 아이디입니다');
+					mem.id_confirm.value = mem.t_id.value;
+				}
+			}
+		});	
 	}function checkNick(){
-		//ajax 단
-		mem.nick_confirm.value='닉네임 사용가능';
+		$.ajax({
+			type : "POST",
+			url : "MemberCheckNick",
+			data: "t_nickname="+mem.t_nickname.value,
+			dataType : "text",
+			error : function(){
+				alert('통신실패!!!!!');
+			},
+			success : function(data){
+				//alert("=== "+data+" ===");
+				//if(data =="사용가능")
+				if(data == "1"){
+					mem.nick_confirm.value = "닉네임 사용불가";
+				} else {
+					mem.nick_confirm.value = "닉네임 사용가능";
+				}
+			}
+		});	
 	}function address_confirm(){
 		//ajax 단
 		 new daum.Postcode({
@@ -120,6 +155,28 @@
 	            }
 	        }).open();
 	    }
+	function checkEmail(){
+		$.ajax({
+			type : "POST",
+			url : "MemberCheckEmail",
+			data: "t_email="+mem.t_email.value,
+			dataType : "text",
+			error : function(){
+				alert('통신실패!!!!!');
+			},
+			success : function(data){
+				//alert("=== "+data+" ===");
+				//if(data =="사용가능")
+				if(data == "1"){
+					mem.email_confirm.value = "이메일 사용불가";
+				} else {
+					mem.email_confirm.value = "이메일 사용가능";
+				}
+			}
+		});	
+	}	
+	
+	
 </script>
 
 
@@ -167,7 +224,10 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="text" name="t_email" ></td>
+													<td>
+														<input type="text" name="t_email" style="width:55%;display:inline-block;" onchange="checkEmail()">
+														<input type="text" name="email_confirm" style="width:44%;display:inline-block;border:none;" disabled>
+													</td>
 												</tr>
 												<tr>
 													<th>연락처</th>
