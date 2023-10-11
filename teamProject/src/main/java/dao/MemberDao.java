@@ -265,4 +265,31 @@ public class MemberDao {
 		}
 		return k;
 	}
+	
+	//회원가입 시 서버에 이미 id가 있는지 확인
+	public int memberCheckId(String id) 
+	{
+		String query = "select count(*) from pjt_shop_member\n" + 
+				"where id = '"+id+"'";
+		int result = template.queryForObject(query, Integer.class);
+		return result;
+	}
+	
+	//회원가입 시 서버에 이미 닉네임이 있는지 확인
+	public int memberCheckNick(String nick) 
+	{
+		String query = "select count(*) from pjt_shop_member\n" + 
+				"where nick = '"+nick+"'";
+		int result = template.queryForObject(query, Integer.class);
+		return result;
+	}
+	
+	//회원가입 시 서버에 이미 이메일이 있는지 확인
+	public int memberCheckEmail(String email) 
+	{
+		String query = "select count(*) from pjt_shop_member\n" + 
+				"where email = '"+email+"'";
+		int result = template.queryForObject(query, Integer.class);
+		return result;
+	}
 }
