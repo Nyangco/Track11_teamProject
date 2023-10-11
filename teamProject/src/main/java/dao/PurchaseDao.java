@@ -223,6 +223,8 @@ public class PurchaseDao {
 		String today = CommonUtil.getToday();
 		String tell = mdto.getT_receive_tel1()+"-"+mdto.getT_receive_tel2()+"-"+mdto.getT_receive_tel3();
 		today = today.substring(2,4)+today.substring(5,7)+today.substring(8)+"_";
+		int status = 0;
+		if(mdto.getT_pay_method().equals("card")) status=1;
 		
 		String sql1 = "select nvl(max(purchase_no),'"+today+"0000') from pjt_shop_purchase where purchase_no like '%"+today+"%'";
 		String sql2 = null;
@@ -235,10 +237,11 @@ public class PurchaseDao {
 			int k = Integer.parseInt(purchase_no.substring(7))+1;
 			purchase_no = today+df.format(k);
 			sql2 = "insert into pjt_shop_purchase (purchase_no, buyer_id, receiver_name, receiver_contact, receiver_addr1, "
-					+ "receiver_addr2, receiver_addr3, delivery_memo, pay_method, transfer_name, cash_receipt, card_number, "
-					+ "card_cvc) values('"+purchase_no+"','"+mdto.getT_id()+"','"+mdto.getT_receive_name()+"','"+tell+"','"
+					+ "receiver_addr2, receiver_addr3, delivery_memo, pay_method, transfer_name, cash_receipt, merchant_uid,status) "
+					+ "values('"+purchase_no+"','"+mdto.getT_id()+"','"+mdto.getT_receive_name()+"','"+tell+"','"
 					+mdto.getT_addr1()+"','"+mdto.getT_addr2()+"','"+mdto.getT_addr3()+"','"+mdto.getT_receive_memo()+"','"
-					+mdto.getT_pay_method()+"','"+mdto.getT_pay_name()+"','"+mdto.getT_cash_recipt_number()+"','','')";
+					+mdto.getT_pay_method()+"','"+mdto.getT_pay_name()+"','"+mdto.getT_cash_recipt_number()+"','"
+					+mdto.getT_merchant_uid()+"',"+status+")";
 			k = template.update(sql2);
 			if(k==1) {
 				for(int i=0; i<pn.length; i++) {

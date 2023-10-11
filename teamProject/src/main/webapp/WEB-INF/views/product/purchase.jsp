@@ -13,9 +13,13 @@
 		if($('#method_sel').val()!='cash'){
 			$('#cash_name').hide();
 			$('#cash_receipt').hide();
+			$('#cashBtn').hide();
+			$('#cardBtn').show();
 		}else{
 			$('#cash_name').show();
 			$('#cash_receipt').show();
+			$('#cashBtn').show();
+			$('#cardBtn').hide();
 		}
 	}function shipping(){
 		if($('#shipping_sel').val()=='n'){
@@ -23,9 +27,9 @@
 			fm.t_receive_tel1.value="";
 			fm.t_receive_tel2.value="";
 			fm.t_receive_tel3.value="";
-			//fm.t_addr1.value="";
-			//fm.t_addr2.value="";
-			//fm.t_addr3.value="";
+			fm.t_addr1.value="";
+			fm.t_addr2.value="";
+			fm.t_addr3.value="";
 			fm.t_receive_memo="";
 		}else{
 			fm.reset();
@@ -41,12 +45,15 @@
 			return true;
 		}else return false;
 	}function goBuy(){
-		if(checkValue(fm.t_receive_name,999,"수령인"))return;
-		else if(checkValue(fm.t_receive_tel1,999,"연락처"))return;
-		else if(checkValue(fm.t_receive_tel2,999,"연락처"))return;
-		//else if(checkValue(fm.t_addr1,999,"배송지 주소"))return;
-		//else if(checkValue(fm.t_addr2,999,"배송지 주소"))return;
-		//else if(checkValue(fm.t_addr3,999,"배송지 주소"))return;
+		if(checkValue(fm.t_receive_name,999,"수령인"))return true;
+		else if(checkValue(fm.t_receive_tel1,999,"연락처"))return true;
+		else if(checkValue(fm.t_receive_tel2,999,"연락처"))return true;
+		//else if(checkValue(fm.t_addr1,999,"배송지 주소"))return true;
+		//else if(checkValue(fm.t_addr2,999,"배송지 주소"))return true;
+		//else if(checkValue(fm.t_addr3,999,"배송지 주소"))return true;
+		else return false;
+	}function goCash(){
+		if(goBuy())return;
 		else if(fm.t_pay_method.value=="cash"&&fm.t_pay_name.value==""){
 			alert("입금자명을 입력해주세요");
 			fm.t_pay_name.focus();
@@ -57,11 +64,43 @@
 			fm.t_cash_recipt_number.focus();
 			return;
 		}else{
+    	    fm.t_gubun.value="DBpurchase";
 			fm.method="post";
 			fm.action="/team/";
 			fm.submit();
 		}
-	}
+	}function goCard(){
+		if(goBuy())return;
+		else{
+			requestPay();
+		}
+	}function requestPay() {
+		const addr = fm.t_addr2.value+fm.t_addr3.value;
+		const mname = "<c:if test='${p_arr.size()>1}'>${p_arr.get(0).getName()}등..</c:if><c:if test='${p_arr.size()==1}'>${p_arr.get(0).getName()}</c:if>";
+		  IMP.init('iamport'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
+		  IMP.request_pay({
+		    pg: "INIBillTst",
+		    pay_method: "card",
+		    merchant_uid : 'merchant_'+new Date().getTime(),
+		    name : mname,
+		    amount : 100,
+		    buyer_email : '${m_dto.getEmail() }',
+		    buyer_name : '${m_dto.getName() }',
+		    buyer_tel : '${m_dto.getContact() }',
+		    buyer_addr : addr,
+		    buyer_postcode : fm.t_addr1.value
+		  }, function (rsp) { // callback
+		      if (rsp.success) {
+		    	  fm.t_merchant_uid.value=rsp.merchant_uid;
+		    	  fm.t_gubun.value="DBpurchase";
+		    	  fm.method="post";
+				  fm.action="/team/";
+				  fm.submit();
+		      } else {
+		    	  alert("결제에 실패했습니다");
+		      }
+		  });
+		}
 </script>
 				<!-- Main -->
 					<div id="main">
@@ -73,10 +112,11 @@
 							</section> 
 							<section>
 								<form class="purchase" name="fm">
-									<input type="hidden" name="t_gubun" value="DBpurchase">
+									<input type="hidden" name="t_gubun" >
 									<input type="hidden" name="t_id" value="${sId }">
 									<input type="hidden" name="t_count" value="${t_count }">
 									<input type="hidden" name="t_bd" value="${t_bd }">
+									<input type="hidden" name="t_merchant_uid">
 									<div class="purchase_desc">
 										<table class="purchase_top">
 											<colgroup>
@@ -229,8 +269,9 @@
 											</tr>
 										</table>
 										<div class="btn_group">
-											<input type="button" value="결제하기" onclick="goBuy()">
-											<input type="button" value="뒤로가기" onclick="history.go(-1)">;
+											<input type="button" value="결제하기" id="cashBtn" onclick="goCash()">
+											<input type="button" value="결제하기" id="cardBtn" onclick="goCard()" style="display:none;">
+											<input type="button" value="뒤로가기" onclick="history.go(-1)">
 										</div>
 									</div>
 								</form>

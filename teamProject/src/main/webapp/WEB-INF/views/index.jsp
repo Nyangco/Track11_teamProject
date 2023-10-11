@@ -7,7 +7,7 @@
 							<header>
 							</header>
 							<section class="tiles">
-								<article class="style1">
+								<article>
 									<span class="image">
 										<img src="images/food.jpg" alt="" />
 									</span>
@@ -18,7 +18,7 @@
 										</div>
 									</a>
 								</article>
-								<article class="style2">
+								<article>
 									<span class="image">
 										<img src="images/cloth.jpg" alt="" />
 									</span>
@@ -29,7 +29,7 @@
 										</div>
 									</a>
 								</article>
-								<article class="style3">
+								<article>
 									<span class="image">
 										<img src="images/antique.jpg" alt="" />
 									</span>
@@ -40,7 +40,7 @@
 										</div>
 									</a>
 								</article>
-								<article class="style4">
+								<article>
 									<span class="image">
 										<img src="images/plant.jpg" alt="" />
 									</span>
@@ -51,7 +51,7 @@
 										</div>
 									</a>
 								</article>
-								<article class="style5">
+								<article>
 									<span class="image">
 										<img src="images/record.jpg" alt="" />
 									</span>
@@ -62,7 +62,7 @@
 										</div>
 									</a>
 								</article>
-								<article class="style6">
+								<article>
 									<span class="image">
 										<img src="images/tools.jpg" alt="" />
 									</span>
