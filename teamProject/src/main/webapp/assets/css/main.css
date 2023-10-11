@@ -3403,6 +3403,10 @@ table{
 	padding-bottom:1em;
 }
 
+form.side_bar{
+	padding:10px;
+}
+
 .detail_img{
 	width:100%;
 }

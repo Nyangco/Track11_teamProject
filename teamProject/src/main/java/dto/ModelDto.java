@@ -13,13 +13,21 @@ public class ModelDto {
 	
 	//purchase
 	private String t_count, t_receive_name, t_receive_tel1, t_receive_tel2, t_receive_tel3, t_receive_memo, t_pay_method, 
-					t_pay_name, t_cash_receipt, t_cash_recipt_number, t_purchase_no, t_bd, t_total;
+					t_pay_name, t_cash_receipt, t_cash_recipt_number, t_purchase_no, t_bd, t_total, t_merchant_uid;
 	//qna
 	private String t_qna_no,t_reg_id,t_reg_date,t_title,t_content,
 					t_update_date,t_reply,t_reply_date;
 	//faq
 	private String t_faq_no,t_question,t_answer;
   
+	public String getT_merchant_uid() {
+		return t_merchant_uid;
+	}
+
+	public void setT_merchant_uid(String t_merchant_uid) {
+		this.t_merchant_uid = t_merchant_uid;
+	}
+
 	public String getT_total() {
 		return t_total;
 	}
