@@ -52,23 +52,38 @@
 									<table style="width:100%">
 										<colgroup>
 											<col width="*">
+											<col width="10%">
 											<col width="15%">
 											<col width="15%">
 										</colgroup>
 										<tr>
 											<th>제목</th>
+											<th>답변</th>
 											<th>작성자</th>
 											<th>작성일자</th>
+											
 										</tr>
 										<c:forEach items="${t_dtos}" var="dto">
 										<tr>
 											<td class="title"><a href="javascript:goDetail('${dto.getQna_no()}')">${dto.getTitle()}</a></td>
+											<td>
+											<c:choose>
+												<c:when test="${not empty dto.getReply()}">
+													답변완료
+												</c:when>
+												<c:otherwise>
+													답변대기
+												</c:otherwise>
+											</c:choose>
+											</td>
 											<td>${dto.getName()}</td>
 											<td>${dto.getReg_date()}</td>
 										</tr>
 										</c:forEach>
 									</table>
+									<c:if test="${sLevel eq '1' }">
 									<input type="button" value="글쓰기" onclick="goWrite()" style="float:right; margin-top:10px;">
+									</c:if>
 								</article>
 							</section>
 						</div>
