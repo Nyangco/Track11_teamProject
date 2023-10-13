@@ -3540,10 +3540,6 @@ form.side_bar{
 	width:100%;
 }
 
-.purchase table *{
-	background-color: white;
-}
-
 .purchase table{
 	margin:50px 0;
 }
@@ -3708,7 +3704,4 @@ body{
 
 select, input[type=month], select>option{
 	background-color:#6C3A00!important;
-}
-
-.statis{
 }
