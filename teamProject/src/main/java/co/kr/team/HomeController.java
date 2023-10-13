@@ -65,6 +65,7 @@ import command.qna.Qna_write;
 import common.CommonExecute;
 import common.CommonTemplate;
 import common.CommonUtil;
+import dao.MemberDao;
 import dao.ProductDao;
 import dao.PurchaseDao;
 import dto.ModelDto;
@@ -407,6 +408,99 @@ public class HomeController {
 		}catch(IOException e) {
 			System.out.println("입출력 오류");
 			e.printStackTrace();
+		}
+	}
+	
+	//중복 닉네임 서버에서 확인
+	@RequestMapping("MemberCheckNick")
+	public void memberCheckNick(HttpServletRequest request, HttpServletResponse response)
+	{
+		MemberDao dao = new MemberDao();
+		String nickname = request.getParameter("t_nickname");
+		int count = dao.memberCheckNick(nickname);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		out.print(count);
+	}
+	//중복 이메일 서버에서 확인
+	@RequestMapping("MemberCheckEmail")
+	public void memberCheckEmail(HttpServletRequest request, HttpServletResponse response)
+	{
+		MemberDao dao = new MemberDao();
+		String email = request.getParameter("t_email");
+		int count = dao.memberCheckEmail(email);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		out.print(count);
+	}
+	
+	//중복 아이디 서버에서 확인
+	@RequestMapping("MemberCheckId")
+	public void memberCheckId(HttpServletRequest request, HttpServletResponse response)
+	{
+		MemberDao dao = new MemberDao();
+		String id = request.getParameter("t_id");
+		int count = dao.memberCheckId(id);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print(count);
+		
+	}
+	
+	//장바구니 담기 - 아이디 품목번호 조합이 없으면 새로 만들고 있으면 count를 더함
+	@RequestMapping("GoBucket")
+	public void goBucket(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		PurchaseDao dao = new PurchaseDao();
+		String id = request.getParameter("t_id");
+		String count = request.getParameter("t_count");
+		String product_no = request.getParameter("t_product_no");
+		System.out.println(id);
+		int check = dao.basketCheck(id, product_no);
+		int result = 0;
+		if(check == 1)
+		{
+			result = dao.updateBasket(id, product_no, count);
+			
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = null;
+			try {
+				out = response.getWriter();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			out.print(result);
+		}
+		else
+		{
+			result = dao.addBasket(id, product_no, count);
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = null;
+			try {
+				out = response.getWriter();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			out.print(result);
 		}
 	}
 }

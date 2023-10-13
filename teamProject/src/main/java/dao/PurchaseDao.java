@@ -324,4 +324,41 @@ public class PurchaseDao {
 		}
 		return arr;
 	}
+	
+	//장바구니에 상품 추가
+	public int addBasket(String id, String product_no, String count) 
+	{
+		String query = "insert into pjt_shop_basket\n" + 
+				"values\n" + 
+				"('"+id+"', '"+product_no+"', "+count+")\n" + 
+				"";
+		int result = template.update(query);
+		return result;
+	}
+	
+	//장바구니에 해당 id, 상품번호 조합이 이미 있는지 확인
+	public int basketCheck(String id, String product_no) 
+	{
+		String query = "select COUNT(*) from pjt_shop_basket\n" + 
+				"\n" + 
+				"where id = '"+id+"' and product_no = '"+product_no+"'\n" + 
+				"";
+		int result = template.queryForObject(query, Integer.class);
+		return result;
+	}
+	
+	//장바구니 상품 count 증가
+	public int updateBasket(String id, String product_no, String count) 
+	{
+		String query = "update pjt_shop_basket\n" + 
+				"set \n" + 
+				"count = count + "+count+"\n" + 
+				"where\n" + 
+				"id = '"+id+"' and\n" + 
+				"product_no = '"+product_no+"'";
+		int result = template.update(query);
+		return result;
+	}
 }
+	
+	

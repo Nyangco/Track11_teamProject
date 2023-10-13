@@ -46,6 +46,39 @@
 			buy.submit();
 		}
 	}function goBucket(){
+		if(<c:if test="${empty sLevel}">true</c:if><c:if test="${not empty sLevel}">false</c:if>){
+			alert("로그인 후 시도해주세요");
+		}else{
+			$.ajax({
+				type : "POST",
+				url : "GoBucket",
+				data: "t_id="+buy.t_id.value+"&t_count="+buy.t_count.value+"&t_product_no="+buy.t_product_no.value ,
+				dataType : "text",
+				
+				error : function(){
+					alert('통신실패!!!!!');
+				},
+				success : function(data){
+					//alert("=== "+data+" ===");
+					//if(data =="사용가능")
+					if(data == "1"){
+						if(confirm("장바구니에 상품이 추가되었습니다. 장바구니로 이동하시겠습니까?"))
+						{
+							buy.t_gubun.value = "basket";
+							buy.method="post";
+							buy.action="/team/";
+							buy.submit();
+						}
+						else
+						{
+								
+						}
+					} else {
+						alert('상품 추가 실패!! 관리자에게 문의하세요');
+					}
+				}
+			});	
+		}
 		//ajax단 처리
 	}
 </script>
