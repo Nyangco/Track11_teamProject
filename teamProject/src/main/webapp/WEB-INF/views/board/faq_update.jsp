@@ -42,6 +42,8 @@
 							<section class="border_detail">
 								<article>
 								<form name="fm">
+									<input type="hidden" name="t_gubun" value="DBfaq_update">
+									<input type="hidden" name="t_faq_no" value="${t_dto.getFaq_no()}">
 									<table style="width:90%">
 										<colgroup>
 											<col width="15%">
