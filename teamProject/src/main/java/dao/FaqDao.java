@@ -28,9 +28,9 @@ public class FaqDao {
 			String i = (String)temp.queryForObject(sql, String.class);
 			i = df.format(Integer.parseInt(i.substring(1))+1);
 			query="insert into pjt_shop_faq\r\n" + 
-					"(faq_no,question,answer)\r\n" + 
+					"(faq_no,question,answer,reg_id)\r\n" + 
 					"values\r\n" + 
-					"('"+i+"','"+mdto.getT_question()+"','"+mdto.getT_answer()+"')";
+					"('"+i+"','"+mdto.getT_question()+"','"+mdto.getT_answer()+"','"+mdto.getT_reg_id()+"')";
 			k = temp.update(query);
 		}catch(DataAccessException d){
 			System.out.println("FaqSave:"+query);
@@ -41,10 +41,12 @@ public class FaqDao {
 
 	public ArrayList<FaqDto> getFaqList(String select, String search) {
 		ArrayList<FaqDto> dtos = new ArrayList<FaqDto>();
-		String query ="select faq_no,question,\r\n" + 
-				"to_char(to_date(reg_date),'yyyy-mm-dd') reg_date\r\n" + 
-				"from pjt_shop_faq\r\n" + 
-				"where "+select+" like '%"+search+"%'\r\n" + 
+		String query ="select f.faq_no,f.question,f.answer,\r\n" + 
+				"to_char(to_date(f.reg_date),'yyyy-mm-dd') reg_date,\r\n" + 
+				"m.name,f.reg_id\r\n" + 
+				"from pjt_shop_faq f, pjt_shop_member m\r\n" + 
+				"where f.reg_id = m.id\r\n" + 
+				"and "+select+" like '%"+search+"%'\r\n" + 
 				"order by reg_date desc";
 		try{
 			RowMapper<FaqDto> rowmapper = 
@@ -59,10 +61,12 @@ public class FaqDao {
 
 	public Object detail(ModelDto mdto) {
 		FaqDto dto = null;
-		String sql = "select faq_no,question,answer,\r\n" + 
-				"to_char(to_date(reg_date),'yyyy-mm-dd') reg_date\r\n" + 
-				"from pjt_shop_faq\r\n" + 
-				"where faq_no = '"+mdto.getT_faq_no()+"'\r\n" + 
+		String sql = "select f.faq_no,f.question,f.answer,\r\n" + 
+				"to_char(to_date(f.reg_date),'yyyy-mm-dd') reg_date,\r\n" + 
+				"m.name,f.reg_id\r\n" + 
+				"from pjt_shop_faq f, pjt_shop_member m\r\n" + 
+				"where f.reg_id = m.id\r\n" + 
+				"and f.faq_no = '"+mdto.getT_faq_no()+"'\r\n" + 
 				"order by reg_date desc";
 		try {
 			RowMapper<FaqDto> rowmapper = new BeanPropertyRowMapper<FaqDto>(FaqDto.class);

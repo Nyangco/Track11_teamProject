@@ -40,8 +40,8 @@
 									<a href="javascript:goSearch()" style="float:right;font-size:27px;margin-left:0.25em;"><i class="fa-solid fa-magnifying-glass"></i></a>
 									<input type="text" name="t_search" value="${t_search}" placeholder="검색어를 입력하세요" class="search" style="width:300px;float:right;margin-left:0.5em;">
 									<select name="t_select" style="width:170px;float:right;margin-left:0.5em;">
-										<option value="question" <c:if test="${select eq 'question'}">selected</c:if>>제목</option>
-										<option value="reg_date" <c:if test="${select eq 'reg_date'}">selected</c:if>>작성일자</option>
+										<option value="f.question" <c:if test="${select eq 'f.question'}">selected</c:if>>제목</option>
+										<option value="f.reg_date" <c:if test="${select eq 'f.reg_date'}">selected</c:if>>작성일자</option>
 									</select>
 								</div>
 								</form>
@@ -62,7 +62,7 @@
 										<c:forEach items="${t_dtos}" var="dto">
 										<tr>
 											<td class="title"><a href="javascript:goDetail('${dto.getFaq_no()}')">${dto.getQuestion()}</a></td>
-											<td>매니저</td>
+											<td>${dto.getName()}</td>
 											<td>${dto.getReg_date()}</td>
 										</tr>
 										</c:forEach>

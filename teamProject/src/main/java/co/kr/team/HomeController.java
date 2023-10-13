@@ -104,7 +104,7 @@ public class HomeController {
 				page = "index";
 			}
 			
-			//Product & Purchase
+	s		//Product & Purchase
 			else if(gubun.equals("detail")) {
 				CommonExecute ce = new Detail();
 				ce.execute(model, mdto, session);
