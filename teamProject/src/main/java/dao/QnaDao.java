@@ -1,6 +1,5 @@
 package dao;
 
-import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -14,7 +13,6 @@ import org.springframework.jdbc.core.RowMapper;
 import common.CommonTemplate;
 import common.CommonUtil;
 import dto.ModelDto;
-import dto.ProductDto;
 import dto.QnaDto;
 
 public class QnaDao {

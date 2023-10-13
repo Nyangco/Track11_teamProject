@@ -25,7 +25,7 @@ public class Basket implements CommonExecute {
 		for(int k=0; k<arr.size(); k++) {
 			sum+=Integer.parseInt(arr.get(k).getPrice())*Integer.parseInt(arr.get(k).getCount());
 		}
-		sum+=2500;
+		if(arr.size()!=0)sum+=2500;
 		DecimalFormat df = new DecimalFormat("￦###,###");
 		model.addAttribute("t_total",df.format(sum));
 		model.addAttribute("t_count",arr.size());

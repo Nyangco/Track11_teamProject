@@ -8,10 +8,8 @@ import org.springframework.ui.Model;
 
 import common.CommonExecute;
 import dao.FaqDao;
-import dao.QnaDao;
 import dto.FaqDto;
 import dto.ModelDto;
-import dto.QnaDto;
 
 public class Faq_list implements CommonExecute {
 

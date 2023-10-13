@@ -3,9 +3,6 @@ package dao;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -183,7 +180,7 @@ public class PurchaseDao {
 	
 	public int count(String id) {
 		int k = 0;
-		String sql = "select count(*) from pjt_shop_basket";
+		String sql = "select count(*) from pjt_shop_basket where id='"+id+"'";
 		try {
 			k = template.queryForInt(sql);
 		}catch(DataAccessException e) {

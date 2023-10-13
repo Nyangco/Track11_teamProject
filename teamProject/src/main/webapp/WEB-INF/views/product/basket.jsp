@@ -113,21 +113,30 @@
 													</td>
 												</tr>
 											</c:forEach>
-											<tr>
-												<td colspan="4">배송비</td>
-												<td >￦2,500</td>
-											</tr>
-											<tr>
-												<td colspan="4">총 금액</td>
-												<td id="total_all">${t_total }</td>
-											</tr>
+											<c:if test="${t_arr.size() ne 0 }">
+												<tr>
+													<td colspan="4">배송비</td>
+													<td >￦2,500</td>
+												</tr>
+												<tr>
+													<td colspan="4">총 금액</td>
+													<td id="total_all">${t_total }</td>
+												</tr>
+											</c:if>
+											<c:if test="${t_arr.size() eq 0 }">
+												<tr>
+													<td colspan="5" style="text-align:center;">장바구니에 상품이 없습니다.</td>
+												</tr>
+											</c:if>
 										</table>
 									</form>
 								</article>
 							</section>
-							<div class="btn_group sell">
-								<input type="button" value="구매하기" onclick="goBasket()">
-							</div>
+							<c:if test="${t_arr.size() ne 0 }">
+								<div class="btn_group sell">
+									<input type="button" value="구매하기" onclick="goBasket()">
+								</div>
+							</c:if>
 						</div>
 					</div>
 <%@ include file="../Common_footer.jsp"%>

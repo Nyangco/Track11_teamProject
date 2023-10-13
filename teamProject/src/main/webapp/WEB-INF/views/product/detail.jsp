@@ -106,7 +106,7 @@
 											<div>등록일<span>${dto.getReg_date() }</span></div>
 											<div>재고<span class="stock">${dto.getStock() }</span></div>
 										</div>
-										<div class="merchan_desc">${dto.getDescription() }</div>
+										<div class="merchan_desc" style="white-space:pre-wrap;">${dto.getDescription() }</div>
 									</div>
 								</div>
 								<form class="side_bar" name="buy" style="border:1px solid black;">

@@ -43,12 +43,12 @@
 										<tr>
 											<td colspan="3">
 												<div style="width: 352px; height: 176px;">
-													<canvas id="p_Count"></canvas>
+													<canvas id="p_Count" class="statis"></canvas>
 												</div>
 											</td>
 											<td>
 												<div style="width: 352px; height: 176px;">
-													<canvas id="c_Cell"></canvas>
+													<canvas id="c_Cell" class="statis"></canvas>
 												</div>
 											</td>
 										</tr>
@@ -97,12 +97,12 @@
 											<tr >
 												<td colspan="3">
 													<div style="width: 352px; height: 176px;">
-													<canvas id="p_Count_m"></canvas>
+													<canvas id="p_Count_m" class="statis"></canvas>
 												</div>
 												</td>
 												<td>
 													<div style="width: 352px; height: 176px;">
-													<canvas id="c_Cell_m"></canvas>
+													<canvas id="c_Cell_m" class="statis"></canvas>
 												</div>
 												</td>
 											</tr>
@@ -152,22 +152,8 @@
 			                    label: '판매 건수', //차트 제목
 			                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
 			                    data: data,
-			                    backgroundColor: [
-			                        //색상
-			                        'rgba(192, 192, 192, 0.2)',
-			                        'rgba(192, 192, 192, 0.2)',
-			                        'rgba(192, 192, 192, 0.2)',
-			                        'rgba(192, 192, 192, 0.2)',
-			                        'rgba(192, 192, 192, 0.2)'
-			                    ],
-			                    borderColor: [
-			                        //경계선 색상
-			                        'rgba(0, 0, 0, 1)',
-			                        'rgba(0, 0, 0, 1)',
-			                        'rgba(0, 0, 0, 1)',
-			                        'rgba(0, 0, 0, 1)',
-			                        'rgba(0, 0, 0, 1)'
-			                    ],
+			                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+			                    borderColor: 'rgba(255, 255, 255, 1)',
 			                    borderWidth: 1 //경계선 굵기
 			                }
 			            ]
@@ -208,22 +194,8 @@
 		                    label: '판매 건수', //차트 제목
 		                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
 		                    data: data,
-		                    backgroundColor: [
-		                        //색상
-		                        'rgba(192, 192, 192, 0.2)',
-		                        'rgba(192, 192, 192, 0.2)',
-		                        'rgba(192, 192, 192, 0.2)',
-		                        'rgba(192, 192, 192, 0.2)',
-		                        'rgba(192, 192, 192, 0.2)'
-		                    ],
-		                    borderColor: [
-		                        //경계선 색상
-		                        'rgba(0, 0, 0, 1)',
-		                        'rgba(0, 0, 0, 1)',
-		                        'rgba(0, 0, 0, 1)',
-		                        'rgba(0, 0, 0, 1)',
-		                        'rgba(0, 0, 0, 1)'
-		                    ],
+		                    backgroundColor:'rgba(255, 255, 255, 0.2)',
+		                    borderColor: 'rgba(255, 255, 255, 1)',
 		                    borderWidth: 1 //경계선 굵기
 		                }
 		            ]
@@ -260,22 +232,8 @@
                     label: '판매 건수', //차트 제목
                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                     data: [${t_p_count_value}],
-                    backgroundColor: [
-                        //색상
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)'
-                    ],
-                    borderColor: [
-                        //경계선 색상
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)'
-                    ],
+                    backgroundColor:'rgba(255, 255, 255, 0.2)',
+                    borderColor: 'rgba(255, 255, 255, 1)',
                     borderWidth: 1 //경계선 굵기
                 }
             ]
@@ -307,22 +265,8 @@
                     label: '매출액', //차트 제목
                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                     data: [${t_c_cell_value}],
-                    backgroundColor: [
-                        //색상
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)',
-                        'rgba(192, 192, 192, 0.2)'
-                    ],
-                    borderColor: [
-                        //경계선 색상
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)',
-                        'rgba(0, 0, 0, 1)'
-                    ],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderColor: 'rgba(255, 255, 255, 1)',
                     borderWidth: 1 //경계선 굵기
                 }
             ]

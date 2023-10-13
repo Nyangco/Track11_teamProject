@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 
 import common.CommonExecute;
 import dao.FaqDao;
-import dao.QnaDao;
 import dto.ModelDto;
 
 public class DBfaq_update implements CommonExecute {

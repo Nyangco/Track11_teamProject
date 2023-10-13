@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 
 import common.CommonExecute;
 import dao.MemberDao;
-import dto.MemberDto;
 import dto.ModelDto;
 
 public class Mypage implements CommonExecute {

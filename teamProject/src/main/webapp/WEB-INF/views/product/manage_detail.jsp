@@ -112,7 +112,7 @@
 													<th colspan="3" style="text-align:center;font-size:24px;">상세 설명</th>
 												</tr>
 												<tr>
-													<td colspan="3"><textarea name="t_c_desc" readonly style="resize: none;">${t_dto.getDescription() }</textarea></td>
+													<td colspan="3"><textarea name="t_c_desc" readonly style="resize: none;white-space:pre-wrap;">${t_dto.getDescription() }</textarea></td>
 												</tr>
 												<tr>
 													<th colspan="3" style="padding-top:0.75em;text-align:center;">

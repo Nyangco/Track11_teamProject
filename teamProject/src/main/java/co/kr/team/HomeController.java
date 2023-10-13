@@ -94,6 +94,8 @@ public class HomeController {
 		if(sLevel!=null) sl = Integer.parseInt(sLevel);
 		else sl=-1;
 		
+		System.out.println(CommonUtil.getFile_dir(session));
+		
 		//비회원 접근 가능
 		if(sl>=-1) {
 

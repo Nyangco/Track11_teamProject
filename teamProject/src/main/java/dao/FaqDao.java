@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import common.CommonTemplate;
-import common.CommonUtil;
 import dto.FaqDto;
 import dto.ModelDto;
 

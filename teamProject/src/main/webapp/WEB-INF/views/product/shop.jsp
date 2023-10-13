@@ -46,7 +46,7 @@
 								</section>
 								<section class="tiles viewpage">
 									<c:forEach items="${arr}" var="dto">
-										<article class="style1">
+										<article>
 											<span class="image">
 												<img src="attach/${dto.getImages()}" alt="" />
 											</span>

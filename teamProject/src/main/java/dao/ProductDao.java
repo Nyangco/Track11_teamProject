@@ -35,7 +35,7 @@ public class ProductDao {
 					+ "from pjt_shop_member m, pjt_shop_product pr, pjt_shop_purchase pu, pjt_shop_purchase_detail d "
 					+ "where m.id=pu.buyer_id and pr.product_no=d.product_no and pu.purchase_no=d.purchase_no and "
 					+ "pu.status='5' and to_char(to_date(substr(pu.purchase_no,1,6),'yyMMdd'),'yyyy-MM')='"+month+"' "
-					+ "group by m.id";
+					+ "group by m.id order by price desc";
 		
 		try {
 			RowMapper<StatisticsDto> rowMapper = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
@@ -50,7 +50,7 @@ public class ProductDao {
 		ArrayList<StatisticsDto> arr = new ArrayList<>();
 		String sql4="select m.id, sum(pr.price*d.count) as price from pjt_shop_member m, pjt_shop_product pr, "
 					+ "pjt_shop_purchase pu, pjt_shop_purchase_detail d where pu.status='5' and m.id=pu.buyer_id "
-					+ "and pr.product_no=d.product_no and pu.purchase_no=d.purchase_no group by m.id";
+					+ "and pr.product_no=d.product_no and pu.purchase_no=d.purchase_no group by m.id order by price desc";
 		try {
 			RowMapper<StatisticsDto> rowMapper = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
 			arr = (ArrayList<StatisticsDto>)template.query(sql4, rowMapper);
@@ -62,10 +62,10 @@ public class ProductDao {
 	
 	public ArrayList<StatisticsDto> getPC(String month){
 		ArrayList<StatisticsDto> arr = new ArrayList<>();
-		String sql3="select d.product_no, count(d.product_no) as count from pjt_shop_purchase_detail d, pjt_shop_purchase p "
+		String sql3="select d.product_no, sum(d.count) as count from pjt_shop_purchase_detail d, pjt_shop_purchase p "
 					+ "where p.status='5' and d.purchase_no=p.purchase_no "
 					+ "and to_char(to_date(substr(p.purchase_no,1,6),'yyMMdd'),'yyyy-MM')='"+month+"' "
-					+ "group by d.product_no";
+					+ "group by d.product_no order by count desc";
 		
 		try {
 			RowMapper<StatisticsDto> rowmap = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);
@@ -78,8 +78,8 @@ public class ProductDao {
 	
 	public ArrayList<StatisticsDto> getPC(){
 		ArrayList<StatisticsDto> arr = new ArrayList<>();
-		String sql3="select d.product_no, count(d.product_no) as count from pjt_shop_purchase_detail d, pjt_shop_purchase p "
-					+ "where p.status='5' and d.purchase_no=p.purchase_no group by d.product_no";
+		String sql3="select d.product_no, sum(d.count) as count from pjt_shop_purchase_detail d, pjt_shop_purchase p "
+					+ "where p.status='5' and d.purchase_no=p.purchase_no group by d.product_no order by count desc";
 		
 		try {
 			RowMapper<StatisticsDto> rowmap = new BeanPropertyRowMapper<StatisticsDto>(StatisticsDto.class);

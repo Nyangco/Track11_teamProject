@@ -1,7 +1,6 @@
 package command.product;
 
 
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,9 +8,7 @@ import org.springframework.ui.Model;
 
 import common.CommonExecute;
 import common.CommonUtil;
-import dao.ProductDao;
 import dao.PurchaseDao;
-import dto.DetailDto;
 import dto.ModelDto;
 
 public class Sold_list implements CommonExecute {
