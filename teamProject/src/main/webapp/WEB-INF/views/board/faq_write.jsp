@@ -44,6 +44,7 @@
 								<article>
 								<form name="fm">
 								<input type="hidden" name="t_gubun" value="DBfaq_write">
+								<input type="hidden" name="t_reg_id" value="${sId}">
 									<table style="width:90%">
 										<colgroup>
 											<col width="15%">
@@ -61,7 +62,7 @@
 										</tr>
 										<tr>
 											<th>작성자</th>
-											<td><input type="text"  readonly value="매니저"></td>
+											<td><input type="text" name="t_name" readonly value="${sName}"></td>
 											<th>작성일</th>
 											<td><input type="text"  readonly value="${time}"></td>
 										</tr>

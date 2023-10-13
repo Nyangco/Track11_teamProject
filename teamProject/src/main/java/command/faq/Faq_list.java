@@ -24,7 +24,7 @@ public class Faq_list implements CommonExecute {
 		String select = mdto.getT_select();
 		String search = mdto.getT_search();
 		if(select==null || search == null) {
-			select= "question";
+			select= "f.question";
 			search= "";
 		}
 		ArrayList<FaqDto> dtos = dao.getFaqList(select,search);
