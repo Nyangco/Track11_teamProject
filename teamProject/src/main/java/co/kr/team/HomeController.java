@@ -499,4 +499,35 @@ public class HomeController {
 			out.print(result);
 		}
 	}
+	
+	@RequestMapping("BasketDelete")
+	public void basketdelete(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			PrintWriter out = response.getWriter();
+			PurchaseDao dao = new PurchaseDao();
+			
+			String id = request.getParameter("t_id");
+			String product_no = request.getParameter("t_product_no");
+			
+			out.print(dao.deleteBasket(id,product_no));
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("changeBasket")
+	public void changeBasket(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			PrintWriter out = response.getWriter();
+			PurchaseDao dao = new PurchaseDao();
+			
+			String id = request.getParameter("t_id");
+			String product_no = request.getParameter("t_product_no");
+			String count = request.getParameter("t_count");
+			
+			out.print(dao.changeBasket(id,product_no,count));
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -59,8 +59,6 @@
 					alert('통신실패!!!!!');
 				},
 				success : function(data){
-					//alert("=== "+data+" ===");
-					//if(data =="사용가능")
 					if(data == "1"){
 						if(confirm("장바구니에 상품이 추가되었습니다. 장바구니로 이동하시겠습니까?"))
 						{

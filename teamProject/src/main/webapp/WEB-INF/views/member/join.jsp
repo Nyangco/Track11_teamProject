@@ -43,9 +43,9 @@
 		else if(checkValue(mem.t_tel1,3,"연락처")) return;
 		else if(checkValue(mem.t_tel2,4,"연락처")) return;
 		else if(checkValue(mem.t_tel3,4,"연락처")) return;
-		//else if(checkValue(mem.t_addr1,50,"주소지")) return;
-		//else if(checkValue(mem.t_addr2,50,"주소지")) return;
-		//else if(checkValue(mem.t_addr3,50,"주소지")) return;
+		else if(checkValue(mem.t_addr1,50,"주소지")) return;
+		else if(checkValue(mem.t_addr2,50,"주소지")) return;
+		else if(checkValue(mem.t_addr3,50,"주소지")) return;
 		else {
 			mem.method="post";
 			mem.action="/team/"
@@ -73,8 +73,6 @@
 				alert('통신실패!!!!!');
 			},
 			success : function(data){
-				//alert("=== "+data+" ===");
-				//if(data =="사용가능")
 				if(data == "1"){
 					alert('중복된 아이디 입니다');
 					mem.id_confirm.value = "";
@@ -94,8 +92,6 @@
 				alert('통신실패!!!!!');
 			},
 			success : function(data){
-				//alert("=== "+data+" ===");
-				//if(data =="사용가능")
 				if(data == "1"){
 					mem.nick_confirm.value = "닉네임 사용불가";
 				} else {
@@ -104,8 +100,6 @@
 			}
 		});	
 	}function address_confirm(){
-		//ajax 단
-
 		 new daum.Postcode({
 	            oncomplete: function(data) {
 	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -166,8 +160,6 @@
 				alert('통신실패!!!!!');
 			},
 			success : function(data){
-				//alert("=== "+data+" ===");
-				//if(data =="사용가능")
 				if(data == "1"){
 					mem.email_confirm.value = "이메일 사용불가";
 				} else {

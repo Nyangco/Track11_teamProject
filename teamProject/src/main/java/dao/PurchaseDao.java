@@ -19,6 +19,30 @@ public class PurchaseDao {
 
 	JdbcTemplate template = CommonTemplate.getTemplate();
 	
+	public int changeBasket(String id, String pn, String cnt) {
+		int k = 0;
+		String sql = "update pjt_shop_basket set count="+cnt+" where id='"+id+"' and product_no='"+pn+"'";
+		try {
+			k = template.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("changeBasket:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
+	public int deleteBasket(String id, String pn) {
+		int k = 0;
+		String sql = "delete pjt_shop_basket where id='"+id+"' and product_no='"+pn+"'";
+		try {
+			k = template.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("deleteBasket:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
 	public int changeStatus(String purchase_no, String status) {
 		int k = 0;
 		String sql = "update pjt_shop_purchase set status="+status+" where purchase_no='"+purchase_no+"'";

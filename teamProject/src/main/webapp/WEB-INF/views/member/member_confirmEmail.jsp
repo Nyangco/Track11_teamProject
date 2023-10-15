@@ -19,7 +19,7 @@
 									<input type="hidden" name="t_gubun" value="DBconfirmEmail">
 									<input type="hidden" name="t_id" value="${sId }">
 										<fieldset>
-											<legend>ID찾기</legend>
+											<legend>이메일 인증</legend>
 											<table style="width:35%">
 												<tr>
 													<th>인증 코드</th>

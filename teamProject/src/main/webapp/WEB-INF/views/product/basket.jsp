@@ -38,23 +38,53 @@
 		const stock_val = Number($(stock).text());
 		const price_val = Number($(price).text());
 		
-		if(count_val<1||!$.isNumeric(count_val)){
-			if(confirm("상품을 삭제하시겠습니까?")){
-				//ajax
-			}
-		}else if(Number(count_val)>stock_val){
+		if(Number(count_val)>stock_val){
 			alert("재고보다 많은 수량을 구매할 수 없습니다.");
 			$(count).val(1);
+		}else if(count_val<=0){
+			if(confirm("장바구니에서 상품을 삭제하시겠습니까?")){
+				$.ajax({
+					type : "post",
+					url : "BasketDelete",
+					dataType : "text",
+					data : "t_product_no="+pn+"&t_id="+basket.t_id.value,
+					error : function(){
+						alert("삭제에 실패했습니다. 다시 시도해주세요");
+					},
+					success : function(data){
+						if(data==1){
+							alert("삭제되었습니다");
+							history.go(0);
+						}else{
+							alert("삭제에 실패했습니다. 다시 시도해주세요");
+						}
+					}
+				});
+			}
 		}else{
 			const numeric = price_val*count_val;
 			$(total).text("￦"+comma(numeric));
 			let total_all = 0;
 			for(let k=1; k<=${t_count}; k++){
-				let price_str = "#price_"+k;
-				let count_str = "#count_"+k;
+				let price_str = ".price_"+k;
+				let count_str = ".count_"+k;
 				total_all+= Number($(price_str).text())*Number($(count_str).val());
 			}
 			$('#total_all').text(cover(total_all+2500));
+			
+			$.ajax({
+				type : "post",
+				url : "changeBasket",
+				dataType : "text",
+				data : "t_product_no="+pn+"&t_id="+basket.t_id.value+"&t_count="+count_val,
+				error : function(){
+					alert("상품 갯수 갱신에 실패하였습니다. 다시 시도해주세요");
+				},
+				success : function(data){
+					if(data!=1)
+						alert("상품 갯수 갱신에 실패하였습니다. 다시 시도해주세요");
+				}
+			});
 		}
 	}function goBasket(){
 		basket.method="post";
@@ -96,19 +126,19 @@
 											<c:forEach items="${t_arr}" var="dto" varStatus="status">
 												<tr>
 													<td>
-														${dto.getProduct_no() }
-														<span style="display:none;" id="stock_${status.count}">${dto.getStock() }</span>
-														<span style="display:none;" id="price_${status.count}">${dto.getPrice() }</span>
-														<input type="hidden" name="t_product_no_${status.count}" value="${dto.getProduct_no() }">
+														<span id="pn_${dto.getProduct_no() }">${dto.getProduct_no() }</span>
+														<span style="display:none;" id="stock_${dto.getProduct_no() }">${dto.getStock() }</span>
+														<span style="display:none;" id="price_${dto.getProduct_no() }" class="price_${status.count }">${dto.getPrice() }</span>
+														<input type="hidden" name="t_product_no_${dto.getProduct_no() }" value="${dto.getProduct_no() }">
 													</td>
 													<td>${dto.getName() }</td>
 													<td>${dto.getCprice() }</td>
 													<td>
-														<div onclick="minus('${status.count}')"><i class="fa-solid fa-square-minus fa-2xl"></i></div>
-														<input type="text" value="${dto.getCount() }" id="count_${status.count }" class="merchan_count" name="t_count_${status.count}" onchange="check_merchan_count('${status.count}')">
-														<div onclick="plus('${status.count}')"><i class="fa-solid fa-square-plus fa-2xl"></i></div>
+														<div onclick="minus('${dto.getProduct_no() }')"><i class="fa-solid fa-square-minus fa-2xl"></i></div>
+														<input type="text" value="${dto.getCount() }" id="count_${dto.getProduct_no() }" class="merchan_count count_${status.count }" name="t_count_${dto.getProduct_no() }" onchange="check_merchan_count('${dto.getProduct_no() }')">
+														<div onclick="plus('${dto.getProduct_no() }')"><i class="fa-solid fa-square-plus fa-2xl"></i></div>
 													</td>
-													<td id="total_${status.count }">
+													<td id="total_${dto.getProduct_no() }">
 														${dto.getTotal() }
 													</td>
 												</tr>
