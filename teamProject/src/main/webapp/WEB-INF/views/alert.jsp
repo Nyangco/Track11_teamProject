@@ -13,6 +13,7 @@
 		<input type="hidden" name="t_purchase_no" value="${t_purchase_no }">
 		<input type="hidden" name="t_pay_method" value="${t_pay_method }">
 		<input type="hidden" name="t_total" value="${t_total }">
+		<input type="hidden" name="t_id" value="${t_id }">
 	</form>
 </body>
 <script>

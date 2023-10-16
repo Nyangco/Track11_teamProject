@@ -34,6 +34,9 @@ import command.member.DBlogin;
 import command.member.DBmember_update;
 import command.member.DBrefund;
 import command.member.Logout;
+import command.member.Manage_member_list;
+import command.member.Manage_member_delete;
+import command.member.Manage_member_view;
 import command.member.Mypage;
 import command.member.Purchase_detail;
 import command.member.Purchase_list;
@@ -254,8 +257,22 @@ public class HomeController {
 		//관리자 접근 가능
 		}if(sl>=2) {
 			
+			//Member
+			if(gubun.equals("manage_member_list")) {
+				CommonExecute ce = new Manage_member_list();
+				ce.execute(model, mdto, session);
+				page = "member/manage_member_list";
+			}else if(gubun.equals("manage_member_view")) {
+				CommonExecute ce = new Manage_member_view();
+				ce.execute(model, mdto, session);
+				page = "member/manage_member_view";
+			}else if(gubun.equals("manage_member_delete")) {
+				CommonExecute ce = new Manage_member_delete();
+				ce.execute(model, mdto, session);
+			}
+			
 			//Product & Purchase
-			if(gubun.equals("manage_create")) {
+			else if(gubun.equals("manage_create")) {
 				CommonExecute ce = new Manage_create();
 				ce.execute(model, mdto, session);
 				page = "product/manage_create";

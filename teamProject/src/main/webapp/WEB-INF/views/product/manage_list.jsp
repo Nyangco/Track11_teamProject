@@ -23,10 +23,6 @@
 		product.method="post";
 		product.action="/team/";
 		product.submit();
-	}function goCheck(){
-		if(event.keycode==65){
-			alert("키누름");
-		}
 	}
 </script>
 				<!-- Main -->
@@ -90,6 +86,7 @@
 								${t_paging }
 							</div>
 							<div class="btn_group sell">
+								<input type="button" value="회원 관리" onclick="goPage('manage_member_list')">
 								<input type="button" value="판매 관리" onclick="goPage('sold_list')">
 								<input type="button" value="판매 통계" onclick="goPage('manage_statistics')">
 								<input type="button" value="신규 등록하기" onclick="goPage('manage_create')">

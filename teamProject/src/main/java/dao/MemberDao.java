@@ -1,6 +1,7 @@
 package dao;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,50 @@ import dto.ModelDto;
 public class MemberDao {
 
 	JdbcTemplate template = CommonTemplate.getTemplate();
+	
+	public int Manage_member_delete(String id) {
+		int k = 0;
+		String sql = "update pjt_shop_member set exit_date=to_date('"+CommonUtil.getTodayTime()+"','yyyy-MM-dd hh24:mi:ss') where id='"+id+"'";
+		try {
+			k = template.update(sql);
+		}catch(DataAccessException e) {
+			System.out.println("manage_member_delete:"+sql);
+			e.printStackTrace();
+		}
+		return k;
+	}
+	
+	public MemberDto Manage_member_view(ModelDto mdto) {
+		MemberDto dto = null;
+		String sql = "select id, name, nick, email, contact, addr1, addr2, addr3, to_char(reg_date,'yyyy-MM-dd') reg_date, "
+					+ "to_char(login_date,'yyyy-MM-dd hh24:mi:ss') login_date, "
+					+ "to_char(up_date,'yyyy-MM-dd') up_date, to_char(exit_date,'yyyy-MM-dd hh24:mi:ss') exit_date, "
+					+ "session_level from pjt_shop_member where id='"+mdto.getT_id()+"'";
+		try {
+			RowMapper<MemberDto> rowmap = new BeanPropertyRowMapper<MemberDto>(MemberDto.class);
+			dto = template.queryForObject(sql, rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("manage_member_view:"+sql);
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+	public ArrayList<MemberDto> Manage_member_list(String select, String search){
+		ArrayList<MemberDto> arr = new ArrayList<MemberDto>();
+		String sql = "select id, email, to_char(reg_date,'yyyy-MM-dd') reg_date, "
+					+ "to_char(login_date,'yyyy-MM-dd hh24:mi:ss') login_date, "
+					+ "exit_date from pjt_shop_member "
+					+ "where "+select+" like '%"+search+"%'";
+		try {
+			RowMapper<MemberDto> rowmap = new BeanPropertyRowMapper<MemberDto>(MemberDto.class);
+			arr = (ArrayList<MemberDto>)template.query(sql, rowmap);
+		}catch(DataAccessException e) {
+			System.out.println("manage_member_list:"+sql);
+			e.printStackTrace();
+		}
+		return arr;
+	}
 	
 	public boolean confirmEmail(ModelDto mdto) {
 		String sql1 = "select count(*) from pjt_shop_member where id='"+mdto.getT_id()+"' and others='"+mdto.getT_email()+"'";
