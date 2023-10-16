@@ -38,7 +38,7 @@
 			$('#t_total').val(comma(price*Number($('.merchan_count').val()))+"￦");
 		}
 	}function goPurchase(){
-		if(<c:if test="${empty sLevel}">true</c:if><c:if test="${not empty sLevel}">false</c:if>){
+		if(<c:if test="${sLevel eq 1}">true</c:if><c:if test="${sLevel ne 1}">false</c:if>){
 			alert("로그인 후 시도해주세요");
 		}else{
 			buy.method="post";
@@ -46,7 +46,7 @@
 			buy.submit();
 		}
 	}function goBucket(){
-		if(<c:if test="${empty sLevel}">true</c:if><c:if test="${not empty sLevel}">false</c:if>){
+		if(<c:if test="${sLevel eq 1}">true</c:if><c:if test="${sLevel ne 1}">false</c:if>){
 			alert("로그인 후 시도해주세요");
 		}else{
 			$.ajax({

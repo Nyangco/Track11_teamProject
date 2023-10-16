@@ -85,6 +85,7 @@
 										</c:forEach>
 									</table>
 									<input type="button" value="상품 관리" onclick="goPage('manage_list')" style="margin-top:10px;float:right;">
+									<input type="button" value="회원 관리" onclick="goPage('manage_member_list')" style="margin-top:10px;float:right;">
 								</article>
 							</section>
 							<div class="paging">
