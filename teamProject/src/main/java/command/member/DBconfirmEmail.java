@@ -19,6 +19,7 @@ public class DBconfirmEmail implements CommonExecute {
 		if(dao.confirmEmail(mdto)) {
 			msg = "인증에 성공하였습니다";
 			url = "mypage";
+			session.setAttribute("sLevel", 1);
 		}
 		model.addAttribute("msg",msg);
 		model.addAttribute("url",url);
