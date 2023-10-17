@@ -60,6 +60,8 @@
 						}
 					}
 				});
+			}else{
+				$(count).val("1");
 			}
 		}else{
 			const numeric = price_val*count_val;

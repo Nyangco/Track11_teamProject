@@ -486,7 +486,6 @@ public class HomeController {
 		String id = request.getParameter("t_id");
 		String count = request.getParameter("t_count");
 		String product_no = request.getParameter("t_product_no");
-		System.out.println(id);
 		int check = dao.basketCheck(id, product_no);
 		int result = 0;
 		if(check == 1)
